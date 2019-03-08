@@ -10,6 +10,12 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+        completions." </string>
+
+    <string-array name="Paymentmethod"
+        <item> At Digital Fabrication Lab </item>
+        <item> Baancode </item>
+    </string-array>
+
+
 </resources>
