@@ -28,6 +28,7 @@
     "typescript": "^3.3.3333"
   },
   "devDependencies": {
-    "@types/reach__router": "^1.2.3"
+    "@types/reach__router": "^1.2.3",
+    "@types/styled-components": "^4.1.12"
   }
 }
