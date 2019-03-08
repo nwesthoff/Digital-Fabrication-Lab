@@ -1,20 +1,21 @@
 import * as React from "react";
 import {
   Grid,
-  Paper,
   Table,
   TableHead,
   TableCell,
   TableRow,
   TableBody,
-  Typography,
-  Button
+  Button,
+  Card,
+  CardHeader
 } from "@material-ui/core";
-import EmailIcon from "@material-ui/icons/Email";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import MoneyOffIcon from "@material-ui/icons/MoneyOff";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { format } from "date-fns";
 import styled from "styled-components";
+import OrderDetail from "./orderdetail";
 
 const StyledIcon = styled.div`
   border-radius: 5px;
@@ -25,137 +26,169 @@ const StyledIcon = styled.div`
     props.paid ? "rgb(220, 237, 200)" : "rgb(255, 230, 233)"};
 `;
 
-const rows = [
+export interface User {
+  fullname: string;
+  email?: string;
+}
+
+export interface Order {
+  title?: string;
+  invoiceId: string;
+  date: Date;
+  printer: string;
+  cost?: number;
+  status: string;
+  paid?: boolean;
+  course?: string;
+  type?: string;
+  user: User; // make User interface
+  paymentMethod: string;
+  description: string;
+  files?: string[]; // make Files interface
+}
+
+const dummyUsers: User[] = [
+  { fullname: "Avelien Husen", email: "avelienhusen@gmail.com" },
+  { fullname: "Nils Westhoff", email: "nils@nilswesthoff.com" },
+  { fullname: "Annemar Marinissen", email: "annemar.24@gmail.com" }
+];
+
+const orders: Order[] = [
   {
-    invoiceId: "CX89",
+    title: "Lekker printje",
+    invoiceId: "CX0814",
     date: new Date(),
-    name: "Connex",
-    cost: "0.00",
+    printer: "Connex",
+    cost: 417.04,
     status: "Done",
     paid: true,
-    course: "3me",
-    type: "NM",
-    user: "Nils Westhoff",
+    course: "3me - Biomaterials & Tissue Biomechanics",
+    type: "PH",
+    user: dummyUsers[0],
     paymentMethod: "RC4999 (baan)",
     description: "Stanford Bunny Test",
-    files: "",
-    email: "nils@nilswesthoff.com"
+    files: [""]
   },
   {
-    invoiceId: "CX90",
+    title: "Lekker printje 2",
+    invoiceId: "CX0815",
     date: new Date(),
-    name: "Connex",
-    cost: "0.00",
+    printer: "Connex",
+    cost: 30.07,
     status: "Done",
     paid: true,
-    course: "3me",
-    type: "NM",
-    user: "Nils Westhoff",
+    course: "3me - Mechatronics system design",
+    type: "PH",
+    user: dummyUsers[1],
     paymentMethod: "RC4999 (baan)",
-    description: "Stanford Bunny Test",
-    files: "",
-    email: "nils@nilswesthoff.com"
+    description: "Boaty Test",
+    files: [""]
   },
   {
-    invoiceId: "CX91",
+    title: "Lekker printje 3",
+    invoiceId: "CX0816",
     date: new Date(),
-    name: "Connex",
-    cost: "0.00",
+    printer: "Connex",
+    cost: 63.0,
     status: "Done",
     paid: false,
-    course: "3me",
-    type: "NM",
-    user: "Nils Westhoff",
+    course: "io - MDD",
+    type: "MA",
+    user: dummyUsers[2],
     paymentMethod: "RC4999 (baan)",
-    description: "Stanford Bunny Test",
-    files: "",
-    email: "nils@nilswesthoff.com"
+    description: "Wooooo",
+    files: [""]
   }
 ];
 
-export default class Dashboard extends React.Component {
+interface Props {}
+
+interface State {
+  selected: Order;
+}
+
+export default class Dashboard extends React.Component<Props, State> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selected: orders[0]
+    };
+  }
+
+  onHover = row => {
+    this.setState(() => {
+      return { selected: row };
+    });
+  };
+
   render() {
     return (
       <Grid container direction="column" alignItems="center">
         <Grid item>
-          <Paper>
-            <Grid container direction="column">
-              <Grid item>
-                <Typography variant="h5" component="h1">
-                  Connex Orders
-                </Typography>
-              </Grid>
-              <Grid item>
+          <Grid
+            style={{ maxWidth: "1500px" }}
+            container
+            direction="row"
+            wrap="nowrap"
+            justify="center"
+            alignItems="flex-start"
+            spacing={16}
+          >
+            <Grid item md={8}>
+              <Card>
+                <CardHeader title="Connex Orders" subheader="orders" />
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Order No.</TableCell>
                       <TableCell>Date</TableCell>
-                      <TableCell>Cost</TableCell>
+                      <TableCell>Order No. (paid)</TableCell>
                       <TableCell>Status</TableCell>
-                      <TableCell>Course/Group</TableCell>
-                      {/* <TableCell >Type</TableCell> */}
-                      <TableCell>user</TableCell>
-                      <TableCell>Payment</TableCell>
                       <TableCell>Description</TableCell>
                       <TableCell>Files</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map(row => (
-                      <TableRow key={row.invoiceId}>
-                        <TableCell component="th" scope="row">
-                          <Grid
-                            container
-                            direction="row"
-                            alignItems="center"
-                            spacing={16}
-                          >
-                            <Grid item>{row.invoiceId}</Grid>
-                            <Grid item>
-                              <StyledIcon paid={row.paid}>
-                                <AttachMoneyIcon color="inherit" />
-                              </StyledIcon>
-                            </Grid>
-                          </Grid>
-                        </TableCell>
+                    {orders.map(row => (
+                      <TableRow
+                        key={row.invoiceId}
+                        onMouseEnter={() => this.onHover(row)}
+                      >
                         <TableCell>{format(row.date, "DD/MM/YY")}</TableCell>
-                        <TableCell>€{row.cost}</TableCell>
-                        <TableCell>{row.status}</TableCell>
-                        <TableCell>{row.course}</TableCell>
-                        {/* <TableCell>{row.type}</TableCell> */}
-                        <TableCell>
-                          <Grid
-                            container
-                            direction="row"
-                            alignItems="center"
-                            spacing={16}
-                          >
-                            <Grid item>{row.user}</Grid>
-                            <Grid item>
-                              <Button
-                                color="primary"
-                                href={`mailto:${row.email}`}
-                              >
-                                <EmailIcon />
-                              </Button>
+                        <TableCell component="th" scope="row">
+                          <StyledIcon paid={row.paid}>
+                            <Grid container alignItems="center" wrap="nowrap">
+                              <Grid item>
+                                {row.paid ? (
+                                  <AttachMoneyIcon color="inherit" />
+                                ) : (
+                                  <MoneyOffIcon color="inherit" />
+                                )}
+                              </Grid>
+                              <Grid item>{row.invoiceId}</Grid>
                             </Grid>
-                          </Grid>
+                          </StyledIcon>
                         </TableCell>
-                        <TableCell>{row.paymentMethod}</TableCell>
+                        <TableCell>{row.status}</TableCell>
                         <TableCell>{row.description}</TableCell>
                         <TableCell>
                           <Button color="secondary" href={`${row.files}`}>
-                            <CloudDownloadIcon />
+                            <CloudDownloadIcon
+                              style={{ marginRight: ".4rem" }}
+                            />{" "}
+                            download
                           </Button>
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-              </Grid>
+              </Card>
             </Grid>
-          </Paper>
+            <Grid item md={4}>
+              <OrderDetail selected={this.state.selected} />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     );
