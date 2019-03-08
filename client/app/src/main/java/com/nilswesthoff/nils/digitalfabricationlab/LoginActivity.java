@@ -26,6 +26,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +91,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_action_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
     private void populateAutoComplete() {
