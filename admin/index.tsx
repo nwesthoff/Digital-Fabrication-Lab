@@ -1,8 +1,8 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
 import { Router, Redirect } from "@reach/router";
-import Auth from "./components/auth";
-import Dashboard from "./components/dashboard/dashboard";
+import Auth from "./src/components/auth";
+import Dashboard from "./src/components/dashboard/dashboard";
 
 class App extends React.Component {
   isLoggedIn = false;

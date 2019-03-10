@@ -1,11 +1,18 @@
 import * as React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 
 import OrderDetail from "./orderdetail";
 import OrderList from "./orderlist";
 
 export interface Printer {
   name: string;
+}
+
+export enum Status {
+  Ordered = 0,
+  Accepted,
+  Printing,
+  Done
 }
 
 export interface User {
@@ -19,7 +26,7 @@ export interface Order {
   date: Date;
   printer: Printer;
   cost?: number;
-  status: string;
+  status: Status;
   paid?: boolean;
   course?: string;
   type?: string;
@@ -44,7 +51,7 @@ const orders: Order[] = [
     date: new Date(),
     printer: printers[0],
     cost: 417.04,
-    status: "Done",
+    status: Status.Done,
     paid: true,
     course: "3me - Biomaterials & Tissue Biomechanics",
     type: "PH",
@@ -59,13 +66,14 @@ const orders: Order[] = [
     date: new Date(),
     printer: printers[0],
     cost: 30.07,
-    status: "Done",
+    status: Status.Accepted,
     paid: true,
     course: "3me - Mechatronics system design",
     type: "PH",
     user: dummyUsers[1],
     paymentMethod: "RC4999 (baan)",
-    description: "Boaty Test",
+    description:
+      "We ship a small reconciler config with a few additions for interaction. It does not know or care about THREE deeply, it uses heuristics to support attributes generically, so we can get away without creating a strong dependency. Hooks of course hold it all together. The aforementioned libs served as an inspiration.",
     files: [""]
   },
   {
@@ -74,7 +82,7 @@ const orders: Order[] = [
     date: new Date(),
     printer: printers[0],
     cost: 63.0,
-    status: "Done",
+    status: Status.Printing,
     paid: false,
     course: "io - MDD",
     type: "MA",
@@ -92,17 +100,36 @@ interface State {
 }
 
 export default class Dashboard extends React.Component<Props, State> {
-  constructor(props) {
-    super(props);
+  state = {
+    orders: orders,
+    selected: orders[0]
+  };
 
-    this.state = {
-      selected: orders[0]
-    };
-  }
-
-  onHover = row => {
+  handleSelectRow = row => {
     this.setState(() => {
       return { selected: row };
+    });
+  };
+
+  onStatusNext = () => {
+    this.setState(prevState => {
+      return {
+        selected: {
+          ...prevState.selected,
+          status: prevState.selected.status + 1
+        }
+      };
+    });
+  };
+
+  onStatusBack = () => {
+    this.setState(prevState => {
+      return {
+        selected: {
+          ...prevState.selected,
+          status: prevState.selected.status - 1
+        }
+      };
     });
   };
 
@@ -113,13 +140,18 @@ export default class Dashboard extends React.Component<Props, State> {
           <Grid container direction="row" justify="center" spacing={16}>
             <Grid item md={8}>
               <OrderList
-                orders={orders}
+                orders={this.state.orders}
                 selected={this.state.selected}
-                onHover={this.onHover}
+                onHover={this.handleSelectRow}
               />
             </Grid>
             <Grid item xs={4}>
-              <OrderDetail selected={this.state.selected} />
+              <OrderDetail
+                selected={this.state.selected}
+                activeStep={this.state.selected.status}
+                onStatusNext={this.onStatusNext}
+                onStatusBack={this.onStatusBack}
+              />
             </Grid>
           </Grid>
         </Grid>

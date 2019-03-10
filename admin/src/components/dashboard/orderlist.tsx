@@ -15,7 +15,7 @@ import MoneyOffIcon from "@material-ui/icons/MoneyOff";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import styled from "styled-components";
 import { format } from "date-fns";
-import { Order } from "./dashboard";
+import { Order, Status } from "./dashboard";
 
 const StyledIcon = styled.div`
   border-radius: 5px;
@@ -42,8 +42,8 @@ export default class OrderList extends React.Component<Props> {
             <TableRow>
               <TableCell>Date</TableCell>
               <TableCell>Order No. (paid)</TableCell>
+              <TableCell>Title</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Description</TableCell>
               <TableCell>Files</TableCell>
             </TableRow>
           </TableHead>
@@ -51,7 +51,7 @@ export default class OrderList extends React.Component<Props> {
             {this.props.orders.map(row => (
               <TableRow
                 key={row.invoiceId}
-                onMouseEnter={() => this.props.onHover(row)}
+                onClick={() => this.props.onHover(row)}
                 selected={row.invoiceId === this.props.selected.invoiceId}
               >
                 <TableCell>{format(row.date, "DD/MM/YY")}</TableCell>
@@ -69,10 +69,14 @@ export default class OrderList extends React.Component<Props> {
                     </Grid>
                   </StyledIcon>
                 </TableCell>
-                <TableCell>{row.status}</TableCell>
-                <TableCell>{row.description}</TableCell>
+                <TableCell>{row.title}</TableCell>
+                <TableCell>{Status[row.status]}</TableCell>
                 <TableCell>
-                  <Button color="secondary" href={`${row.files}`}>
+                  <Button
+                    color="secondary"
+                    href={`${row.files}`}
+                    target="_BLANK"
+                  >
                     <CloudDownloadIcon style={{ marginRight: ".4rem" }} />{" "}
                     download
                   </Button>
