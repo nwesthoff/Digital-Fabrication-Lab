@@ -10,7 +10,10 @@ import {
   List,
   MobileStepper,
   Typography,
-  ListItemIcon
+  ListItemIcon,
+  ListItemAvatar,
+  Avatar,
+  CardHeader
 } from "@material-ui/core";
 import EmailIcon from "@material-ui/icons/Email";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
@@ -30,6 +33,17 @@ const StyledTitle = styled(Typography)`
   padding-left: 1rem;
 `;
 
+const StyledCardContent = styled.div`
+  padding: 1.2rem 0;
+`;
+
+const StyledList = styled(List)`
+  background-color: #fafafa;
+  && {
+    padding: 0.4rem 0 0.4rem 0.4rem;
+  }
+`;
+
 interface Props {
   selected: Order;
   activeStep: Status;
@@ -42,6 +56,17 @@ export default class OrderDetail extends React.Component<Props> {
     return (
       <Card>
         <CardMedia style={{ height: "200px" }} image={dummyImage} />
+        <StyledList disablePadding>
+          <ListItem>
+            <ListItemText primary={this.props.selected.title} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>?</Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={this.props.selected.user.fullname} />
+          </ListItem>
+        </StyledList>
         <MobileStepper
           variant="dots"
           steps={4}
@@ -68,8 +93,7 @@ export default class OrderDetail extends React.Component<Props> {
             </Button>
           }
         />
-        <CardContent>
-          <StyledTitle variant="h5">{this.props.selected.title}</StyledTitle>
+        <StyledCardContent>
           <List dense>
             <ListItem>
               <ListItemIcon>
@@ -78,15 +102,6 @@ export default class OrderDetail extends React.Component<Props> {
               <ListItemText
                 primary="Description"
                 secondary={this.props.selected.description}
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Request by"
-                secondary={this.props.selected.user.fullname}
               />
             </ListItem>
             <ListItem>
@@ -117,7 +132,7 @@ export default class OrderDetail extends React.Component<Props> {
               />
             </ListItem>
           </List>
-        </CardContent>
+        </StyledCardContent>
         <CardActions>
           <Button
             color="primary"

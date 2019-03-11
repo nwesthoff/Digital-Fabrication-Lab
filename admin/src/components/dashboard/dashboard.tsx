@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Grid } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+  CardHeader
+} from "@material-ui/core";
 
 import OrderDetail from "./orderdetail";
 import OrderList from "./orderlist";
@@ -42,7 +48,7 @@ interface Props {}
 
 interface State {
   orders: Order[];
-  selected: number;
+  selected?: number;
 }
 
 export default class Dashboard extends React.Component<Props, State> {
@@ -89,34 +95,51 @@ export default class Dashboard extends React.Component<Props, State> {
     return (
       <Grid container direction="column" alignItems="center">
         <Grid item style={{ width: "100%", maxWidth: "1200px" }}>
-          <Grid container direction="row" justify="center" spacing={16}>
-            <Grid item md={8}>
-              <Grid container direction="column" spacing={16}>
-                {printerArray.map((printer, i) => {
-                  const filteredOrders = this.state.orders.filter(order => {
-                    return order.printer === printerArray[i];
-                  });
-
-                  return (
-                    <Grid item key={printer.name}>
-                      <OrderList
-                        printer={printer.name}
-                        orders={filteredOrders}
-                        selected={this.state.selected}
-                        onSelect={this.handleSelectRow}
-                      />
-                    </Grid>
-                  );
-                })}
-              </Grid>
+          <Grid container direction="column" spacing={32}>
+            <Grid item xs={12}>
+              <Card>
+                <CardHeader
+                  title="Digital Fabrication Lab Admin"
+                  subheader="Orders"
+                />
+              </Card>
             </Grid>
-            <Grid item xs={4}>
-              <OrderDetail
-                selected={this.state.orders[this.state.selected]}
-                activeStep={this.state.orders[this.state.selected].status}
-                onStatusNext={this.onStatusNext}
-                onStatusBack={this.onStatusBack}
-              />
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              spacing={32}
+            >
+              <Grid item xs={8}>
+                <Grid container direction="column" spacing={16}>
+                  {printerArray.map((printer, i) => {
+                    const filteredOrders = this.state.orders.filter(order => {
+                      return order.printer === printerArray[i];
+                    });
+
+                    return (
+                      <Grid item key={printer.name}>
+                        <OrderList
+                          printer={printer.name}
+                          orders={filteredOrders}
+                          selected={this.state.selected}
+                          onSelect={this.handleSelectRow}
+                        />
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              </Grid>
+              {this.state.selected !== undefined ? (
+                <Grid item xs={4}>
+                  <OrderDetail
+                    selected={this.state.orders[this.state.selected]}
+                    activeStep={this.state.orders[this.state.selected].status}
+                    onStatusNext={this.onStatusNext}
+                    onStatusBack={this.onStatusBack}
+                  />
+                </Grid>
+              ) : null}
             </Grid>
           </Grid>
         </Grid>

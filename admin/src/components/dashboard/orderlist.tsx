@@ -38,7 +38,7 @@ export default class OrderList extends React.Component<Props> {
   render() {
     return (
       <Card>
-        <CardHeader title={`${this.props.printer} Orders`} />
+        <CardHeader title={this.props.printer} />
         <Table>
           <TableHead>
             <TableRow>

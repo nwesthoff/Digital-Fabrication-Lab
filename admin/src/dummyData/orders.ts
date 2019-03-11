@@ -58,7 +58,7 @@ export const dummyOrders: Order[] = [
   },
   {
     title: "Lekker printje",
-    invoiceId: "CX0817",
+    invoiceId: "UM0017",
     date: new Date(),
     printer: dummyPrinters[2],
     cost: 417.04,
@@ -73,7 +73,7 @@ export const dummyOrders: Order[] = [
   },
   {
     title: "Lekker printje",
-    invoiceId: "CX0818",
+    invoiceId: "UM0018",
     date: new Date(),
     printer: dummyPrinters[2],
     cost: 417.04,
@@ -88,7 +88,7 @@ export const dummyOrders: Order[] = [
   },
   {
     title: "Lekker printje",
-    invoiceId: "CX0819",
+    invoiceId: "FL0119",
     date: new Date(),
     printer: dummyPrinters[1],
     cost: 417.04,
