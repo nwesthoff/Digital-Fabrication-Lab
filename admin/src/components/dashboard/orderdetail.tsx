@@ -9,13 +9,19 @@ import {
   ListItemText,
   List,
   MobileStepper,
-  Typography
+  Typography,
+  ListItemIcon
 } from "@material-ui/core";
 import EmailIcon from "@material-ui/icons/Email";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import NotesIcon from "@material-ui/icons/Notes";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import GroupWorkIcon from "@material-ui/icons/GroupWork";
 import styled from "styled-components";
+import ClassIcon from "@material-ui/icons/Class";
 
 import { Order, Status } from "./dashboard";
 import dummyImage from "../../assets/dummy/dummy1.jpg";
@@ -47,7 +53,7 @@ export default class OrderDetail extends React.Component<Props> {
               onClick={this.props.onStatusNext}
               disabled={this.props.activeStep === 3}
             >
-              Next
+              {Status[this.props.selected.status + 1]}
               <KeyboardArrowRight />
             </Button>
           }
@@ -58,38 +64,53 @@ export default class OrderDetail extends React.Component<Props> {
               disabled={this.props.activeStep === 0}
             >
               <KeyboardArrowLeft />
-              Back
+              {Status[this.props.selected.status - 1]}
             </Button>
           }
         />
         <CardContent>
           <StyledTitle variant="h5">{this.props.selected.title}</StyledTitle>
-          <List>
+          <List dense>
             <ListItem>
+              <ListItemIcon>
+                <NotesIcon />
+              </ListItemIcon>
               <ListItemText
                 primary="Description"
                 secondary={this.props.selected.description}
               />
             </ListItem>
             <ListItem>
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
               <ListItemText
-                primary="Name"
+                primary="Request by"
                 secondary={this.props.selected.user.fullname}
               />
             </ListItem>
             <ListItem>
+              <ListItemIcon>
+                <GroupWorkIcon />
+              </ListItemIcon>
               <ListItemText
                 primary="Type"
                 secondary={this.props.selected.type}
               />
             </ListItem>
             <ListItem>
+              <ListItemIcon>
+                <AttachMoneyIcon />
+              </ListItemIcon>
               <ListItemText
                 primary="Payment"
                 secondary={this.props.selected.paymentMethod}
               />
             </ListItem>
             <ListItem>
+              <ListItemIcon>
+                <ClassIcon />
+              </ListItemIcon>
               <ListItemText
                 primary="Course/group"
                 secondary={this.props.selected.course}

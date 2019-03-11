@@ -8,7 +8,8 @@ import {
   TableCell,
   TableBody,
   Grid,
-  Button
+  Button,
+  Badge
 } from "@material-ui/core";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
@@ -28,31 +29,32 @@ const StyledIcon = styled.div`
 
 interface Props {
   orders: Order[];
-  selected: Order;
-  onHover: Function;
+  selected?: number;
+  onSelect: Function;
+  printer: string;
 }
 
 export default class OrderList extends React.Component<Props> {
   render() {
     return (
       <Card>
-        <CardHeader title="Connex Orders" />
+        <CardHeader title={`${this.props.printer} Orders`} />
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
-              <TableCell>Order No. (paid)</TableCell>
+              <TableCell>Order #</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Files</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.props.orders.map(row => (
+            {this.props.orders.map((row, index) => (
               <TableRow
                 key={row.invoiceId}
-                onClick={() => this.props.onHover(row)}
-                selected={row.invoiceId === this.props.selected.invoiceId}
+                onClick={() => this.props.onSelect(index)}
+                selected={index === this.props.selected}
               >
                 <TableCell>{format(row.date, "DD/MM/YY")}</TableCell>
                 <TableCell component="th" scope="row">
