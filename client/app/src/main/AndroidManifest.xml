@@ -13,8 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".Register"></activity>
         <activity android:name=".Profile" />
+=======
+        <activity android:name=".Order"></activity>
+>>>>>>> a2191028f366782fb5c2483058c8fcf398c86679
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
