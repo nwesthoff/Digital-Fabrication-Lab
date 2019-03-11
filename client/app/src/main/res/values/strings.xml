@@ -13,19 +13,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions." </string>
 
-<<<<<<< HEAD
-    <string-array name="Paymentmethod"
-    <item>At Digital Fabrication Lab</item>
-    <item>Baancode</item>
-    <string name="title_activity_profile1">Profile1</string>
-    <string name="title_activity_profile">Profile</string>
-</string-array>
-=======
     <string-array name="payment">
         <item> At Digital Fabrication Lab </item>
         <item> Baancode </item>
     </string-array>
->>>>>>> a2191028f366782fb5c2483058c8fcf398c86679
-
 
     </resources>
