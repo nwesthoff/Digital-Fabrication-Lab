@@ -13,9 +13,11 @@
         completions." </string>
 
     <string-array name="Paymentmethod"
-        <item> At Digital Fabrication Lab </item>
-        <item> Baancode </item>
-    </string-array>
+    <item>At Digital Fabrication Lab</item>
+    <item>Baancode</item>
+    <string name="title_activity_profile1">Profile1</string>
+    <string name="title_activity_profile">Profile</string>
+</string-array>
 
 
-</resources>
+    </resources>
