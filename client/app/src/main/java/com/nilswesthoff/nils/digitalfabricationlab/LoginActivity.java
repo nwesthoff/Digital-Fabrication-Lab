@@ -54,9 +54,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
-
+    private FirebaseAuth mAuth;
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -69,10 +69,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getSupportActionBar().setLogo(R.drawable.ic_action_icon);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (EditText) findViewById(R.id.txtEmail);
         populateAutoComplete();
-
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mAuth = FirebaseAuth.getInstance();
+        mPasswordView = (EditText) findViewById(R.id.txtPassword);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -194,7 +194,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        ;
+
         return email.contains("@");
     }
 
