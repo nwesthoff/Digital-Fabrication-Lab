@@ -42,17 +42,6 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
         adapter_payment.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_payment.setAdapter(adapter_payment);
 
-        @Override
-        public boolean isEnabled(int position) {
-            if (position == 0) {
-                // Disable the first item from Spinner
-                // First item will be use for hint
-                return false;
-            } else {
-                return true;
-            }
-        }
-
         //choose machine dropdown
         Spinner spinner_machine = (Spinner) findViewById(R.id.choose_machine);
         ArrayAdapter<CharSequence> adapter_machine = ArrayAdapter.createFromResource(this,
