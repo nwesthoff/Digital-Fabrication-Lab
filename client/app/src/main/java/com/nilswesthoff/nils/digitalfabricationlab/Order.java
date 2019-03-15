@@ -35,12 +35,19 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order2);
 
-        Spinner mySpinner = (Spinner) findViewById(R.id.payment_method);
+        //payment method dropdown
+        Spinner spinner_payment = (Spinner) findViewById(R.id.payment_method);
+        ArrayAdapter<CharSequence> adapter_payment = ArrayAdapter.createFromResource(this,
+                R.array.payment, android.R.layout.simple_spinner_item);
+        adapter_payment.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_payment.setAdapter(adapter_payment);
 
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(Order.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.payment));
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mySpinner.setAdapter(myAdapter);
+        //choose machine dropdown
+        Spinner spinner_machine = (Spinner) findViewById(R.id.choose_machine);
+        ArrayAdapter<CharSequence> adapter_machine = ArrayAdapter.createFromResource(this,
+                R.array.machine, android.R.layout.simple_spinner_item);
+        adapter_machine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_machine.setAdapter(adapter_machine);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 

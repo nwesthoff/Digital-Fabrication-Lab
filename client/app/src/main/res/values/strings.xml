@@ -18,4 +18,11 @@
         <item> Baancode </item>
     </string-array>
 
+    <string-array name="machine">
+        <item> Connex 3 </item>
+        <item> Form2 </item>
+        <item> Ultimaker </item>
+        <item> Lasercutter </item>
+    </string-array>
+
     </resources>
