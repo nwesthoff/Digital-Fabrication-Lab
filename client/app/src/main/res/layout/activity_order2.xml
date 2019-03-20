@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Order">
 
 <ScrollView
     android:id="@+id/scroll_view"
@@ -77,3 +83,17 @@
     </LinearLayout>
 
 </ScrollView>
+
+<android.support.design.widget.BottomNavigationView
+android:id="@+id/main_nav"
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:layout_marginTop="546dp"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintTop_toTopOf="parent"
+app:menu="@menu/nav_items"
+tools:layout_editor_absoluteX="0dp">
+
+</android.support.design.widget.BottomNavigationView>
+
+</android.support.constraint.ConstraintLayout>

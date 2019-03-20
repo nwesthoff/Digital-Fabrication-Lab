@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +27,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PICK_FILE_REQUEST = 234;
     private Button chooseButton, uploadButton;
+    private BottomNavigationView mMainNav;
 
     private Uri filePath;
 
@@ -34,6 +37,35 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order2);
+
+        mMainNav=(BottomNavigationView) findViewById(R.id.main_nav);
+
+        mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch(menuItem.getItemId()) {
+                    case R.id.nav_profile :
+                        mMainNav.setItemBackgroundResource(R.color.Grey45);
+                        Intent intent1=new Intent(Order.this, Profile.class);
+                        startActivity(intent1);
+                        break;
+
+                    case R.id.nav_request :
+                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+                        break;
+
+                    case R.id.nav_news:
+                        mMainNav.setItemBackgroundResource(R.color.Grey45);
+                        Intent intent2=new Intent(Order.this, News.class);
+                        startActivity(intent2);
+                        break;
+
+                    default:
+                }
+                return false;
+            }
+        });
 
         //payment method dropdown
         Spinner spinner_payment = (Spinner) findViewById(R.id.payment_method);
