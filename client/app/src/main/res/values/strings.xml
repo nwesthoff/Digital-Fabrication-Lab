@@ -26,5 +26,11 @@
         <item> Ultimaker </item>
         <item> Lasercutter </item>
     </string-array>
+    <string name="title_activity_requests">Requests</string>
+    <string name="tab_text_1">Request</string>
+    <string name="tab_text_2">Printers</string>
+    <string name="tab_text_3">Showcase</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>

@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".News"></activity>
+        <activity
+            android:name=".Requests"
+            android:label="@string/title_activity_requests"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".News" />
         <activity android:name=".Register" />
         <activity android:name=".Profile" />
         <activity android:name=".Order" />
