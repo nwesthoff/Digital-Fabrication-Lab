@@ -6,10 +6,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
-public class Profile extends AppCompatActivity {
-
+public class News extends AppCompatActivity {
     private BottomNavigationView mMainNav;
     private Order order;
     private News  news;
@@ -17,7 +15,7 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_news);
 
         mMainNav=(BottomNavigationView) findViewById(R.id.main_nav);
 
@@ -25,28 +23,26 @@ public class Profile extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch(menuItem.getItemId()) {
-                    case R.id.nav_profile :
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_profile:
+                        mMainNav.setItemBackgroundResource(R.color.Grey45);
+                        Intent intent0 = new Intent(News.this, Profile.class);
+                        startActivity(intent0);
                         break;
 
-                    case R.id.nav_request :
+                    case R.id.nav_request:
                         mMainNav.setItemBackgroundResource(R.color.Grey45);
-                        Intent intent1=new Intent(Profile.this, Order.class);
+                        Intent intent1 = new Intent(News.this, Order.class);
                         startActivity(intent1);
                         break;
 
-
-
                     case R.id.nav_news:
-                        mMainNav.setItemBackgroundResource(R.color.Grey45);
-                        Intent intent2=new Intent(Profile.this, News.class);
-                        startActivity(intent2);
+                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
                         break;
 
                     default:
                 }
-                        return false;
+                return false;
             }
         });
     }
