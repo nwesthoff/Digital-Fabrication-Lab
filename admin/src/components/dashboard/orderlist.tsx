@@ -8,15 +8,16 @@ import {
   TableCell,
   TableBody,
   Grid,
-  Button,
-  Badge
+  Button
 } from "@material-ui/core";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import styled from "styled-components";
 import { format } from "date-fns";
-import { Order, Status } from "./dashboard";
+import { StatusInstance, PrinterInstance, Order } from "./dashboard";
+import dataStore from "../../stores/datastore";
+import { observer } from "mobx-react";
 
 const StyledIcon = styled.div`
   border-radius: 5px;
@@ -28,17 +29,20 @@ const StyledIcon = styled.div`
 `;
 
 interface Props {
+  printer: PrinterInstance;
   orders: Order[];
-  selected?: number;
-  onSelect: Function;
-  printer: string;
 }
 
+@observer
 export default class OrderList extends React.Component<Props> {
+  handleSelectRow = (row: string) => {
+    dataStore.selectedOrderId = row;
+  };
+
   render() {
     return (
       <Card>
-        <CardHeader title={this.props.printer} />
+        <CardHeader title={this.props.printer.name} />
         <Table>
           <TableHead>
             <TableRow>
@@ -50,41 +54,52 @@ export default class OrderList extends React.Component<Props> {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.props.orders.map((row, index) => (
-              <TableRow
-                key={row.invoiceId}
-                onClick={() => this.props.onSelect(index)}
-                selected={index === this.props.selected}
-              >
-                <TableCell>{format(row.date, "DD/MM/YY")}</TableCell>
-                <TableCell component="th" scope="row">
-                  <StyledIcon paid={row.paid}>
-                    <Grid container alignItems="center" wrap="nowrap">
-                      <Grid item>
-                        {row.paid ? (
-                          <AttachMoneyIcon color="inherit" />
-                        ) : (
-                          <MoneyOffIcon color="inherit" />
-                        )}
-                      </Grid>
-                      <Grid item>{row.invoiceId}</Grid>
-                    </Grid>
-                  </StyledIcon>
-                </TableCell>
-                <TableCell>{row.title}</TableCell>
-                <TableCell>{Status[row.status]}</TableCell>
-                <TableCell>
-                  <Button
-                    color="secondary"
-                    href={`${row.files}`}
-                    target="_BLANK"
+            {dataStore.orders.length > 0 &&
+              dataStore.orders
+                .filter(order => {
+                  return (
+                    order.printer && order.printer.id === this.props.printer.id
+                  );
+                })
+                .map(row => (
+                  <TableRow
+                    key={row.id}
+                    onClick={() => this.handleSelectRow(row.id)}
+                    selected={row.id === dataStore.selectedOrderId}
                   >
-                    <CloudDownloadIcon style={{ marginRight: ".4rem" }} />{" "}
-                    download
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+                    <TableCell>
+                      {row.date && format(row.date.toDate(), "DD/MM/YY")}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <StyledIcon paid={row.paid}>
+                        <Grid container alignItems="center" wrap="nowrap">
+                          <Grid item>
+                            {row.paid ? (
+                              <AttachMoneyIcon color="inherit" />
+                            ) : (
+                              <MoneyOffIcon color="inherit" />
+                            )}
+                          </Grid>
+                          <Grid item>{row.invoice_no}</Grid>
+                        </Grid>
+                      </StyledIcon>
+                    </TableCell>
+                    <TableCell>{row.title}</TableCell>
+                    <TableCell>{StatusInstance[row.status]}</TableCell>
+                    <TableCell>
+                      {/* {row.files && ( */}
+                      <Button
+                        color="secondary"
+                        href={`${row.files}`}
+                        target="_BLANK"
+                      >
+                        <CloudDownloadIcon style={{ marginRight: ".4rem" }} />{" "}
+                        download
+                      </Button>
+                      {/* )} */}
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </Card>

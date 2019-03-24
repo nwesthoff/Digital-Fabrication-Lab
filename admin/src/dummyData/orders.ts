@@ -12,7 +12,7 @@ export enum Status {
 export const dummyOrders: Order[] = [
   {
     title: "Lekker printje",
-    invoiceId: "CX0814",
+    invoice_no: "CX0814",
     date: new Date(),
     printer: dummyPrinters[0],
     cost: 417.04,
@@ -27,7 +27,7 @@ export const dummyOrders: Order[] = [
   },
   {
     title: "Lekker printje 2",
-    invoiceId: "CX0815",
+    invoice_no: "CX0815",
     date: new Date(),
     printer: dummyPrinters[0],
     cost: 30.07,
@@ -43,7 +43,7 @@ export const dummyOrders: Order[] = [
   },
   {
     title: "Lekker printje 3",
-    invoiceId: "CX0816",
+    invoice_no: "CX0816",
     date: new Date(),
     printer: dummyPrinters[0],
     cost: 63.0,
@@ -58,7 +58,7 @@ export const dummyOrders: Order[] = [
   },
   {
     title: "Lekker printje",
-    invoiceId: "UM0017",
+    invoice_no: "UM0017",
     date: new Date(),
     printer: dummyPrinters[2],
     cost: 417.04,
@@ -73,7 +73,7 @@ export const dummyOrders: Order[] = [
   },
   {
     title: "Lekker printje",
-    invoiceId: "UM0018",
+    invoice_no: "UM0018",
     date: new Date(),
     printer: dummyPrinters[2],
     cost: 417.04,
@@ -88,7 +88,7 @@ export const dummyOrders: Order[] = [
   },
   {
     title: "Lekker printje",
-    invoiceId: "FL0119",
+    invoice_no: "FL0119",
     date: new Date(),
     printer: dummyPrinters[1],
     cost: 417.04,

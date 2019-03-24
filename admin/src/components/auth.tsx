@@ -11,7 +11,12 @@ import {
   Grid
 } from "@material-ui/core";
 
-export default class Auth extends React.Component {
+interface Props {
+  path?: String;
+  default?: Boolean;
+}
+
+export default class Auth extends React.Component<Props> {
   render() {
     return (
       <Grid container justify="center" alignContent="center" spacing={16}>

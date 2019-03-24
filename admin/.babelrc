@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    ["babel-plugin-styled-components"],
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "config": ["../admin/src/config"],
+          "stores": ["../admin/src/stores"],
+          "components": ["../admin/src/components"],
+          "utils": ["../admin/src/utils"],
+          "api": ["../admin/src/api"]
+        }
+      }
+    ]
+  ]
+}

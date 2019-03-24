@@ -1,145 +1,102 @@
 import * as React from "react";
-import {
-  Grid,
-  Typography,
-  Card,
-  CardContent,
-  CardHeader
-} from "@material-ui/core";
+import { Grid, Card, CardHeader, Typography } from "@material-ui/core";
+import { observer } from "mobx-react";
 
-import OrderDetail from "./orderdetail";
 import OrderList from "./orderlist";
 
-import { dummyOrders } from "../../dummyData/orders";
+import { observable } from "mobx";
+import dataStore, { DataStore } from "../../stores/datastore";
+import OrderDetail from "./orderdetail";
 
-export interface Printer {
+export interface PrinterInstance {
   name: string;
+  id: string;
 }
 
-export enum Status {
+export enum StatusInstance {
   Ordered = 0,
   Accepted,
   Printing,
   Done
 }
 
-export interface User {
-  fullname: string;
+export interface UserInstance {
+  id: string;
+  name: string;
   email?: string;
 }
 
 export interface Order {
+  id: string;
   title?: string;
-  invoiceId: string;
-  date: Date;
-  printer: Printer;
+  invoice_no?: string;
+  date?: Date;
+  printer?: PrinterInstance;
   cost?: number;
-  status: Status;
+  status?: StatusInstance;
   paid?: boolean;
   course?: string;
   type?: string;
-  user: User;
-  paymentMethod: string;
+  order_by?: string;
+  payment_method: string;
   description: string;
   files?: string[]; // make Files interface
 }
 
-interface Props {}
+interface Props {
+  dataStore: DataStore;
+  path?: String;
+}
 
 interface State {
-  orders: Order[];
   selected?: number;
 }
 
+@observer
 export default class Dashboard extends React.Component<Props, State> {
-  state = {
-    orders: dummyOrders,
-    selected: 0
-  };
+  @observable
+  selected?: string = dataStore.selectedOrderId;
 
-  handleSelectRow = (row: number) => {
-    this.setState(() => {
-      return { selected: row };
-    });
-  };
-
-  onStatusNext = () => {
-    this.setState(prevState => {
-      let newOrderState = prevState.orders;
-      newOrderState[this.state.selected].status =
-        newOrderState[this.state.selected].status + 1;
-
-      return {
-        orders: newOrderState
-      };
-    });
-  };
-
-  onStatusBack = () => {
-    this.setState(prevState => {
-      let newOrderState = prevState.orders;
-      newOrderState[this.state.selected].status =
-        newOrderState[this.state.selected].status - 1;
-
-      return {
-        orders: newOrderState
-      };
-    });
+  componentDidMount = () => {
+    dataStore.fetchData();
   };
 
   render() {
-    const printerArray = this.state.orders
-      .map(order => order.printer)
-      .filter((el, i, a) => i === a.indexOf(el));
-
     return (
       <Grid container direction="column" alignItems="center">
         <Grid item style={{ width: "100%", maxWidth: "1200px" }}>
           <Grid container direction="column" spacing={32}>
-            <Grid item xs={12}>
-              <Card>
-                <CardHeader
-                  title="Digital Fabrication Lab Admin"
-                  subheader="Orders"
-                />
-              </Card>
+            <Grid item xs={12} style={{ paddingTop: "3rem" }}>
+              <Typography variant="display1">Orders</Typography>
             </Grid>
-            <Grid
-              container
-              direction="row"
-              justify="space-between"
-              spacing={32}
-            >
-              <Grid item xs={8}>
-                <Grid container direction="column" spacing={16}>
-                  {printerArray.map((printer, i) => {
-                    const filteredOrders = this.state.orders.filter(order => {
-                      return order.printer === printerArray[i];
-                    });
-
-                    return (
-                      <Grid item key={printer.name}>
-                        <OrderList
-                          printer={printer.name}
-                          orders={filteredOrders}
-                          selected={this.state.selected}
-                          onSelect={this.handleSelectRow}
-                        />
-                      </Grid>
-                    );
-                  })}
+            <Grid item xs={12}>
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                spacing={16}
+              >
+                <Grid item xs={8}>
+                  <Grid container direction="column" spacing={16}>
+                    {dataStore.printers &&
+                      dataStore.printers.map(printer => {
+                        return (
+                          <Grid item key={printer.name}>
+                            <OrderList
+                              printer={printer}
+                              orders={dataStore.orders}
+                            />
+                          </Grid>
+                        );
+                      })}
+                  </Grid>
                 </Grid>
+                {dataStore.selectedOrderId ? (
+                  <Grid item xs={4}>
+                    <OrderDetail />
+                  </Grid>
+                ) : null}
               </Grid>
-              {this.state.selected !== undefined ? (
-                <Grid item xs={4}>
-                  <OrderDetail
-                    selected={this.state.orders[this.state.selected]}
-                    activeStep={this.state.orders[this.state.selected].status}
-                    onStatusNext={this.onStatusNext}
-                    onStatusBack={this.onStatusBack}
-                  />
-                </Grid>
-              ) : null}
             </Grid>
           </Grid>
         </Grid>
