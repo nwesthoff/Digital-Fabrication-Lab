@@ -12,12 +12,12 @@ import com.nilswesthoff.nils.digitalfabricationlab.R;
 public class Tab1Fragment extends Fragment {
     private static final String TAG = "Tab1Fragment";
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater, inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_requests,container,false);
+   // @Nullable
+   // @Override
+   // public View onCreateView(LayoutInflater, inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+   //     View view = inflater.inflate(R.layout.fragment_requests,container,false);
 
 
-        return view;
-    }
+    //    return view;
+   // }
 }
