@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Card, CardHeader, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { observer } from "mobx-react";
 
 import OrderList from "./orderlist";
@@ -41,6 +41,12 @@ export interface Order {
   payment_method: string;
   description: string;
   files?: string[]; // make Files interface
+  images: OrderImage[];
+}
+
+export interface OrderImage {
+  id: string;
+  url?: string;
 }
 
 interface Props {
@@ -67,7 +73,7 @@ export default class Dashboard extends React.Component<Props, State> {
         <Grid item style={{ width: "100%", maxWidth: "1200px" }}>
           <Grid container direction="column" spacing={32}>
             <Grid item xs={12} style={{ paddingTop: "3rem" }}>
-              <Typography variant="display1">Orders</Typography>
+              <Typography variant="h3">Orders</Typography>
             </Grid>
             <Grid item xs={12}>
               <Grid
