@@ -8,7 +8,9 @@ import {
   TableCell,
   TableBody,
   Grid,
-  Button
+  Button,
+  Switch,
+  FormControlLabel
 } from "@material-ui/core";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
@@ -39,10 +41,37 @@ export default class OrderList extends React.Component<Props> {
     dataStore.selectedOrderId = row;
   };
 
+  handleOnlineChange = () => {
+    this.props.printer.online = !this.props.printer.online;
+  };
+
   render() {
     return (
       <Card>
-        <CardHeader title={this.props.printer.name} />
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>
+            <CardHeader title={this.props.printer.name} />
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={
+                    dataStore.printers.find(printer => {
+                      return printer === this.props.printer;
+                    }).online
+                  }
+                  color="default"
+                  onChange={() => {
+                    this.handleOnlineChange();
+                  }}
+                  value="online"
+                />
+              }
+              label="online"
+            />
+          </Grid>
+        </Grid>
         <Table>
           <TableHead>
             <TableRow>

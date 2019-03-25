@@ -13,6 +13,7 @@ import {
 import materialTheme from "config/theme";
 
 import fabricationLabLogo from "./assets/fabricationlab-logo.png";
+import Notifications from "components/notifications/notifications";
 
 export default class App extends React.Component {
   isLoggedIn = false;
@@ -39,6 +40,7 @@ export default class App extends React.Component {
           <Dashboard path="/admin/dashboard" />
           <Auth default path="/admin/login" />
         </Router>
+        <Notifications />
       </MuiThemeProvider>
     );
   }

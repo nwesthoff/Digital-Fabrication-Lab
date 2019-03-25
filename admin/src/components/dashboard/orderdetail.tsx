@@ -26,8 +26,9 @@ import ClassIcon from "@material-ui/icons/Class";
 import { StatusInstance } from "./dashboard";
 import { observer } from "mobx-react";
 import dataStore from "stores/datastore";
-import { fetchImage } from "api/firestore";
+import { fetchImage, updateCollection } from "api/firestore";
 import { observable } from "mobx";
+import { userSessionStore } from "stores/userSessionStore";
 
 const StyledCardContent = styled.div`
   padding: 1.2rem 0;

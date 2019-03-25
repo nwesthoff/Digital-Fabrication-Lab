@@ -11,6 +11,7 @@ import OrderDetail from "./orderdetail";
 export interface PrinterInstance {
   name: string;
   id: string;
+  online?: boolean;
 }
 
 export enum StatusInstance {
