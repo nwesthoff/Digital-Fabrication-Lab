@@ -18,3 +18,12 @@ export const fetchCollection = (collectionName: string) => {
       });
     });
 };
+
+export const fetchImage = (id: string) => {
+  return db
+    .doc("images/" + id)
+    .get()
+    .then(res => {
+      return res.data();
+    });
+};

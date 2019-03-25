@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import materialTheme from "config/theme";
 
+import fabricationLabLogo from "./assets/fabricationlab-logo.png";
+
 export default class App extends React.Component {
   isLoggedIn = false;
 
@@ -22,7 +24,7 @@ export default class App extends React.Component {
           <Toolbar>
             <Grid container spacing={16} alignItems="center">
               <Grid item>
-                <Avatar />
+                <Avatar src={fabricationLabLogo} />
               </Grid>
               <Grid item>
                 <Typography variant="h6" color="inherit">

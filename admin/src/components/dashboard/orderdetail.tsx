@@ -24,9 +24,10 @@ import styled from "styled-components";
 import ClassIcon from "@material-ui/icons/Class";
 
 import { StatusInstance } from "./dashboard";
-import dummyImage from "../../assets/dummy/dummy1.jpg";
 import { observer } from "mobx-react";
 import dataStore from "stores/datastore";
+import { fetchImage } from "api/firestore";
+import { observable } from "mobx";
 
 const StyledCardContent = styled.div`
   padding: 1.2rem 0;
@@ -47,29 +48,34 @@ interface Props {
 
 @observer
 export default class OrderDetail extends React.Component<Props> {
-  // onStatusNext = () => {
-  //   this.setState(prevState => {
-  //     let newOrderState = prevState.orders;
-  //     newOrderState[this.selected].status =
-  //       newOrderState[this.selected].status + 1;
+  @observable
+  featuredImage = undefined;
 
-  //     return {
-  //       orders: newOrderState
-  //     };
-  //   });
-  // };
+  onStatusNext = () => {
+    if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
+      dataStore.selectedOrder.status = dataStore.selectedOrder.status + 1;
+    }
+  };
 
-  // onStatusBack = () => {
-  //   this.setState(prevState => {
-  //     let newOrderState = prevState.orders;
-  //     newOrderState[this.selected].status =
-  //       newOrderState[this.selected].status - 1;
+  onStatusBack = () => {
+    if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
+      dataStore.selectedOrder.status = dataStore.selectedOrder.status - 1;
+    }
+  };
 
-  //     return {
-  //       orders: newOrderState
-  //     };
-  //   });
-  // };
+  componentDidMount = () => {
+    if (
+      dataStore.selectedOrder.images &&
+      dataStore.selectedOrder.images.length > 0
+    ) {
+      fetchImage(dataStore.selectedOrder.images[0].id).then(res => {
+        this.featuredImage = res.url;
+      });
+    } else {
+      this.featuredImage = undefined;
+    }
+  };
+
   render() {
     const orderBy =
       dataStore.selectedOrder && dataStore.selectedOrder.order_by
@@ -82,10 +88,19 @@ export default class OrderDetail extends React.Component<Props> {
       <Card>
         {dataStore.selectedOrder ? (
           <React.Fragment>
-            <CardMedia style={{ height: "200px" }} image={dummyImage} />
+            {this.featuredImage ? (
+              <CardMedia
+                style={{ height: "200px" }}
+                image={this.featuredImage}
+              />
+            ) : null}
+
             <StyledList disablePadding>
               <ListItem>
-                <ListItemText primary={dataStore.selectedOrder.title} />
+                <ListItemText
+                  primaryTypographyProps={{ variant: "h6" }}
+                  primary={dataStore.selectedOrder.title}
+                />
               </ListItem>
               <ListItem>
                 <ListItemAvatar>
@@ -98,12 +113,12 @@ export default class OrderDetail extends React.Component<Props> {
               variant="dots"
               steps={4}
               position="static"
-              activeStep={this.props.activeStep}
+              activeStep={dataStore.selectedOrder.status}
               nextButton={
                 <Button
                   size="small"
-                  onClick={this.props.onStatusNext}
-                  disabled={this.props.activeStep === 3}
+                  onClick={this.onStatusNext}
+                  disabled={dataStore.selectedOrder.status === 3}
                 >
                   {StatusInstance[dataStore.selectedOrder.status + 1]}
                   <KeyboardArrowRight />
@@ -112,8 +127,8 @@ export default class OrderDetail extends React.Component<Props> {
               backButton={
                 <Button
                   size="small"
-                  onClick={this.props.onStatusBack}
-                  disabled={this.props.activeStep === 0}
+                  onClick={this.onStatusBack}
+                  disabled={dataStore.selectedOrder.status === 0}
                 >
                   <KeyboardArrowLeft />
                   {StatusInstance[dataStore.selectedOrder.status - 1]}
