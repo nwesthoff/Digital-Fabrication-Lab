@@ -65,14 +65,14 @@ export default class OrderList extends React.Component<Props> {
                       return printer === this.props.printer;
                     }).online
                   }
-                  color="default"
+                  color="primary"
                   onChange={() => {
                     this.handleOnlineChange();
                   }}
                   value="online"
                 />
               }
-              label="online"
+              label={this.props.printer.online ? "online" : "offline"}
             />
           </Grid>
         </Grid>
@@ -120,16 +120,18 @@ export default class OrderList extends React.Component<Props> {
                     <TableCell>{row.title}</TableCell>
                     <TableCell>{StatusInstance[row.status]}</TableCell>
                     <TableCell>
-                      {/* {row.files && ( */}
-                      <Button
-                        color="secondary"
-                        href={`${row.files}`}
-                        target="_BLANK"
-                      >
-                        <CloudDownloadIcon style={{ marginRight: ".4rem" }} />{" "}
-                        download
-                      </Button>
-                      {/* )} */}
+                      {row.files ? (
+                        <Button
+                          color="secondary"
+                          href={`${row.files}`}
+                          target="_BLANK"
+                        >
+                          <CloudDownloadIcon style={{ marginRight: ".4rem" }} />{" "}
+                          download
+                        </Button>
+                      ) : (
+                        "No files"
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

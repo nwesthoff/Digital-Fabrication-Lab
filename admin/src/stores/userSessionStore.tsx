@@ -12,7 +12,7 @@ export interface NotificationInstance {
   autoHideDuration?: number;
 }
 
-export class userSessionStore {
+class userSessionStore {
   @observable
   notifications: NotificationInstance[] = [];
 }

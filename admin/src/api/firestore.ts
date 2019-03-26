@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import userSessionStore from "stores/userSessionStore";
+import createNotification from "components/notifications/createNotification";
 
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
@@ -39,18 +40,9 @@ export const updateDoc = (
   return docRef
     .update(data)
     .then(() => {
-      userSessionStore.notifications.push({
-        message: docName + " Successfully updated!",
-        autoHideDuration: 6000
-      });
+      // createNotification(docName + " Successfully updated!"); DISABLED NOTIFICATION
     })
     .catch(error => {
-      // The document probably doesn't exist.
-      userSessionStore.notifications.push({
-        message: "Error updating " + docName + ": " + error,
-        autoHideDuration: 6000
-      });
+      createNotification("Error updating " + docName + ": " + error, 6000);
     });
-
-  return;
 };
