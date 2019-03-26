@@ -28,6 +28,7 @@ import { observer } from "mobx-react";
 import dataStore from "stores/datastore";
 import { fetchImage, updateDoc } from "api/firestore";
 import { observable } from "mobx";
+import FeaturedImage from "./featuredImage";
 
 const StyledCardContent = styled.div`
   padding: 1.2rem 0;
@@ -48,9 +49,6 @@ interface Props {
 
 @observer
 export default class OrderDetail extends React.Component<Props> {
-  @observable
-  featuredImage = undefined;
-
   onStatusNext = () => {
     if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
       dataStore.selectedOrder.status = dataStore.selectedOrder.status + 1;
@@ -71,18 +69,7 @@ export default class OrderDetail extends React.Component<Props> {
     });
   };
 
-  componentDidMount = () => {
-    if (
-      dataStore.selectedOrder.images &&
-      dataStore.selectedOrder.images.length > 0
-    ) {
-      fetchImage(dataStore.selectedOrder.images[0].id).then(res => {
-        this.featuredImage = res.url;
-      });
-    } else {
-      this.featuredImage = undefined;
-    }
-  };
+  componentDidMount = () => {};
 
   render() {
     const orderBy =
@@ -96,11 +83,9 @@ export default class OrderDetail extends React.Component<Props> {
       <Card>
         {dataStore.selectedOrder ? (
           <React.Fragment>
-            {this.featuredImage ? (
-              <CardMedia
-                style={{ height: "200px" }}
-                image={this.featuredImage}
-              />
+            {dataStore.selectedOrder.images &&
+            dataStore.selectedOrder.images.length > 0 ? (
+              <FeaturedImage />
             ) : null}
 
             <StyledList disablePadding>
