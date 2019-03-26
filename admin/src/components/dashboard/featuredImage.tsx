@@ -9,16 +9,10 @@ import createNotification from "components/notifications/createNotification";
 @observer
 export default class FeaturedImage extends Component {
   @observable
-  featuredImage = undefined;
-
-  @observable
   featuredImageUrl = undefined;
 
   componentDidMount = () => {
-    if (
-      dataStore.selectedOrder.images &&
-      dataStore.selectedOrder.images.length > 0
-    ) {
+    if (dataStore.selectedOrder.images[0]) {
       fetchImage(dataStore.selectedOrder.images[0].id)
         .then(res => {
           this.featuredImageUrl = res.url;
@@ -26,8 +20,6 @@ export default class FeaturedImage extends Component {
         .catch(error => {
           createNotification("Error: " + error);
         });
-    } else {
-      this.featuredImage = undefined;
     }
   };
 
