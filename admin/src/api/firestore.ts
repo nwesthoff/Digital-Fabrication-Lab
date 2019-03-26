@@ -29,6 +29,18 @@ export const fetchImage = (id: string) => {
     });
 };
 
+export const fetchFile = (id: string) => {
+  return db
+    .doc("files/" + id)
+    .get()
+    .then(res => {
+      return res.data();
+    })
+    .catch(error => {
+      createNotification("Error: " + error);
+    });
+};
+
 export const updateDoc = (
   collectionName: string,
   docName: string,

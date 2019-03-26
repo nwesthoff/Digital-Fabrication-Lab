@@ -10,7 +10,8 @@ import {
   Grid,
   Button,
   Switch,
-  FormControlLabel
+  FormControlLabel,
+  CircularProgress
 } from "@material-ui/core";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
@@ -20,7 +21,8 @@ import { format } from "date-fns";
 import { StatusInstance, PrinterInstance, Order } from "./dashboard";
 import dataStore from "../../stores/datastore";
 import { observer } from "mobx-react";
-import { updateDoc } from "api/firestore";
+import { updateDoc, fetchFile } from "api/firestore";
+import download from "downloadjs";
 
 const StyledIcon = styled.div`
   border-radius: 5px;
@@ -49,6 +51,20 @@ export default class OrderList extends React.Component<Props> {
     });
   };
 
+  handleDownloadFiles = async (order: Order) => {
+    if (order && order.files && order.files.length > 0) {
+      Promise.all(
+        order.files.map(file => {
+          return fetchFile(file.id);
+        })
+      ).then(res => {
+        res.map(file => {
+          download(file.fileUrl);
+        });
+      });
+    }
+  };
+
   render() {
     return (
       <Card>
@@ -60,11 +76,7 @@ export default class OrderList extends React.Component<Props> {
             <FormControlLabel
               control={
                 <Switch
-                  checked={
-                    dataStore.printers.find(printer => {
-                      return printer === this.props.printer;
-                    }).online
-                  }
+                  checked={this.props.printer.online}
                   color="primary"
                   onChange={() => {
                     this.handleOnlineChange();
@@ -94,36 +106,40 @@ export default class OrderList extends React.Component<Props> {
                     order.printer && order.printer.id === this.props.printer.id
                   );
                 })
-                .map(row => (
+                .map(order => (
                   <TableRow
-                    key={row.id}
-                    onClick={() => this.handleSelectRow(row.id)}
-                    selected={row.id === dataStore.selectedOrderId}
+                    key={order.id}
+                    onClick={() => this.handleSelectRow(order.id)}
+                    selected={order.id === dataStore.selectedOrderId}
                   >
                     <TableCell>
-                      {row.date && format(row.date.toDate(), "DD/MM/YY")}
+                      {order.date && format(order.date.toDate(), "DD/MM/YY")}
                     </TableCell>
-                    <TableCell component="th" scope="row">
-                      <StyledIcon paid={row.paid}>
+                    <TableCell component="th" scope="row" padding="dense">
+                      <StyledIcon paid={order.paid}>
                         <Grid container alignItems="center" wrap="nowrap">
                           <Grid item>
-                            {row.paid ? (
+                            {order.paid ? (
                               <AttachMoneyIcon color="inherit" />
                             ) : (
                               <MoneyOffIcon color="inherit" />
                             )}
                           </Grid>
-                          <Grid item>{row.invoice_no}</Grid>
+                          <Grid item>{order.invoice_no}</Grid>
                         </Grid>
                       </StyledIcon>
                     </TableCell>
-                    <TableCell>{row.title}</TableCell>
-                    <TableCell>{StatusInstance[row.status]}</TableCell>
+                    <TableCell>{order.title}</TableCell>
                     <TableCell>
-                      {row.files ? (
+                      {order.status ? StatusInstance[order.status] : "unknown"}
+                    </TableCell>
+                    <TableCell>
+                      {order.files ? (
                         <Button
                           color="secondary"
-                          href={`${row.files}`}
+                          onClick={() => {
+                            this.handleDownloadFiles(order);
+                          }}
                           target="_BLANK"
                         >
                           <CloudDownloadIcon style={{ marginRight: ".4rem" }} />{" "}

@@ -41,8 +41,14 @@ export interface Order {
   order_by?: string;
   payment_method: string;
   description: string;
-  files?: string[]; // make Files interface
+  files?: FileInstance[]; // make Files interface
   images: OrderImage[];
+}
+
+export interface FileInstance {
+  id: string;
+  fileName: string;
+  fileUrl: string;
 }
 
 export interface OrderImage {
@@ -83,7 +89,7 @@ export default class Dashboard extends React.Component<Props, State> {
                 justify="space-between"
                 spacing={16}
               >
-                <Grid item xs={8}>
+                <Grid item xs={12} lg={8}>
                   <Grid container direction="column" spacing={16}>
                     {dataStore.printers &&
                       dataStore.printers.map(printer => {
@@ -99,7 +105,7 @@ export default class Dashboard extends React.Component<Props, State> {
                   </Grid>
                 </Grid>
                 {dataStore.selectedOrderId ? (
-                  <Grid item xs={4}>
+                  <Grid item xs={12} sm={6} lg={4}>
                     <OrderDetail />
                   </Grid>
                 ) : null}
