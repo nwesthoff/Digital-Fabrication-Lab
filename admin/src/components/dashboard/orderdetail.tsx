@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   Button,
   Card,
-  CardMedia,
   CardActions,
   ListItem,
   ListItemText,
@@ -26,8 +25,7 @@ import ClassIcon from "@material-ui/icons/Class";
 import { StatusInstance } from "./dashboard";
 import { observer } from "mobx-react";
 import dataStore from "stores/datastore";
-import { fetchImage, updateDoc } from "api/firestore";
-import { observable } from "mobx";
+import { updateDoc } from "api/firestore";
 import FeaturedImage from "./featuredImage";
 
 const StyledCardContent = styled.div`

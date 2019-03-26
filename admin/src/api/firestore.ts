@@ -2,7 +2,6 @@ import firebaseConfig from "config/firebaseConfig";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import userSessionStore from "stores/userSessionStore";
 import createNotification from "components/notifications/createNotification";
 
 firebase.initializeApp(firebaseConfig);
