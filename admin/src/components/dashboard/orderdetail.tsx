@@ -26,9 +26,8 @@ import ClassIcon from "@material-ui/icons/Class";
 import { StatusInstance } from "./dashboard";
 import { observer } from "mobx-react";
 import dataStore from "stores/datastore";
-import { fetchImage, updateCollection } from "api/firestore";
+import { fetchImage, updateDoc } from "api/firestore";
 import { observable } from "mobx";
-import { userSessionStore } from "stores/userSessionStore";
 
 const StyledCardContent = styled.div`
   padding: 1.2rem 0;
@@ -55,6 +54,10 @@ export default class OrderDetail extends React.Component<Props> {
   onStatusNext = () => {
     if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
       dataStore.selectedOrder.status = dataStore.selectedOrder.status + 1;
+
+      updateDoc("Orders", dataStore.selectedOrder.id, {
+        status: dataStore.selectedOrder.status
+      });
     }
   };
 
@@ -62,6 +65,10 @@ export default class OrderDetail extends React.Component<Props> {
     if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
       dataStore.selectedOrder.status = dataStore.selectedOrder.status - 1;
     }
+
+    updateDoc("Orders", dataStore.selectedOrder.id, {
+      status: dataStore.selectedOrder.status
+    });
   };
 
   componentDidMount = () => {

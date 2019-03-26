@@ -29,15 +29,28 @@ export const fetchImage = (id: string) => {
     });
 };
 
-export const updateCollection = (collectionName: string) => {
-  userSessionStore.notifications = [
-    {
-      message: collectionName,
-      autoHideDuration: 6000
-    }
-  ];
+export const updateDoc = (
+  collectionName: string,
+  docName: string,
+  data: any
+) => {
+  var docRef = db.collection(collectionName).doc(docName);
 
-  console.log(userSessionStore);
+  return docRef
+    .update(data)
+    .then(() => {
+      userSessionStore.notifications.push({
+        message: docName + " Successfully updated!",
+        autoHideDuration: 6000
+      });
+    })
+    .catch(error => {
+      // The document probably doesn't exist.
+      userSessionStore.notifications.push({
+        message: "Error updating " + docName + ": " + error,
+        autoHideDuration: 6000
+      });
+    });
 
   return;
 };

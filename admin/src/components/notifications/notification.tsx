@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Snackbar, SnackbarContent } from "@material-ui/core";
+import { Snackbar, SnackbarContent, IconButton } from "@material-ui/core";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import { NotificationInstance } from "stores/userSessionStore";
+import CloseIcon from "@material-ui/icons/Close";
 
 interface P {
   notification: NotificationInstance;
@@ -12,11 +13,11 @@ interface P {
 @observer
 export default class Notification extends Component<P> {
   @observable
-  open: boolean = true;
+  displayNotification: boolean = true;
 
-  handleClose() {
-    this.open = !this.open;
-  }
+  handleClose = () => {
+    this.displayNotification = false;
+  };
 
   render() {
     return (
@@ -25,11 +26,19 @@ export default class Notification extends Component<P> {
           vertical: "bottom",
           horizontal: "right"
         }}
-        open={this.open}
+        open={this.displayNotification}
         autoHideDuration={this.props.notification.autoHideDuration || 5000}
         onClose={this.handleClose}
       >
-        <SnackbarContent message={this.props.notification.message} />
+        <SnackbarContent
+          style={{ color: "white" }}
+          message={this.props.notification.message}
+          action={
+            <IconButton color="inherit" onClick={this.handleClose}>
+              <CloseIcon />
+            </IconButton>
+          }
+        />
       </Snackbar>
     );
   }

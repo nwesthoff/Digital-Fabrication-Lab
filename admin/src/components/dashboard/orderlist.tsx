@@ -20,6 +20,7 @@ import { format } from "date-fns";
 import { StatusInstance, PrinterInstance, Order } from "./dashboard";
 import dataStore from "../../stores/datastore";
 import { observer } from "mobx-react";
+import { updateDoc } from "api/firestore";
 
 const StyledIcon = styled.div`
   border-radius: 5px;
@@ -43,6 +44,9 @@ export default class OrderList extends React.Component<Props> {
 
   handleOnlineChange = () => {
     this.props.printer.online = !this.props.printer.online;
+    updateDoc("Printers", this.props.printer.id, {
+      online: this.props.printer.online
+    });
   };
 
   render() {
