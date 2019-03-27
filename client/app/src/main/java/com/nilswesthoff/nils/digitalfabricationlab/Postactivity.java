@@ -126,7 +126,7 @@ public class Postactivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Postactivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(Postactivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
