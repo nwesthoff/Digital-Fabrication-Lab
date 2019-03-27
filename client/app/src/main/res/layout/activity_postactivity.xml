@@ -5,22 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".Postactivity">
-    
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bar"
         android:background="@color/common_google_signin_btn_text_dark_default">
-        
+
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/toolbar2">
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -38,17 +38,17 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:textColor="@color/Grey45" />
-                
+
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:orientation="vertical">
-        
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -64,7 +64,7 @@
             android:hint="Discription"
             android:maxLines="8"
             android:id="@+id/description"/>
-        
+
     </LinearLayout>
 
 </LinearLayout>
