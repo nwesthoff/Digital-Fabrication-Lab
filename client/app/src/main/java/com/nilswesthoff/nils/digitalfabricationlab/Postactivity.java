@@ -16,11 +16,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.util.HashMap;
 
 public class Postactivity extends AppCompatActivity {
 
@@ -72,7 +78,7 @@ public class Postactivity extends AppCompatActivity {
     }
 
     private void uploadImage(){
-        ProgressDialog progressDialog=new ProgressDialog(this);
+        final ProgressDialog progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Posting");
         progressDialog.show();
 
@@ -97,9 +103,34 @@ public class Postactivity extends AppCompatActivity {
                         Uri downloadUri=task.getResult();
                         myUrl=downloadUri.toString();
 
+                        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Posts");
+
+                        String postid=reference.push().getKey();
+
+                        HashMap<String,Object> hashMap=new HashMap<>();
+                        hashMap.put("postid", postid);
+                        hashMap.put("postimage", myUrl);
+                        hashMap.put("description", description.getText().toString());
+                        hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                        reference.child(postid).setValue(hashMap);
+
+                        progressDialog.dismiss();
+
+                        startActivity(new Intent(Postactivity.this, test.class));
+                        finish();
+                    } else {
+                        Toast.makeText(Postactivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                     }
                 }
-            })
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Postactivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show()
+                }
+            });
+        } else {
+            Toast.makeText(this, "No image selected!", Toast.LENGTH_SHORT).show();
         }
     }
 
