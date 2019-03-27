@@ -20,4 +20,15 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
 
+    <Button
+        android:id="@+id/make_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Make New Request"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="left|center_vertical"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
 </android.support.constraint.ConstraintLayout>

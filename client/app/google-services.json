@@ -1,35 +1,43 @@
 {
   "project_info": {
-    "project_number": "1038598661501",
-    "firebase_url": "https://client-21af0.firebaseio.com",
-    "project_id": "client-21af0",
-    "storage_bucket": "client-21af0.appspot.com"
+    "project_number": "32933460740",
+    "firebase_url": "https://digital-fabrication-lab.firebaseio.com",
+    "project_id": "digital-fabrication-lab",
+    "storage_bucket": "digital-fabrication-lab.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1038598661501:android:e704c8ad88683521",
+        "mobilesdk_app_id": "1:32933460740:android:e704c8ad88683521",
         "android_client_info": {
           "package_name": "com.nilswesthoff.nils.digitalfabricationlab"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1038598661501-mjgftf1df83ug66cu86mfjvv5spdr7hf.apps.googleusercontent.com",
+          "client_id": "32933460740-mcagpbdmeqkpj23g30978b0i76f7p3li.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.nilswesthoff.nils.digitalfabricationlab",
-            "certificate_hash": "3d479477a260a469ca3e2b326953cda8f6073b69"
+            "certificate_hash": "73755a7cf5dff4479e6a0423fdd1d752d2bce870"
           }
         },
         {
-          "client_id": "1038598661501-23d93menpk4ta7ra7o8rloc20mflbm7h.apps.googleusercontent.com",
+          "client_id": "32933460740-1bm2u79i968u3t87cekc12e8tg5i8adg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nilswesthoff.nils.digitalfabricationlab",
+            "certificate_hash": "0cc503b0db37a35bb13595477275957aafd5fcd0"
+          }
+        },
+        {
+          "client_id": "32933460740-8f20bpm0fiidk7ooikqn871ckfs1f8q5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDg3_O9lt4FMBh6udvbWfi2t6v6ut617JY"
+          "current_key": "AIzaSyBLuLW1b1t8XaHPmmpoUhUpw9Up8_0mS2o"
         }
       ],
       "services": {
@@ -40,7 +48,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1038598661501-23d93menpk4ta7ra7o8rloc20mflbm7h.apps.googleusercontent.com",
+              "client_id": "32933460740-8f20bpm0fiidk7ooikqn871ckfs1f8q5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
