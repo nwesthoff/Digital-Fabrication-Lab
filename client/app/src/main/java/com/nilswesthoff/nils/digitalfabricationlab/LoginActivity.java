@@ -3,6 +3,7 @@ package com.nilswesthoff.nils.digitalfabricationlab;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.DownloadManager;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -336,7 +337,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 finish();
-                Intent myIntent=new Intent(LoginActivity.this, Requests.class);
+                Intent myIntent=new Intent(LoginActivity.this,Requests.class);
                 LoginActivity.this.startActivity(myIntent);
 
             } else {
