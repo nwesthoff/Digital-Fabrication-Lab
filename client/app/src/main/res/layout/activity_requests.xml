@@ -8,17 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".Request.Requests">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/main_nav"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="546dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/nav_items"
-        tools:layout_editor_absoluteX="0dp">
 
-    </android.support.design.widget.BottomNavigationView>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -79,8 +69,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/upload_button" />
-
-
 
 </android.support.design.widget.CoordinatorLayout>
 
