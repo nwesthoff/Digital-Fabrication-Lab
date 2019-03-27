@@ -92,7 +92,7 @@
             android:layout_marginBottom="10dp"
             android:textStyle="bold"
             android:id="@+id/comments"
-            android:textColor="@color/Grey45light"/>
+            android:textColor="@color/Grey45"/>
     </LinearLayout>
 
 </RelativeLayout>

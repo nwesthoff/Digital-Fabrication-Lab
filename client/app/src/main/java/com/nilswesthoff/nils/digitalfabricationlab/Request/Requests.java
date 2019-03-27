@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nilswesthoff.nils.digitalfabricationlab.R;
+import com.nilswesthoff.nils.digitalfabricationlab.test;
 
 public class Requests extends AppCompatActivity {
 
@@ -48,6 +50,10 @@ public class Requests extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.main_content, new Tab1Fragment());
+        fragmentTransaction.commit();
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -160,9 +166,6 @@ public class Requests extends AppCompatActivity {
             return 3;
         }
 
-        public void buttonClicked (View view) {
-            Intent myIntent = new Intent(Requests.this, Order.class);
-            startActivity(myIntent);
-        }
+
     }
 }
