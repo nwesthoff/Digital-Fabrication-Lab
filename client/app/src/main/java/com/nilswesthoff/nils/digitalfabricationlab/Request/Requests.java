@@ -1,5 +1,6 @@
 package com.nilswesthoff.nils.digitalfabricationlab.Request;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,7 +43,6 @@ public class Requests extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -62,7 +62,7 @@ public class Requests extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Joe :)", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -158,6 +158,11 @@ public class Requests extends AppCompatActivity {
         public int getCount() {
             // Show 3 total pages.
             return 3;
+        }
+
+        public void buttonClicked (View view) {
+            Intent myIntent = new Intent(Requests.this, Order.class);
+            startActivity(myIntent);
         }
     }
 }
