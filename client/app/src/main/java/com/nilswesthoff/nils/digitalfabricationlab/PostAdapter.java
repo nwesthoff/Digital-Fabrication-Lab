@@ -1,6 +1,7 @@
 package com.nilswesthoff.nils.digitalfabricationlab;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
 
 import java.util.List;
 
@@ -29,7 +36,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
         View view = LayoutInflater.from(mContext).inflate(R.layout.postitem, viewGroup, false);
-        return null;
+        return new PostAdapter.ViewHolder(view);
 
     }
 
@@ -40,7 +47,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     @Override
     public int getItemCount(){
-        return 0;
+        return mPost.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -60,8 +67,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             likes=itemView.findViewById(R.id.likes);
             publisher=itemView.findViewById(R.id.publisher);
             description=itemView.findViewById(R.id.description);
+            comments=itemView.findViewById(R.id.comments);
         }
+    }
 
+    private void publisherInfo(ImageView image_profile, TextView username, TextView publisher, String userid) {
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile user=dataSnapshot.getValue(Profile.class);
+
+            }
+//TO DO: Add profile 6.57 https://www.youtube.com/watch?v=mk2CrU-awkM&list=PLzLFqCABnRQduspfbu2empaaY9BoIGLDM&index=7
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
+
+
 }
