@@ -38,29 +38,21 @@
                         android:textColor="@color/Grey45"
                         />
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                    //ImageView
+                        //android:layout_width="30dp"
+                        //android:layout_height="30dp"
                         //android:src="@drawable"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:id="@+id/ivEllipses" />
                 </RelativeLayout>
 
-        <tabian.com.instagramclone2.Utils.SquareImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_image"
-            android:scaleType="centerCrop" />
-
-        <RelativeLayout
+        //RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@id/relLayout2"
-            android:layout_below="@+id/post_image"></RelativeLayout>
+            android:layout_below="@+id/post_image">
 
-    //tabian.com.instagramclone2.Utils.SquareImageView
-
-            </RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
