@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   Button,
   Card,
-  CardMedia,
   CardActions,
   ListItem,
   ListItemText,
@@ -11,7 +10,9 @@ import {
   ListItemAvatar,
   Avatar,
   MobileStepper,
-  CircularProgress
+  CircularProgress,
+  ListItemSecondaryAction,
+  Checkbox
 } from "@material-ui/core";
 import EmailIcon from "@material-ui/icons/Email";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
@@ -22,12 +23,13 @@ import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import GroupWorkIcon from "@material-ui/icons/GroupWork";
 import styled from "styled-components";
 import ClassIcon from "@material-ui/icons/Class";
+import download from "downloadjs";
 
 import { StatusInstance } from "./dashboard";
 import { observer } from "mobx-react";
 import dataStore from "stores/datastore";
-import { fetchImage } from "api/firestore";
-import { observable } from "mobx";
+import { updateDoc, fetchFile } from "api/firestore";
+import FeaturedImage from "./featuredImage";
 
 const StyledCardContent = styled.div`
   padding: 1.2rem 0;
@@ -48,12 +50,13 @@ interface Props {
 
 @observer
 export default class OrderDetail extends React.Component<Props> {
-  @observable
-  featuredImage = undefined;
-
   onStatusNext = () => {
     if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
       dataStore.selectedOrder.status = dataStore.selectedOrder.status + 1;
+
+      updateDoc("Orders", dataStore.selectedOrder.id, {
+        status: dataStore.selectedOrder.status
+      });
     }
   };
 
@@ -61,18 +64,36 @@ export default class OrderDetail extends React.Component<Props> {
     if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
       dataStore.selectedOrder.status = dataStore.selectedOrder.status - 1;
     }
+
+    updateDoc("Orders", dataStore.selectedOrder.id, {
+      status: dataStore.selectedOrder.status
+    });
   };
 
-  componentDidMount = () => {
+  handlePaidClick = () => {
+    dataStore.selectedOrder.paid = !dataStore.selectedOrder.paid;
+
+    updateDoc("Orders", dataStore.selectedOrder.id, {
+      paid: dataStore.selectedOrder.paid
+    });
+  };
+
+  handleDownloadFiles = async () => {
     if (
-      dataStore.selectedOrder.images &&
-      dataStore.selectedOrder.images.length > 0
+      dataStore &&
+      dataStore.selectedOrder &&
+      dataStore.selectedOrder.files &&
+      dataStore.selectedOrder.files.length > 0
     ) {
-      fetchImage(dataStore.selectedOrder.images[0].id).then(res => {
-        this.featuredImage = res.url;
+      Promise.all(
+        dataStore.selectedOrder.files.map(file => {
+          return fetchFile(file.id);
+        })
+      ).then(res => {
+        res.map(file => {
+          download(file.fileUrl);
+        });
       });
-    } else {
-      this.featuredImage = undefined;
     }
   };
 
@@ -88,11 +109,9 @@ export default class OrderDetail extends React.Component<Props> {
       <Card>
         {dataStore.selectedOrder ? (
           <React.Fragment>
-            {this.featuredImage ? (
-              <CardMedia
-                style={{ height: "200px" }}
-                image={this.featuredImage}
-              />
+            {dataStore.selectedOrder.images &&
+            dataStore.selectedOrder.images.length > 0 ? (
+              <FeaturedImage />
             ) : null}
 
             <StyledList disablePadding>
@@ -155,14 +174,20 @@ export default class OrderDetail extends React.Component<Props> {
                     secondary={dataStore.selectedOrder.type}
                   />
                 </ListItem>
-                <ListItem>
+                <ListItem button onClick={this.handlePaidClick}>
                   <ListItemIcon>
                     <AttachMoneyIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary="Payment"
+                    primary="Payment (paid)"
                     secondary={dataStore.selectedOrder.payment_method}
                   />
+                  <ListItemSecondaryAction>
+                    <Checkbox
+                      checked={dataStore.selectedOrder.paid}
+                      onClick={this.handlePaidClick}
+                    />
+                  </ListItemSecondaryAction>
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
@@ -182,11 +207,7 @@ export default class OrderDetail extends React.Component<Props> {
                 </Button>
               ) : null}
               {dataStore.selectedOrder && dataStore.selectedOrder.files ? (
-                <Button
-                  color="secondary"
-                  href={`${dataStore.selectedOrder.files}`}
-                  target="_BLANK"
-                >
+                <Button color="secondary" onClick={this.handleDownloadFiles}>
                   <CloudDownloadIcon style={{ marginRight: ".4rem" }} />{" "}
                   download
                 </Button>

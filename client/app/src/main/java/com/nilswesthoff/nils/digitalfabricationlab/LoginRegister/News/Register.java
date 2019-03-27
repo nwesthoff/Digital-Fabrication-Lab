@@ -1,9 +1,11 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.LoginRegister.News;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 public class Register extends AppCompatActivity implements View.OnClickListener  {
 

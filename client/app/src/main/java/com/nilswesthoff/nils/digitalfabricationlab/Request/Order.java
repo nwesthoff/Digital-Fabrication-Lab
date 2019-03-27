@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Request;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,6 +21,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nilswesthoff.nils.digitalfabricationlab.News.News;
+import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
+import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 
 public class Order extends AppCompatActivity implements View.OnClickListener {

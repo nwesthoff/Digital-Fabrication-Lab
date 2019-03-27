@@ -2,6 +2,7 @@ import firebaseConfig from "config/firebaseConfig";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
+import createNotification from "components/notifications/createNotification";
 
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
@@ -25,5 +26,34 @@ export const fetchImage = (id: string) => {
     .get()
     .then(res => {
       return res.data();
+    });
+};
+
+export const fetchFile = (id: string) => {
+  return db
+    .doc("files/" + id)
+    .get()
+    .then(res => {
+      return res.data();
+    })
+    .catch(error => {
+      createNotification("Error: " + error);
+    });
+};
+
+export const updateDoc = (
+  collectionName: string,
+  docName: string,
+  data: any
+) => {
+  var docRef = db.collection(collectionName).doc(docName);
+
+  return docRef
+    .update(data)
+    .then(() => {
+      // createNotification(docName + " Successfully updated!"); DISABLED NOTIFICATION
+    })
+    .catch(error => {
+      createNotification("Error updating " + docName + ": " + error, 6000);
     });
 };
