@@ -117,7 +117,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                     }
 
                                 }
-                            }); //TO DO: Fix haakjes en ga verder (19.07) ( https://www.youtube.com/watch?v=WOmBT_N1mKY&list=PLzLFqCABnRQduspfbu2empaaY9BoIGLDM&index=2
+                            });
+                        } else {
+                            pd.dismiss();
+                            Toast.makeText(Register.this, "You can't register wit this email or password", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
