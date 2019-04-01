@@ -83,6 +83,7 @@
                     style="?android:textAppearanceSmall"
                     android:layout_width="123dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
                     android:background="@color/colorAccent"
                     android:text="@string/action_sign_in"
                     android:textColor="@color/textwhite"

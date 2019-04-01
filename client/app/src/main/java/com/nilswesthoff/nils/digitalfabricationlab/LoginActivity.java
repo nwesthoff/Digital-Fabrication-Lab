@@ -27,18 +27,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private Button button_register;
     private Button button_login;
-    private FirebaseUser currentUser;
+    public FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
+
         setContentView(R.layout.activity_login);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         button_register = findViewById(R.id.signup);
         button_login = findViewById(R.id.signin);
 
-        FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
