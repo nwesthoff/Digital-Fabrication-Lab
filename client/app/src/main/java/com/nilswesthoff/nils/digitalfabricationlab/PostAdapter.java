@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +44,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i){
 
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        Post post=mPost.get(i);
+        //Glide.with(mContext).load(post.getPostimage()).into(viewHolder:post_image);
+
+        if (post.getDescription().equals("")){
+            viewHolder.description.setVisibility(View.GONE);
+        } else {
+            viewHolder.description.setVisibility(View.VISIBLE);
+            viewHolder.description.setText(post.getDescription());
+        }
+        publisherInfo(viewHolder.image_profile, viewHolder.username,viewHolder.publisher, post.getPublisher());
+
     }
 
     @Override
@@ -71,7 +84,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         }
     }
 
-    private void publisherInfo(ImageView image_profile, TextView username, TextView publisher, String userid) {
+    private void publisherInfo(final ImageView image_profile, final TextView username, TextView publisher, String userid) {
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -79,8 +92,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Profile user=dataSnapshot.getValue(Profile.class);
 
+
             }
-//TO DO: Add profile 6.57 https://www.youtube.com/watch?v=mk2CrU-awkM&list=PLzLFqCABnRQduspfbu2empaaY9BoIGLDM&index=7
+//TODO wij hebben geen User met volgers, heb nu de tutorial gevolgd maar moeten dit nog even uitzoeken hoe we alles wat geupload wordt laten zien.
+            //https://www.youtube.com/watch?v=mk2CrU-awkM&list=PLzLFqCABnRQduspfbu2empaaY9BoIGLDM&index=7
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
