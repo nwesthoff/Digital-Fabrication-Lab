@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.Request;
+package com.nilswesthoff.nils.digitalfabricationlab;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +17,11 @@ import android.view.MenuItem;
 
 import com.nilswesthoff.nils.digitalfabricationlab.News.News;
 import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
-import com.nilswesthoff.nils.digitalfabricationlab.R;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab1Fragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab2Fragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab3Fragment;
 
-public class Requests extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private BottomNavigationView mMainNav;
@@ -28,7 +30,7 @@ public class Requests extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_requests);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,7 +55,7 @@ public class Requests extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_profile:
-                        Intent intent1 = new Intent(Requests.this, Profile.class);
+                        Intent intent1 = new Intent(MainActivity.this, Profile.class);
                         startActivity(intent1);
                         break;
 
@@ -62,7 +64,7 @@ public class Requests extends AppCompatActivity {
                         break;
 
                     case R.id.nav_news:
-                        Intent intent2 = new Intent(Requests.this, News.class);
+                        Intent intent2 = new Intent(MainActivity.this, News.class);
                         startActivity(intent2);
                         break;
 

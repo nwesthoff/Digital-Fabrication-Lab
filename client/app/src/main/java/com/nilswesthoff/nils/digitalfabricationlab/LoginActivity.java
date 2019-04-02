@@ -16,7 +16,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Requests;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -73,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                             currentUser = mAuth.getCurrentUser();
                             finish();
                             startActivity(new Intent(getApplicationContext(),
-                                    Requests.class));
+                                    MainActivity.class));
                         } else {
                             Toast.makeText(LoginActivity.this, "couldn't login",
                                     Toast.LENGTH_SHORT).show();
@@ -106,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "registration successful",
                                         Toast.LENGTH_SHORT).show();
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), Requests.class));
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             } else {
                                 Toast.makeText(LoginActivity.this, "Couldn't register, try again",
                                         Toast.LENGTH_SHORT).show();

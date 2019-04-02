@@ -31,7 +31,7 @@
         <activity android:name=".PostActivity" />
         <activity android:name=".test" />
         <activity
-            android:name=".Request.Requests"
+            android:name=".MainActivity"
             android:label="@string/title_activity_requests"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".News.News" />

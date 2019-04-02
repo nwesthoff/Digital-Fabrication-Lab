@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nilswesthoff.nils.digitalfabricationlab.LoginActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Requests;
+import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
 
 import java.util.HashMap;
 
@@ -108,7 +108,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                     if (task.isSuccessful()) {
                                         if (task.isSuccessful()) {
                                             pd.dismiss();
-                                            Intent intent = new Intent(Register.this, Requests.class);
+                                            Intent intent = new Intent(Register.this, MainActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                         }
