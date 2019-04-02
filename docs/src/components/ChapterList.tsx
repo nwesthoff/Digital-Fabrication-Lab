@@ -9,13 +9,6 @@ const Post = styled.article`
   margin-bottom: 2.4rem;
   line-height: 1.75rem;
 
-  h2 {
-    margin-bottom: 0.6rem;
-    font-size: 2.4em;
-    font-weight: 700;
-    text-decoration: none;
-  }
-
   @media (max-width: 480px) {
     font-size: 90%;
     margin-bottom: 1.4rem;
@@ -27,6 +20,8 @@ const Post = styled.article`
 `;
 
 const PostImage = styled.img`
+  width: 100%;
+  height: auto;
   display: block;
 `;
 
@@ -44,11 +39,7 @@ const ChapterList = () => (
         return (
           <WrapLink key={path} to={`/posts${path}`}>
             <Post>
-              <Grid container direction="column">
-                <Grid item>
-                  <Typography variant="h2">{title}</Typography>
-                </Grid>
-
+              <Grid container direction="column" spacing={8}>
                 {node.frontmatter.image ? (
                   <Grid item>
                     <PostImage
@@ -61,7 +52,13 @@ const ChapterList = () => (
                 ) : null}
 
                 <Grid item>
-                  <p>{node.excerpt}</p>
+                  <Typography variant="h4" component="h3">
+                    {title}
+                  </Typography>
+                </Grid>
+
+                <Grid item>
+                  <Typography variant="body1">{node.excerpt}</Typography>
                 </Grid>
 
                 <Grid item>

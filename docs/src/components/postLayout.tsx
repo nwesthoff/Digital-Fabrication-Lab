@@ -3,6 +3,7 @@ import { RouterProps } from '@reach/router';
 import Layout from './layout';
 import { PostQueryData } from '../interfaces/PostQuery.interface';
 import NextPostLink from './NextPostLink';
+import { Typography } from '@material-ui/core';
 
 type PostLayoutProps = PostQueryData & RouterProps;
 
@@ -12,9 +13,8 @@ const PostLayout: React.FunctionComponent<PostLayoutProps> = props => {
 
     return (
       <Layout location={location}>
-        <h1>{pageContext.frontmatter.title}</h1>
-        <h2>{pageContext.frontmatter.subtitle}</h2>
-        {/* <h3>{pageContext.node.timeToRead} min read</h3> */}
+        <Typography variant="h1">{pageContext.frontmatter.title}</Typography>
+        <Typography variant="h2">{pageContext.frontmatter.subtitle}</Typography>
         {props.children}
         {pageContext.next ? (
           <NextPostLink

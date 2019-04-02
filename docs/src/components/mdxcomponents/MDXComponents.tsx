@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { preToCodeBlock } from 'mdx-utils';
 import Code from './Code';
-import { Typography, Link } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import LinkStyled from './LinkStyled';
 
 // Defining the `MDXProvider` components prop value
 const mdxComponents = {
@@ -11,7 +12,7 @@ const mdxComponents = {
   h4: (props: any) => <Typography variant="h4" {...props} />,
   h5: (props: any) => <Typography variant="h5" {...props} />,
   h6: (props: any) => <Typography variant="h6" {...props} />,
-  p: (props: any) => <Typography variant="body1" {...props} />,
+  p: (props: any) => <Typography variant="body1" {...props} gutterBottom />,
   pre: (props: any) => {
     const preProps = preToCodeBlock(props);
     if (preProps) {
@@ -27,7 +28,7 @@ const mdxComponents = {
       <Typography variant="body1" {...props} />
     </li>
   ),
-  a: (props: any) => <Link {...props} />,
+  a: (props: any) => <LinkStyled {...props} />,
 };
 
 export default mdxComponents;

@@ -12,7 +12,6 @@ module.exports = {
     "gatsby-plugin-typescript",
     "gatsby-transformer-remark",
     "gatsby-image",
-    "gatsby-plugin-sass",
     "gatsby-plugin-styled-components",
     "gatsby-plugin-offline",
     {

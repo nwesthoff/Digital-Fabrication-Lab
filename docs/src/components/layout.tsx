@@ -5,7 +5,6 @@ import { StaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 
 import Header from './header';
-import '../config/layout.scss';
 import { MDXProvider } from '@mdx-js/tag';
 import { LayoutQueryData } from '../interfaces/LayoutQuery.interface';
 import { Grid, MuiThemeProvider } from '@material-ui/core';
