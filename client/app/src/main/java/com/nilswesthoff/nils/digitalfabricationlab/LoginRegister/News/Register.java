@@ -2,9 +2,9 @@ package com.nilswesthoff.nils.digitalfabricationlab.LoginRegister.News;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -24,13 +24,11 @@ import com.nilswesthoff.nils.digitalfabricationlab.LoginActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 import com.nilswesthoff.nils.digitalfabricationlab.Request.Requests;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 
-public class Register extends AppCompatActivity implements View.OnClickListener  {
+public class Register extends AppCompatActivity implements View.OnClickListener {
 
-    EditText name, Studenttype, email, password,bio;
+    EditText name, Studenttype, email, password, bio;
     Button register;
     ImageView Profileimage;
     TextView txt_login;
@@ -44,16 +42,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        name=findViewById(R.id.name);
-        Studenttype=findViewById(R.id.Studenttype);
-        email=findViewById(R.id.email_login_form);
-        password=findViewById(R.id.password);
-        bio=findViewById(R.id.Bio);
+        name = findViewById(R.id.name);
+        Studenttype = findViewById(R.id.Studenttype);
+        email = findViewById(R.id.email_login_form);
+        password = findViewById(R.id.password);
+        bio = findViewById(R.id.Bio);
 
-        Profileimage=(ImageView) findViewById(R.id.Profile_image);
+        Profileimage = (ImageView) findViewById(R.id.Profile_image);
         Profileimage.setOnClickListener(this);
 
-        auth=FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         txt_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,32 +84,32 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         });
     }
 
-    private void register(final String name, final String Studenttype, String email, String password, String bio){
+    private void register(final String name, final String Studenttype, String email, String password, String bio) {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            FirebaseUser firebaseUser=auth.getCurrentUser();
-                            String userid=firebaseUser.getUid();
+                        if (task.isSuccessful()) {
+                            FirebaseUser firebaseUser = auth.getCurrentUser();
+                            String userid = firebaseUser.getUid();
 
-                            reference= FirebaseDatabase.getInstance().getReference().child("Users").child(userid);
+                            reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid);
 
-                            HashMap<String, Object> hashMap =new HashMap<>();
-                            hashMap.put("id",userid);
-                            hashMap.put("name",name.toLowerCase());
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("id", userid);
+                            hashMap.put("name", name.toLowerCase());
                             hashMap.put("Studenttype", Studenttype);
-                            hashMap.put("bio","");
-                            hashMap.put("Profile_image","");
+                            hashMap.put("bio", "");
+                            hashMap.put("Profile_image", "");
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        if(task.isSuccessful()){
+                                    if (task.isSuccessful()) {
+                                        if (task.isSuccessful()) {
                                             pd.dismiss();
-                                            Intent intent=new Intent(Register.this, Requests.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            Intent intent = new Intent(Register.this, Requests.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                         }
                                     }
@@ -120,15 +118,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                             });
                         } else {
                             pd.dismiss();
-                            Toast.makeText(Register.this, "You can't register wit this email or password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "You can't register with this email or password", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
     }
+
     @Override
-    public void onClick(View v){
-        switch (v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
 
         }
 

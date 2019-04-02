@@ -3,12 +3,11 @@ package com.nilswesthoff.nils.digitalfabricationlab.Request;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,8 +20,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.nilswesthoff.nils.digitalfabricationlab.News.News;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 
@@ -30,7 +27,6 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PICK_FILE_REQUEST = 234;
     private Button chooseButton, uploadButton;
-    private BottomNavigationView mMainNav;
 
     private Uri filePath;
 
@@ -40,35 +36,6 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order2);
-
-        mMainNav=(BottomNavigationView) findViewById(R.id.main_nav);
-
-        mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch(menuItem.getItemId()) {
-                    case R.id.nav_profile :
-                        mMainNav.setItemBackgroundResource(R.color.Grey45);
-                        Intent intent1=new Intent(Order.this, Profile.class);
-                        startActivity(intent1);
-                        break;
-
-                    case R.id.nav_request :
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
-                        break;
-
-                    case R.id.nav_news:
-                        mMainNav.setItemBackgroundResource(R.color.Grey45);
-                        Intent intent2=new Intent(Order.this, News.class);
-                        startActivity(intent2);
-                        break;
-
-                    default:
-                }
-                return false;
-            }
-        });
 
         //payment method dropdown
         Spinner spinner_payment = (Spinner) findViewById(R.id.payment_method);
@@ -94,11 +61,11 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    private void showFileChooser(){
+    private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select file"),PICK_FILE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select file"), PICK_FILE_REQUEST);
 
     }
 
@@ -131,12 +98,12 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                             progressDialog.setMessage(((int) progress) + "% Uploaded...");
                         }
                     });
             ;
-        }else{
+        } else {
             //display an error toast
         }
     }
@@ -144,17 +111,17 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if(requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
         }
     }
 
     @Override
-    public void onClick (View view) {
+    public void onClick(View view) {
         if (view == chooseButton) {
             //open file chooser
             showFileChooser();
-        } else if (view == uploadButton){
+        } else if (view == uploadButton) {
             //upload to firebase storage
             uploadFile();
         }

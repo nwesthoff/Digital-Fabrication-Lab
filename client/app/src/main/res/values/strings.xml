@@ -37,5 +37,6 @@
     <string name="hint_email">Email</string>
     <string name="create_account">Register</string>
     <string name="action_sign_up">Register account</string>
+    <string name="no_data">No data has been found</string>
 
 </resources>
