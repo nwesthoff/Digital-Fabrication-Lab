@@ -1,3 +1,5 @@
+package com.nilswesthoff.nils.digitalfabricationlab.Request;
+
 public class RequestItem {
     private int mImageResource;
     private String mOrderTextHeadline;
