@@ -6,9 +6,11 @@ import styled from 'styled-components';
 
 import Header from './header';
 import '../config/layout.scss';
+import { MDXProvider } from '@mdx-js/tag';
 import { LayoutQueryData } from '../interfaces/LayoutQuery.interface';
 import { Grid, MuiThemeProvider } from '@material-ui/core';
 import { muiTheme } from '../config/theme';
+import mdxComponents from './mdxcomponents/MDXComponents';
 
 const MainLayout = styled.main`
   margin: 1rem auto;
@@ -60,7 +62,11 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => (
                   padding: '0 1.2rem',
                 }}
               >
-                <MainLayout>{children}</MainLayout>
+                <MainLayout>
+                  <MDXProvider components={mdxComponents}>
+                    {children}
+                  </MDXProvider>
+                </MainLayout>
               </Grid>
             </Grid>
           </>
