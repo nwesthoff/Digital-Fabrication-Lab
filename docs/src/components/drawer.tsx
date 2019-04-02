@@ -40,16 +40,11 @@ const Sidebar = () => (
           {posts && posts.length > 0 ? (
             <List style={{ paddingTop: '0' }}>
               <ListItem style={{ padding: '24px 16px' }}>
-                <ListItemAvatar>
-                  <a href="https://nilswesthoff.com" target="blank">
-                    <GravatarImg
-                      src={fetchGravatar('n.westhoff@vanberlo.nl')}
-                    />
-                  </a>
-                </ListItemAvatar>
                 <ListItemText
                   primary={
-                    <Typography variant="h6">Internship Report</Typography>
+                    <Typography variant="h6" component="h2">
+                      Digital Fabrication Lab
+                    </Typography>
                   }
                   secondary={
                     <span>
@@ -57,6 +52,7 @@ const Sidebar = () => (
                       <a href="https://nilswesthoff.com" target="blank">
                         Nils Westhoff
                       </a>
+                      , Avelien Husen <br /> and Annemar Marinissen
                     </span>
                   }
                 />

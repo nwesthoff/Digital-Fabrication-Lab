@@ -25,8 +25,13 @@ export const muiTheme = createMuiTheme({
       fontSize: '1.2em',
     },
     body1: {
+      fontFamily: ['Arial', 'sans-serif'].join(),
       fontSize: '18px',
+      lineHeight: '32px',
     },
+    body2: {
+      fontSize: '16px'
+    }
   },
   palette: {
     primary: {

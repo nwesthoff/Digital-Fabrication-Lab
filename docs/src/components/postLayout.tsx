@@ -13,8 +13,17 @@ const PostLayout: React.FunctionComponent<PostLayoutProps> = props => {
 
     return (
       <Layout location={location}>
-        <Typography variant="h1">{pageContext.frontmatter.title}</Typography>
-        <Typography variant="h2">{pageContext.frontmatter.subtitle}</Typography>
+        <Typography variant="h1" style={{ margin: '.8rem 0' }}>
+          {pageContext.frontmatter.title}
+        </Typography>
+        <Typography
+          variant="h3"
+          component="h2"
+          color="primary"
+          style={{ margin: '.8rem 0' }}
+        >
+          {pageContext.frontmatter.subtitle}
+        </Typography>
         {props.children}
         {pageContext.next ? (
           <NextPostLink

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Logo from '../images/vanberlo-logo.svg';
+import Logo from '../images/logo.svg';
 import {
   Grid,
   Hidden,

@@ -73,7 +73,7 @@ module.exports = {
         background_color: "#2D9CDB",
         theme_color: "#2D9CDB",
         display: "minimal-ui",
-        icon: "src/images/vanberlo-logo.svg" // This path is relative to the root of the site.
+        icon: "src/images/logo.svg" // This path is relative to the root of the site.
       }
     }
     // this (optional) plugin enables Progressive Web App + Offline functionality
