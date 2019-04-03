@@ -17,7 +17,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.nilswesthoff.nils.digitalfabricationlab.LoginRegister.News.Register;
 import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
+import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.User;
 
 import java.util.List;
 
@@ -43,8 +45,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i){
 
+        //TODO: currentUser=FirebaseAuth.getInstance().getCurrentUser()
         Post post=mPost.get(i);
-        //Glide.with(mContext).load(post.getPostimage()).into(viewHolder:post_image);
+        //TODO Glide.with(mContext).load(post.getPostimage()).into(viewHolder:post_image);
 
         if (post.getDescription().equals("")){
             viewHolder.description.setVisibility(View.GONE);
@@ -52,7 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             viewHolder.description.setVisibility(View.VISIBLE);
             viewHolder.description.setText(post.getDescription());
         }
-        publisherInfo(viewHolder.image_profile, viewHolder.username,viewHolder.publisher, post.getPublisher());
+        publisherInfo(viewHolder.image_profile, viewHolder.fullname,viewHolder.publisher, post.getPublisher());
 
     }
 
@@ -64,7 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView image_profile, post_image, like, comment, save;
-        public TextView username, likes, publisher, description, comments;
+        public TextView fullname, likes, publisher, description, comments;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -74,7 +77,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             like=itemView.findViewById(R.id.like);
             comment=itemView.findViewById(R.id.comment);
             save=itemView.findViewById(R.id.save);
-            username=itemView.findViewById(R.id.username);
+            fullname=itemView.findViewById(R.id.fullname);
             likes=itemView.findViewById(R.id.likes);
             publisher=itemView.findViewById(R.id.publisher);
             description=itemView.findViewById(R.id.description);
@@ -82,18 +85,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         }
     }
 
-    private void publisherInfo(final ImageView image_profile, final TextView username, TextView publisher, String userid) {
+    private void publisherInfo(ImageView image_profile, final TextView fullname, final TextView publisher, String userid) {
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile user=dataSnapshot.getValue(Profile.class);
-
-
+                User user=dataSnapshot.getValue(User.class);
+                //TODO Glide.with(mContext).load.(Profile.getImageurl());
+                //TODO wij hebben geen User met volgers, heb nu de tutorial gevolgd maar moeten dit nog even uitzoeken hoe we alles wat geupload wordt laten zien.
+                //https://www.youtube.com/watch?v=mk2CrU-awkM&list=PLzLFqCABnRQduspfbu2empaaY9BoIGLDM&index=7
+                fullname.setText(user.getFullname());
+                publisher.setText(user.getFullname());
             }
-//TODO wij hebben geen User met volgers, heb nu de tutorial gevolgd maar moeten dit nog even uitzoeken hoe we alles wat geupload wordt laten zien.
-            //https://www.youtube.com/watch?v=mk2CrU-awkM&list=PLzLFqCABnRQduspfbu2empaaY9BoIGLDM&index=7
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
