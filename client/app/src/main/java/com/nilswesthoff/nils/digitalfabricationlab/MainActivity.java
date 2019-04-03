@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_request:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+
                         break;
 
                     case R.id.nav_news:
