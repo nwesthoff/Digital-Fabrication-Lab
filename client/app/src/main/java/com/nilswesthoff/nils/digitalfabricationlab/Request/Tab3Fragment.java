@@ -78,7 +78,7 @@ public class Tab3Fragment extends Fragment {
                     followingList.add(snapshot.getKey());
                 }
 
-//                readPosts();
+                readPosts();
             }
 
             @Override
@@ -88,28 +88,30 @@ public class Tab3Fragment extends Fragment {
         });
     }
 
-//    private void readPosts() {
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-//
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                postList.clear();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Post post = snapshot.getValue(Post.class);
-//                    for (String id : followingList) ;
-//                    if (post.getPublisher().equals(id)) {
-//                        postList.add(post);
-//                    }
-//                }
-//
-//                postAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
+    private void readPosts() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Post post = snapshot.getValue(Post.class);
+                    for (String id : followingList) {
+                        if (post.getPublisher().equals(id)) {
+                            postList.add(post);
+                        }
+                    }
+                }
+
+                postAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+    }
 }
