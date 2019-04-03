@@ -16,6 +16,112 @@ Present activity, fragment and intent structure in a diagram of your software so
 
 Discuss the choices of your GUI elements! Present how these GUI elements facilitate interaction with your software. Make the necessary references to Appendix C!
 
+```java
+public class MainActivity extends AppCompatActivity {
+
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private BottomNavigationView mMainNav;
+    private ViewPager mViewPager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.commit();
+
+        mViewPager = findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout tabLayout = findViewById(R.id.tabs);
+
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        mMainNav = findViewById(R.id.main_nav);
+
+        mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_profile:
+                        Intent intent1 = new Intent(MainActivity.this, Profile.class);
+                        startActivity(intent1);
+                        break;
+
+                    case R.id.nav_request:
+                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+                        break;
+
+                    case R.id.nav_news:
+                        Intent intent2 = new Intent(MainActivity.this, News.class);
+                        startActivity(intent2);
+                        break;
+
+                    default:
+                }
+                return false;
+            }
+        });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_requests, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = null;
+            switch (position) {
+                case 0:
+                    fragment = new Tab1Fragment();
+                    break;
+                case 1:
+                    fragment = new Tab2Fragment();
+                    break;
+                case 2:
+                    fragment = new Tab3Fragment();
+                    break;
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+
+    }
+}
+```
+
 ##### Implementation of database, sensor, multimedia technologies
 
 Present at least two technology solutions related to database management, sensor data handling, multimedia management, camera handling, or connectivity. Discuss the challenges and their solutions you faced during the implementation of your prototype software. Put the related software code into Appendix D.

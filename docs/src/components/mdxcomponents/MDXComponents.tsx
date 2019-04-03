@@ -4,6 +4,7 @@ import Code from './Code';
 import { Typography } from '@material-ui/core';
 import LinkStyled from './LinkStyled';
 import BlockquoteStyled from './BlockquoteStyled';
+import PreStyled from './PreStyled';
 
 // Defining the `MDXProvider` components prop value
 const mdxComponents = {
@@ -44,11 +45,15 @@ const mdxComponents = {
     />
   ),
   pre: (props: any) => {
-    const preProps = preToCodeBlock(props);
+    let preProps;
+    if (!props.className) {
+      preProps = preToCodeBlock(props);
+    }
+
     if (preProps) {
       return <Code {...preProps} />;
     } else {
-      return <pre {...props} />;
+      return <PreStyled {...props} />;
     }
   },
   ul: (props: any) => <ul style={{ margin: '0 0 1.2rem' }} {...props} />,

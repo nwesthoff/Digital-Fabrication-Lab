@@ -27,7 +27,7 @@ const NextPostLinkContainer = styled(Link)`
 export default class NextPostLink extends Component<Props> {
   render() {
     return (
-      <div>
+      <div style={{ marginTop: '2rem' }}>
         <NextPostLinkContainer to={this.props.path}>
           <Typography
             variant="overline"

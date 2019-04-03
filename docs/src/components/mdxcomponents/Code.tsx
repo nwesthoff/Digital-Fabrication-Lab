@@ -1,29 +1,50 @@
 import * as React from 'react';
-import Highlight, { defaultProps } from 'prism-react-renderer';
+import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 
-const Code = ({ codeString, language, ...props }) => {
-  return (
-    <Highlight
-      {...defaultProps}
-      code={codeString}
-      language={language}
-      theme={undefined}
-    >
-      {({ className, tokens, getLineProps, getTokenProps }) => (
-        <div className="gatsby-highlight">
-          <pre className={className}>
-            {tokens.map((line, i) => (
-              <div {...getLineProps({ line, key: i })}>
-                {line.map((token, key) => (
-                  <span {...getTokenProps({ token, key })} />
-                ))}
-              </div>
-            ))}
-          </pre>
-        </div>
-      )}
-    </Highlight>
-  );
-};
+interface Props {
+  defaultProps: any;
+  codeString: string;
+  className: Language;
+}
 
-export default Code;
+interface State {
+  open: boolean;
+}
+
+export default class Code extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+  }
+
+  render() {
+    return (
+      <div
+        style={{
+          maxHeight: this.state.open ? 'auto' : '10rem',
+          overflow: 'hidden',
+        }}
+      >
+        <Highlight
+          {...defaultProps}
+          code={this.props.codeString}
+          language={this.props.className}
+        >
+          {({ className, style, tokens, getLineProps, getTokenProps }) => (
+            <pre className={className} style={{ ...style, padding: '20px' }}>
+              {tokens.map((line, i) => (
+                <div key={i} {...getLineProps({ line, key: i })}>
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token, key })} />
+                  ))}
+                </div>
+              ))}
+            </pre>
+          )}
+        </Highlight>
+      </div>
+    );
+  }
+}
