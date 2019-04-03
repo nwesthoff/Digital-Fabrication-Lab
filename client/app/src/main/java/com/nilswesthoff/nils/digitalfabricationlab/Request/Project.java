@@ -1,14 +1,14 @@
 package com.nilswesthoff.nils.digitalfabricationlab.Request;
 
 public class Project {
-    String ProjectId;
-    String ProjectTitle;
-    String Machine;
-    String Description;
-    String PaymentMethod;
-    String Baancode;
+    private String ProjectId;
+    private String ProjectTitle;
+    private String Machine;
+    private String Description;
+    private String PaymentMethod;
+    //String Baancode;
 
-    public Project(String id, String title, String description, String course, String baan) {
+    public Project(String id, String title, String description, String course) {
 
     }
 
@@ -18,7 +18,7 @@ public class Project {
         Machine = machine;
         Description = description;
         PaymentMethod = paymentMethod;
-        Baancode = baancode;
+        //Baancode = baancode;
     }
 
     public String getProjectId() {
@@ -41,7 +41,7 @@ public class Project {
         return PaymentMethod;
     }
 
-    public String getBaancode() {
-        return Baancode;
-    }
+    //public String getBaancode() {
+    //    return Baancode;
+    //}
 }

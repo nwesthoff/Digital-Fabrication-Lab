@@ -28,7 +28,7 @@ import com.google.firebase.storage.UploadTask;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 
-public class Order extends AppCompatActivity {
+public class Order extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PICK_FILE_REQUEST = 234;
 
@@ -37,22 +37,25 @@ public class Order extends AppCompatActivity {
     EditText course_group;
     EditText baan_code;
 
-    private Button chooseButton;
-    private Button uploadButton;
+    private Button chooseButton, uploadButton;
     private Button confirmButton;
 
 
     private Uri filePath;
 
     private StorageReference storageReference;
-    DatabaseReference databaseProjects;
+    private DatabaseReference databaseProjects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order2);
 
+        chooseButton = (Button) findViewById(R.id.choose_button);
+        uploadButton = (Button) findViewById(R.id.upload_button);
+
         databaseProjects = FirebaseDatabase.getInstance().getReference("projects");
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         //payment method dropdown TODO: Make 1st option grey, kind of done
         Spinner spinner_payment = (Spinner) findViewById(R.id.payment_method);
@@ -124,11 +127,7 @@ public class Order extends AppCompatActivity {
             }
         });
 
-        storageReference = FirebaseStorage.getInstance().getReference();
-
         project_title = (EditText) findViewById(R.id.project_title);
-        chooseButton = (Button) findViewById(R.id.choose_button);
-        uploadButton = (Button) findViewById(R.id.upload_button);
         description = (EditText) findViewById(R.id.description);
         course_group = (EditText) findViewById(R.id.course_group);
         confirmButton = (Button) findViewById(R.id.confirm_button);
@@ -155,6 +154,17 @@ public class Order extends AppCompatActivity {
             startActivityForResult(Intent.createChooser(intent, "Select file"), PICK_FILE_REQUEST);
         }
 
+
+        public void onClick(View view) {
+        if (view == chooseButton) {
+            //open file chooser
+            showFileChooser();
+        } else if (view == uploadButton) {
+            //upload to firebase storage
+            uploadFile();
+        }
+    }
+
         private void uploadFile() {
 
         //TODO: show that you selected a file
@@ -168,7 +178,7 @@ public class Order extends AppCompatActivity {
         //TODO: file title = real file name instead of "projects.jpg"
         //TODO: get Firebase location back
 
-        StorageReference riversRef = storageReference.child("files/");
+        StorageReference riversRef = storageReference.child("files/project.jpg");
 
         riversRef.putFile(filePath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -195,26 +205,14 @@ public class Order extends AppCompatActivity {
 
         } else {
         //display an error toast
-        //TODO: Upload error when there are empty fields
         }
         }
 
         @Override
         protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-        }
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (view == chooseButton) {
-                //open file chooser
-                showFileChooser();
-            } else if (view == uploadButton) {
-                //upload to firebase storage
-                uploadFile();
+            if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                filePath = data.getData();
             }
         }
 
@@ -223,12 +221,12 @@ public class Order extends AppCompatActivity {
             //String Machine = choose_machine.getSelectedItem().toString();
             String Description = description.getText().toString().trim();
             String course = course_group.getText().toString().trim();
-            String baan = baan_code.getText().toString().trim();
+            //String baan = baan_code.getText().toString().trim();
 
             if (!TextUtils.isEmpty(title)) {
 
                 String id = databaseProjects.push().getKey();
-                Project project = new Project(id, title, Description, course, baan);
+                Project project = new Project(id, title, Description, course);
 
                 databaseProjects.child(id).setValue(project);
                 //Toast.makeText(this, "Title added", Toast.LENGTH_LONG).show();
@@ -236,6 +234,7 @@ public class Order extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Enter your Project Title", Toast.LENGTH_LONG).show();
             }
+
         }
 
 }
