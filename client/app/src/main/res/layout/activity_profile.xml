@@ -13,6 +13,9 @@
         android:layout_marginTop="546dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="?android:attr/windowBackground"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@color/selector"
         app:menu="@menu/nav_items"
         tools:layout_editor_absoluteX="0dp">
 
