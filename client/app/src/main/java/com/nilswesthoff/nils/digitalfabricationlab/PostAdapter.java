@@ -26,7 +26,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public Context mContext;
     public List<Post> mPost;
 
-    private FirebaseUser firebaseUser;
 
     public PostAdapter(Context mContext, List<Post> mPost) {
         this.mContext = mContext;
@@ -44,7 +43,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i){
 
-        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         Post post=mPost.get(i);
         //Glide.with(mContext).load(post.getPostimage()).into(viewHolder:post_image);
 

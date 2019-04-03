@@ -1,8 +1,10 @@
 package com.nilswesthoff.nils.digitalfabricationlab.Request;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nilswesthoff.nils.digitalfabricationlab.Post;
+import com.nilswesthoff.nils.digitalfabricationlab.PostActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.PostAdapter;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
@@ -36,6 +39,15 @@ public class Tab3Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_showcase, container, false);
 
+        FloatingActionButton makePost = view.findViewById(R.id.makePost);
+        makePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(getActivity(), PostActivity.class);
+                startActivity(in);
+            }
+        });
+
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -46,9 +58,11 @@ public class Tab3Fragment extends Fragment {
         postAdapter = new PostAdapter(getContext(), postList);
         recyclerView.setAdapter(postAdapter);
 
+
         checkfollowing();
 
         return view;
+
     }
 
     private void checkfollowing() {
