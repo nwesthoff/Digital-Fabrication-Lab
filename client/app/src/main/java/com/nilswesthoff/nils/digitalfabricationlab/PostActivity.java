@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab3Fragment;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
@@ -117,7 +118,7 @@ public class PostActivity extends AppCompatActivity {
 
                         progressDialog.dismiss();
 
-                        startActivity(new Intent(PostActivity.this, test.class));
+                        startActivity(new Intent(PostActivity.this, Tab3Fragment.class));
                         finish();
                     } else {
                         Toast.makeText(PostActivity.this, "Failed!", Toast.LENGTH_SHORT).show();

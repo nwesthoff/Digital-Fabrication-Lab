@@ -31,7 +31,6 @@ public class Tab3Fragment extends Fragment {
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList;
-
     private List<String> followingList;
 
     @Nullable
@@ -57,7 +56,6 @@ public class Tab3Fragment extends Fragment {
         postList = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), postList);
         recyclerView.setAdapter(postAdapter);
-
 
         checkfollowing();
 
