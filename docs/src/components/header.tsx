@@ -63,12 +63,16 @@ export default class Header extends Component<Props, State> {
                   <img
                     height="32"
                     src={Logo}
-                    style={{ margin: '0 0.4rem 0 0' }}
+                    style={{ margin: '0 0.6rem 0 0' }}
                   />
                 </Grid>
                 <Grid item>
                   <Hidden smDown>
-                    <Typography variant="h6" style={{ color: 'white' }}>
+                    <Typography
+                      variant="h2"
+                      component="h1"
+                      style={{ color: 'white', fontSize: '1.2rem' }}
+                    >
                       {this.props.siteTitle}
                     </Typography>
                   </Hidden>

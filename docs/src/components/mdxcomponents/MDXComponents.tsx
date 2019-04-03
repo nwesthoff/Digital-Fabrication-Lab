@@ -8,34 +8,11 @@ import PreStyled from './PreStyled';
 
 // Defining the `MDXProvider` components prop value
 const mdxComponents = {
-  h1: (props: any) => (
-    <Typography variant="h1" style={{ margin: '1.2rem 0' }} {...props} />
-  ),
-  h2: (props: any) => (
-    <Typography variant="h2" style={{ margin: '1.2rem 0' }} {...props} />
-  ),
-  h3: (props: any) => (
-    <Typography variant="h3" style={{ margin: '1.0rem 0' }} {...props} />
-  ),
-  h4: (props: any) => (
-    <Typography variant="h4" style={{ margin: '.8rem 0' }} {...props} />
-  ),
-  h5: (props: any) => (
-    <Typography
-      variant="h5"
-      color="primary"
-      style={{ margin: '.6rem 0' }}
-      {...props}
-    />
-  ),
-  h6: (props: any) => (
-    <Typography
-      variant="h6"
-      color="primary"
-      style={{ margin: '.4rem 0' }}
-      {...props}
-    />
-  ),
+  h1: (props: any) => <Typography variant="h2" {...props} />,
+  h2: (props: any) => <Typography variant="h3" {...props} />,
+  h3: (props: any) => <Typography variant="h4" {...props} />,
+  h4: (props: any) => <Typography variant="h5" color="primary" {...props} />,
+  h5: (props: any) => <Typography variant="h6" color="primary" {...props} />,
   p: (props: any) => (
     <Typography
       variant="body1"
@@ -65,6 +42,9 @@ const mdxComponents = {
   ),
   a: (props: any) => <LinkStyled target="blank" {...props} />,
   blockquote: (props: any) => <BlockquoteStyled {...props} />,
+  img: (props: any) => (
+    <img style={{ maxWidth: '100%', height: 'auto' }} {...props} />
+  ),
 };
 
 export default mdxComponents;

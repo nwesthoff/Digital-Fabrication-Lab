@@ -42,7 +42,7 @@ const Sidebar = () => (
               <ListItem style={{ padding: '24px 16px' }}>
                 <ListItemText
                   primary={
-                    <Typography variant="h6" component="h2">
+                    <Typography variant="h3" component="h2" color="primary">
                       Digital Fabrication Lab
                     </Typography>
                   }

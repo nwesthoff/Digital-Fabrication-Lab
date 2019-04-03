@@ -52,8 +52,11 @@ const ChapterList = () => (
                 ) : null}
 
                 <Grid item>
-                  <Typography variant="h4" component="h3">
+                  <Typography variant="h2" component="h3">
                     {title}
+                  </Typography>
+                  <Typography variant="h3" component="h4">
+                    {node.frontmatter.subtitle}
                   </Typography>
                 </Grid>
 
@@ -89,6 +92,7 @@ const LISTING_QUERY = graphql`
           frontmatter {
             path
             title
+            subtitle
             date(formatString: "MMMM DD, YYYY")
             image {
               childImageSharp {

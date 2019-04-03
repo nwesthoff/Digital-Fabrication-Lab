@@ -9,11 +9,9 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
   <Layout location={location}>
     <Grid container spacing={32}>
       <Grid item>
-        <Typography variant="h1" gutterBottom>
-          Software Report
-        </Typography>
+        <Typography variant="h1">Software Report</Typography>
         <Typography variant="h2" gutterBottom>
-          Digital Fabrication App
+          Digital Fabrication Lab App
         </Typography>
         <ul>
           <li>
@@ -39,7 +37,7 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
       </Grid>
 
       <Grid item>
-        <Typography variant="h3" style={{ marginBottom: '2rem' }}>
+        <Typography variant="h2" component="h3" color="primary" gutterBottom>
           Table of Contents
         </Typography>
         <ChapterList />

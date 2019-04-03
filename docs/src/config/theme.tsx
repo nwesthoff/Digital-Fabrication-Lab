@@ -7,31 +7,54 @@ export const muiTheme = createMuiTheme({
       fontWeight: 'bold',
     },
     h1: {
-      fontSize: '2.986em',
+      fontSize: '4.5rem',
+      fontWeight: 100,
+      lineHeight: 1.3,
     },
     h2: {
-      fontSize: '2.488em',
+      fontFamily: ['Roboto', 'Arial', 'sans-serif'].join(),
+      fontSize: '2.0625rem',
+      fontWeight: 200,
+      lineHeight: 1.625,
     },
     h3: {
-      fontSize: '2.074em',
+      fontFamily: ['Arial', 'sans-serif'].join(),
+      fontSize: '1.375rem',
+      fontWeight: 400,
+      lineHeight: 1.3,
     },
     h4: {
-      fontSize: '1.728em',
+      fontFamily: ['Arial', 'sans-serif'].join(),
+      fontSize: '1em',
+      fontWeight: 400,
+      lineHeight: 1.625,
     },
     h5: {
-      fontSize: '1.44em',
+      fontFamily: ['Arial', 'sans-serif'].join(),
+      fontSize: '0.83em',
+      fontWeight: 400,
+      lineHeight: 1.625,
     },
     h6: {
-      fontSize: '1.2em',
+      fontFamily: ['Arial', 'sans-serif'].join(),
+      fontSize: '0.67em',
+      fontWeight: 400,
+      lineHeight: 1.625,
     },
     body1: {
       fontFamily: ['Arial', 'sans-serif'].join(),
-      fontSize: '18px',
-      lineHeight: '32px',
+      fontSize: '1em',
+      lineHeight: '1.625',
     },
     body2: {
-      fontSize: '16px'
-    }
+      fontSize: '.8em',
+      lineHeight: '1.625',
+    },
+    overline: {
+      fontSize: '.75rem',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+    },
   },
   palette: {
     primary: {
@@ -39,6 +62,9 @@ export const muiTheme = createMuiTheme({
     },
     secondary: {
       main: '#D81B60',
+    },
+    text: {
+      primary: '#222',
     },
   },
 });

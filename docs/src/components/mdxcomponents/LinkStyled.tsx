@@ -2,7 +2,7 @@ import { muiTheme } from '../../config/theme';
 import styled from 'styled-components';
 
 const LinkStyled = styled.a`
-  color: #646464;
+  color: ${muiTheme.palette.text.primary};
   text-decoration: none;
   -webkit-text-decoration-skip: objects;
   position: relative;
@@ -10,11 +10,11 @@ const LinkStyled = styled.a`
   &:before,
   &:after {
     content: "";
-    opacity: 0.6;
+    opacity: 0.5;
     z-index: -1;
     position: absolute;
-    height: 8px;
-    bottom: -1px;
+    height: 3px;
+    bottom: 0px;
     transition: 250ms ease-in-out;
   }
 
@@ -27,7 +27,7 @@ const LinkStyled = styled.a`
   &:after {
     right: -5px;
     width: 0%;
-    background-color: ${muiTheme.palette.primary.main};
+    background-color: ${muiTheme.palette.secondary.dark};
   }
 
   &:hover,

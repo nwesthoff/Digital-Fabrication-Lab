@@ -36,10 +36,15 @@ export default class NextPostLink extends Component<Props> {
           >
             Next Project:
           </Typography>
-          <Typography variant="h4" color="inherit">
+          <Typography variant="h2" component="h4" color="inherit">
             {this.props.title}
           </Typography>
-          <Typography variant="h6" color="inherit" style={{ opacity: 0.9 }}>
+          <Typography
+            variant="h3"
+            component="h6"
+            color="inherit"
+            style={{ opacity: 0.9 }}
+          >
             {this.props.subtitle}
           </Typography>
         </NextPostLinkContainer>
