@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".Request.Order">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="110dp">
 
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
@@ -35,7 +36,7 @@
                 android:id="@+id/upload_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Upload file"
+                android:text="Choose file"
                 android:textAlignment="center" />
 
             <Button
@@ -76,6 +77,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/payment" />
+
+            <EditText
+                android:id="@+id/baan_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Baancode"
+                android:visibility="invisible"
+                android:layout_marginLeft="30dp"/>
+
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm project" />
 
         </LinearLayout>
 
