@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,7 +48,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
         //TODO: currentUser=FirebaseAuth.getInstance().getCurrentUser()
         Post post=mPost.get(i);
-        //TODO Glide.with(mContext).load(post.getPostimage()).into(viewHolder:post_image);
+        Glide.with(mContext).load(post.getPostimage()).into(viewHolder:post_image);
 
         if (post.getDescription().equals("")){
             viewHolder.description.setVisibility(View.GONE);
