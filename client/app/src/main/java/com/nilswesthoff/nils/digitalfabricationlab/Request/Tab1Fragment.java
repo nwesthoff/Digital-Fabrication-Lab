@@ -34,7 +34,7 @@ public class Tab1Fragment extends Fragment {
         makeRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getActivity(), Order.class);
+                Intent in = new Intent(getActivity(), OrderTEST.class);
                 startActivity(in);
             }
         });

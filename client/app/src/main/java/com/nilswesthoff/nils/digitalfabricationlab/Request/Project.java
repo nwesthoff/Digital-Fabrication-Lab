@@ -1,47 +1,33 @@
 package com.nilswesthoff.nils.digitalfabricationlab.Request;
 
 public class Project {
-    private String ProjectId;
-    private String ProjectTitle;
-    private String Machine;
-    private String Description;
-    private String PaymentMethod;
+    private String projectID;
+    private String projecTitel;
+    //private String Machine;
+    private String projectDescription;
+    //private String PaymentMethod;
     //String Baancode;
 
-    public Project(String id, String title, String description, String course) {
+
+    public Project(String id, String projectTitel, String projectDescription) {
 
     }
 
-    public Project(String projectId, String projectTitle, String machine, String description, String paymentMethod, String baancode) {
-        ProjectId = projectId;
-        ProjectTitle = projectTitle;
-        Machine = machine;
-        Description = description;
-        PaymentMethod = paymentMethod;
-        //Baancode = baancode;
+    public Project(String projectID, String projecTitel) {
+        this.projectID = projectID;
+        this.projecTitel = projecTitel;
+        this.projectDescription = projectDescription;
     }
 
-    public String getProjectId() {
-        return ProjectId;
+    public String getProjectID() {
+        return projectID;
     }
 
-    public String getProjectTitle() {
-        return ProjectTitle;
+    public String getProjecTitel() {
+        return projecTitel;
     }
 
-    public String getMachine() {
-        return Machine;
+    public String getProjectDescription() {
+        return projectDescription;
     }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public String getPaymentMethod() {
-        return PaymentMethod;
-    }
-
-    //public String getBaancode() {
-    //    return Baancode;
-    //}
 }

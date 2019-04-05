@@ -223,17 +223,26 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
             String course = course_group.getText().toString().trim();
             //String baan = baan_code.getText().toString().trim();
 
+
             if (!TextUtils.isEmpty(title)) {
 
                 String id = databaseProjects.push().getKey();
-                Project project = new Project(id, title, Description, course);
+                //Project project = new Project(id, title, Description, course);
 
-                databaseProjects.child(id).setValue(project);
+                //databaseProjects.child(id).setValue(project);
+
+                //Confirmation text
+                Toast.makeText(this, "Project confirmed", Toast.LENGTH_LONG).show();
+
                 //Toast.makeText(this, "Title added", Toast.LENGTH_LONG).show();
 
             } else {
                 Toast.makeText(this, "Enter your Project Title", Toast.LENGTH_LONG).show();
             }
+
+            //TODO: go back to Requests page
+            //Intent in = new Intent(this, Tab1Fragment.class);
+            //startActivity(in);
 
         }
 
