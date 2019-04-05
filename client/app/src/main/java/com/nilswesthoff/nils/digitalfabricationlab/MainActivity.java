@@ -1,6 +1,7 @@
 package com.nilswesthoff.nils.digitalfabricationlab;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,6 +75,21 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        //TODO: kijken of bundel intent werkt (kan pas als post etc zichtbaarzijn, komt overeen met to do in comment adapter over mainactivity
+
+        Bundle intent = getIntent().getExtras();
+        if (intent!=null){
+            String publisher = intent.getString("publisherid");
+
+            SharedPreferences.Editor editor = getSharedPreferences("PREPS", MODE_PRIVATE).edit();
+            editor.putString("profileid", publisher);
+            editor.apply();
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                    new Profile().commit());
+        } else getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                new Tab3Fragment().commit());
+
     }
 
 

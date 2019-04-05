@@ -3,6 +3,7 @@ package com.nilswesthoff.nils.digitalfabricationlab.Profile.Request;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -50,5 +51,8 @@ public class Profile extends AppCompatActivity {
                         return false;
             }
         });
+    }
+
+    public Fragment commit() {
     }
 }
