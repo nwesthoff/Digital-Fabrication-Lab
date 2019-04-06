@@ -2,16 +2,23 @@ package com.nilswesthoff.nils.digitalfabricationlab.Request;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 import com.nilswesthoff.nils.digitalfabricationlab.RequestAdapter;
 
@@ -22,6 +29,7 @@ public class Tab1Fragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mlayoutManager;
+    public FirebaseFirestore db;
 
     @Nullable
     @Override
@@ -38,6 +46,23 @@ public class Tab1Fragment extends Fragment {
                 startActivity(in);
             }
         });
+
+        db = FirebaseFirestore.getInstance();
+
+        db.collection("orders")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
 
         /// DATA CREATED HERE, TODO: FILL WITH FIREBASE DATA
         ArrayList<RequestItem> requestItems = new ArrayList<>();
