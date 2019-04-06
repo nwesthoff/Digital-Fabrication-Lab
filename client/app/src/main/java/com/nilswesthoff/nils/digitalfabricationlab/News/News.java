@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.Request.Order;
 import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
@@ -29,19 +30,17 @@ public class News extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_profile:
-                        mMainNav.setItemBackgroundResource(R.color.Grey45);
                         Intent intent0 = new Intent(News.this, Profile.class);
                         startActivity(intent0);
                         break;
 
                     case R.id.nav_request:
-                        mMainNav.setItemBackgroundResource(R.color.Grey45);
-                        Intent intent1 = new Intent(News.this, Order.class);
+                        Intent intent1 = new Intent(News.this, MainActivity.class);
                         startActivity(intent1);
                         break;
 
                     case R.id.nav_news:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+
                         break;
 
                     default:

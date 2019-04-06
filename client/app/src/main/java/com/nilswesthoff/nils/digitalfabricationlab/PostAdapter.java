@@ -1,6 +1,7 @@
 package com.nilswesthoff.nils.digitalfabricationlab;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -17,7 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.nilswesthoff.nils.digitalfabricationlab.LoginRegister.News.Register;
 import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
+import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.User;
 
 import java.util.List;
 
@@ -26,7 +30,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public Context mContext;
     public List<Post> mPost;
 
-    private FirebaseUser firebaseUser;
+    private FirebaseUser currentUser;
+
 
     public PostAdapter(Context mContext, List<Post> mPost) {
         this.mContext = mContext;
@@ -42,11 +47,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i){
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i){
 
-        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        Post post=mPost.get(i);
-        //Glide.with(mContext).load(post.getPostimage()).into(viewHolder:post_image);
+        currentUser=FirebaseAuth.getInstance().getCurrentUser();
+        final Post post=mPost.get(i);
+
+        Glide.with(mContext).load(post.getPostimage()).into(viewHolder.post_image);
 
         if (post.getDescription().equals("")){
             viewHolder.description.setVisibility(View.GONE);
@@ -54,7 +60,44 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             viewHolder.description.setVisibility(View.VISIBLE);
             viewHolder.description.setText(post.getDescription());
         }
-        publisherInfo(viewHolder.image_profile, viewHolder.username,viewHolder.publisher, post.getPublisher());
+        publisherInfo(viewHolder.image_profile, viewHolder.fullname,viewHolder.publisher, post.getPublisher());
+        isLiked(post.getPostid(), viewHolder.like);
+        nrLikes(viewHolder.likes, post.getPostid());
+        getComments(post.getPostid(), viewHolder.comments);
+
+
+        viewHolder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(viewHolder.like.getTag().equals("like")){
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostid())
+                            .child(currentUser.getUid()).setValue(true);
+                } else {
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostid())
+                            .child(currentUser.getUid()).removeValue();
+                }
+            }
+        });
+
+        viewHolder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, CommentsActivity.class);
+                intent.putExtra("postid", post.getPostid());
+                intent.putExtra("publisherid", post.getPublisher());
+                mContext.startActivity(intent);
+            }
+        });
+
+        viewHolder.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, CommentsActivity.class);
+                intent.putExtra("postid", post.getPostid());
+                intent.putExtra("publisherid", post.getPublisher());
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 
@@ -66,7 +109,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView image_profile, post_image, like, comment, save;
-        public TextView username, likes, publisher, description, comments;
+        public TextView fullname, likes, publisher, description, comments;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,7 +119,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             like=itemView.findViewById(R.id.like);
             comment=itemView.findViewById(R.id.comment);
             save=itemView.findViewById(R.id.save);
-            username=itemView.findViewById(R.id.username);
+            fullname=itemView.findViewById(R.id.fullname);
             likes=itemView.findViewById(R.id.likes);
             publisher=itemView.findViewById(R.id.publisher);
             description=itemView.findViewById(R.id.description);
@@ -84,18 +127,80 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         }
     }
 
-    private void publisherInfo(final ImageView image_profile, final TextView username, TextView publisher, String userid) {
+    private void getComments(String postid, final TextView comments){
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("comments").child(postid);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                comments.setText("View all " +dataSnapshot.getChildrenCount()+" Comments");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void isLiked (String postid, final ImageView imageView ){
+
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference()
+                .child("likes")
+                .child(postid);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(currentUser.getUid()).exists()){
+                    imageView.setImageResource(R.drawable.ic_liked);
+                    imageView.setTag("liked");
+                } else {
+                    imageView.setImageResource(R.drawable.ic_like);
+                    imageView.setTag("Like");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void nrLikes(final TextView likes, String postid){
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("Likes")
+                .child(postid);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                likes.setText(dataSnapshot.getChildrenCount()+"Likes");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void publisherInfo(ImageView image_profile, final TextView fullname, final TextView publisher, String userid) {
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile user=dataSnapshot.getValue(Profile.class);
-
-
+                User user=dataSnapshot.getValue(User.class);
+                Glide.with(mContext).load(user.getImageurl());
+                //TODO wij hebben geen User met volgers, heb nu de tutorial gevolgd maar moeten dit nog even uitzoeken hoe we alles wat geupload wordt laten zien.
+                //https://www.youtube.com/watch?v=mk2CrU-awkM&list=PLzLFqCABnRQduspfbu2empaaY9BoIGLDM&index=7
+                fullname.setText(user.getFullname());
+                publisher.setText(user.getFullname());
             }
-//TODO wij hebben geen User met volgers, heb nu de tutorial gevolgd maar moeten dit nog even uitzoeken hoe we alles wat geupload wordt laten zien.
-            //https://www.youtube.com/watch?v=mk2CrU-awkM&list=PLzLFqCABnRQduspfbu2empaaY9BoIGLDM&index=7
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
