@@ -18,9 +18,9 @@ import android.view.MenuItem;
 
 import com.nilswesthoff.nils.digitalfabricationlab.News.News;
 import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.ProfileActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab1Fragment;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab2Fragment;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab3Fragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.ProjectTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.RequestTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.PrinterTabFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         }
 //        else {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.container,
-//                    new Tab3Fragment().commit());
+//                    new ProjectTabFragment().commit());
 //        }
 
     }
@@ -125,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new Tab1Fragment();
+                    fragment = new RequestTabFragment();
                     break;
                 case 1:
-                    fragment = new Tab2Fragment();
+                    fragment = new PrinterTabFragment();
                     break;
                 case 2:
-                    fragment = new Tab3Fragment();
+                    fragment = new ProjectTabFragment();
                     break;
             }
             return fragment;

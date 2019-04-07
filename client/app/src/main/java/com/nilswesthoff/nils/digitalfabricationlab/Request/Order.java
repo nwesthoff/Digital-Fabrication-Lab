@@ -249,7 +249,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
 
             //Confirmation text
             Toast.makeText(this, "Order confirmed", Toast.LENGTH_LONG).show();
-//            Intent intent1 = new Intent(Order.this, Tab1Fragment.class);
+//            Intent intent1 = new Intent(Order.this, RequestTabFragment.class);
 //            startActivity(intent1);
 
         } else {

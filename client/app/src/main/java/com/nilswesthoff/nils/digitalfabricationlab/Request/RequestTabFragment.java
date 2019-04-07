@@ -24,8 +24,8 @@ import com.nilswesthoff.nils.digitalfabricationlab.RequestAdapter;
 
 import java.util.ArrayList;
 
-public class Tab1Fragment extends Fragment {
-    private static final String TAG = "Tab1Fragment";
+public class RequestTabFragment extends Fragment {
+    private static final String TAG = "RequestTabFragment";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mlayoutManager;
