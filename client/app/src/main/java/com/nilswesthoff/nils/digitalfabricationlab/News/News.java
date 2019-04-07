@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.ProfileActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.Request.Order;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 public class News extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class News extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_profile:
-                        Intent intent0 = new Intent(News.this, Profile.class);
+                        Intent intent0 = new Intent(News.this, ProfileActivity.class);
                         startActivity(intent0);
                         break;
 

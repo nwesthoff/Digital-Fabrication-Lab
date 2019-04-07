@@ -1,31 +1,31 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Comments;
 
 public class Comment {
 
-    private String comment;
-    private String publisher;
+    private String mComment;
+    private String mPublisher;
 
     public Comment(String comment, String publisher) {
-        this.comment = comment;
-        this.publisher = publisher;
+        mComment = comment;
+        mPublisher = publisher;
     }
 
     public Comment() {
     }
 
     public String getComment() {
-        return comment;
+        return mComment;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        mComment = comment;
     }
 
     public String getPublisher() {
-        return publisher;
+        return mPublisher;
     }
 
     public void setPublisher(String publisher) {
-        this.publisher = publisher;
+        mPublisher = publisher;
     }
 }

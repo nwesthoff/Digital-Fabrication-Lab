@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                             //check if successful
                             if (task.isSuccessful()) {
                                 //User is successfully registered and logged in
-                                //start Profile Activity here
+                                //start ProfileActivity Activity here
                                 Toast.makeText(LoginActivity.this, "registration successful",
                                         Toast.LENGTH_SHORT).show();
                                 finish();

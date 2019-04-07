@@ -1,16 +1,15 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Comments;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,19 +21,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.User;
+import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.User;
+import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class CommentsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private CommentsAdapter commentsAdapter;
-    private List<Comment> commentList;
+    private ArrayList<Comment> commentList;
 
-    EditText addcomment;
+    EditText addComment;
     ImageView image_profile;
     TextView post;
 
@@ -48,7 +47,7 @@ public class CommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-        Toolbar toolbar=findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Comments");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,30 +59,31 @@ public class CommentsActivity extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         commentList = new ArrayList<>();
-        commentsAdapter = new CommentsAdapter(this, commentList);
+        commentList.add(new Comment("Hallo", "Nils Westhoff"));
+
+        commentsAdapter = new CommentsAdapter(commentList);
         recyclerView.setAdapter(commentsAdapter);
 
-        addcomment=findViewById(R.id.add_comment);
-        image_profile=findViewById(R.id.image_profile);
-        post=findViewById(R.id.post);
+        addComment = findViewById(R.id.add_comment);
+        image_profile = findViewById(R.id.image_profile);
+        post = findViewById(R.id.post);
 
-        currentUser= FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         Intent intent = getIntent();
-        postid=intent.getStringExtra("postid");
-        publisherid=intent.getStringExtra("publisherid");
+        postid = intent.getStringExtra("postid");
+        publisherid = intent.getStringExtra("publisherid");
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(addcomment.getText().toString().equals("")){
+                if (addComment.getText().toString().equals("")) {
                     Toast.makeText(CommentsActivity.this, "You can't send empty comment", Toast.LENGTH_SHORT).show();
-                } else{
-                    addcomment();
+                } else {
+                    addComment();
                 }
             }
         });
@@ -92,19 +92,19 @@ public class CommentsActivity extends AppCompatActivity {
         readComments();
     }
 
-    private void addcomment() {
+    private void addComment() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postid);
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("comment", addcomment.getText().toString());
+        hashMap.put("comment", addComment.getText().toString());
         hashMap.put("publisher", currentUser.getUid());
 
         reference.push().setValue(hashMap);
-        addcomment.setText("");
+        addComment.setText("");
     }
 
-    private void getImage(){
-        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+    private void getImage() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,14 +120,14 @@ public class CommentsActivity extends AppCompatActivity {
         });
     }
 
-    private void readComments (){
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Comments").child(postid);
+    private void readComments() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 commentList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Comment comment = snapshot.getValue(Comment.class);
                     commentList.add(comment);
                 }
@@ -141,7 +141,6 @@ public class CommentsActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }

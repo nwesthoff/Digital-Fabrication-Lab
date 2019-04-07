@@ -114,7 +114,4 @@ public class Tab3Fragment extends Fragment {
 
         });
     }
-
-    public Fragment commit() {
-    }
 }

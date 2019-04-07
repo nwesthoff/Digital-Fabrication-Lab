@@ -17,7 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nilswesthoff.nils.digitalfabricationlab.News.News;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
+import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.ProfileActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab1Fragment;
 import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab2Fragment;
 import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab3Fragment;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_profile:
-                        Intent intent1 = new Intent(MainActivity.this, Profile.class);
+                        Intent intent1 = new Intent(MainActivity.this, ProfileActivity.class);
                         startActivity(intent1);
                         break;
 
@@ -78,17 +78,21 @@ public class MainActivity extends AppCompatActivity {
         //TODO: kijken of bundel intent werkt (kan pas als post etc zichtbaarzijn, komt overeen met to do in comment adapter over mainactivity
 
         Bundle intent = getIntent().getExtras();
-        if (intent!=null){
+        if (intent != null) {
             String publisher = intent.getString("publisherid");
 
             SharedPreferences.Editor editor = getSharedPreferences("PREPS", MODE_PRIVATE).edit();
             editor.putString("profileid", publisher);
             editor.apply();
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                    new Profile().commit());
-        } else getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                new Tab3Fragment().commit());
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                    new ProfileActivity());
+            transaction.commit();
+        }
+//        else {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                    new Tab3Fragment().commit());
+//        }
 
     }
 
