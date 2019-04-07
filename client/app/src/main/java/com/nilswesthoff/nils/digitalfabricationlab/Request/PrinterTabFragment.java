@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
-public class Tab2Fragment extends Fragment {
-    private static final String TAG = "Tab2Fragment";
+public class PrinterTabFragment extends Fragment {
+    private static final String TAG = "PrinterTabFragment";
 
     @Nullable
     @Override

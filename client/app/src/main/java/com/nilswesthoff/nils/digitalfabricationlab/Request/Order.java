@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -26,6 +27,9 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Order extends AppCompatActivity implements View.OnClickListener {
@@ -98,13 +102,14 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
         });
 
         //choose machine dropdown TODO: Make 1st option grey/not // done
-        Spinner spinner_machine = (Spinner) findViewById(R.id.choose_machine);
-        ArrayAdapter<CharSequence> adapter_machine = ArrayAdapter.createFromResource(this,
-                R.array.machine, android.R.layout.simple_spinner_item);
-        adapter_machine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_machine.setAdapter(adapter_machine);
+        CollectionReference PrintersRef = db.collection("Printers");
+        Spinner PrinterSpinner = findViewById(R.id.choose_machine);
+        List<String> Printers = new ArrayList<>();
+        ArrayAdapter<String> PrinterAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Printers);
+        PrinterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        PrinterSpinner.setAdapter(PrinterAdapter);
 
-        spinner_machine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        PrinterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent2, View view, int position, long l) {
 
@@ -244,7 +249,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
 
             //Confirmation text
             Toast.makeText(this, "Order confirmed", Toast.LENGTH_LONG).show();
-//            Intent intent1 = new Intent(Order.this, Tab1Fragment.class);
+//            Intent intent1 = new Intent(Order.this, RequestTabFragment.class);
 //            startActivity(intent1);
 
         } else {

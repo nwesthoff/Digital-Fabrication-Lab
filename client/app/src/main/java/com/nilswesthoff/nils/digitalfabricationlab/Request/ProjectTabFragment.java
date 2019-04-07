@@ -26,8 +26,8 @@ import com.nilswesthoff.nils.digitalfabricationlab.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tab3Fragment extends Fragment {
-    private static final String TAG = "Tab3Fragment";
+public class ProjectTabFragment extends Fragment {
+    private static final String TAG = "ProjectTabFragment";
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList;
@@ -113,8 +113,5 @@ public class Tab3Fragment extends Fragment {
             }
 
         });
-    }
-
-    public Fragment commit() {
     }
 }
