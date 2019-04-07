@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,35 +16,40 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nilswesthoff.nils.digitalfabricationlab.Printers.Printer;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Order extends AppCompatActivity implements View.OnClickListener {
-
+public class CreateOrderActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int PICK_FILE_REQUEST = 234;
 
     EditText project_title;
     EditText description;
-    Spinner choose_machine;
+    private ArrayAdapter<Printer> printerAdapter;
+    private List<Printer> Printers;
     EditText course_group;
     EditText baan_code;
+    private String clickedPrinterId;
 
     private Button chooseButton, uploadButton;
     private Button confirmButton;
-    private static final String TAG = "Order Activity";
-
+    private static final String TAG = "CreateOrderActivity Activity";
 
     private Uri filePath;
 
@@ -102,32 +106,44 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
         });
 
         //choose machine dropdown TODO: Make 1st option grey/not // done
+        Printers = new ArrayList<>();
+
         CollectionReference PrintersRef = db.collection("Printers");
-        Spinner PrinterSpinner = findViewById(R.id.choose_machine);
-        List<String> Printers = new ArrayList<>();
-        ArrayAdapter<String> PrinterAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Printers);
-        PrinterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        PrinterSpinner.setAdapter(PrinterAdapter);
-
-        PrinterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        PrintersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent2, View view, int position, long l) {
-
-                if (parent2.getItemAtPosition(position).equals("Choose machine")) {
-                    //do nothing
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Printer printers = document.toObject(Printer.class);
+                        Printers.add(printers);
+                    }
                 } else {
-                    //on selecting spinner item
-                    String item = parent2.getItemAtPosition(position).toString();
-
-                    //show selected spinner item
-                    Toast.makeText(parent2.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
-
-                    //if we want to do something else with the selection, do it here
+//                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
+            }
+        });
+
+
+        Spinner printerSpinner = findViewById(R.id.choose_machine);
+        printerAdapter = new ArrayAdapter<>(CreateOrderActivity.this, android.R.layout.simple_spinner_item, Printers);
+        printerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        printerSpinner.setAdapter(printerAdapter);
+
+        printerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //on selecting spinner item
+                String item = parent.getItemAtPosition(position).toString();
+                String clickedPrinterId = printerAdapter.getItem(position).getId();
+
+                //show selected spinner item
+                Toast.makeText(printerAdapter.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
+
+                //if we want to do something else with the selection, do it here
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> PrinterAdapter) {
 
                 //TODO: Auto-generator method stub
 
@@ -136,7 +152,6 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
 
         project_title = findViewById(R.id.project_title);
         description = findViewById(R.id.description);
-        choose_machine = findViewById(R.id.choose_machine);
         course_group = findViewById(R.id.course_group);
         confirmButton = findViewById(R.id.confirm_button);
         baan_code = findViewById((R.id.baan_code));
@@ -225,7 +240,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
 
     private void filledIn() {
         String title = project_title.getText().toString().trim();
-        String printer = choose_machine.getSelectedItem().toString();
+        String printer = clickedPrinterId;
         String Description = description.getText().toString().trim();
         String course = course_group.getText().toString().trim();
         String baan = baan_code.getText().toString().trim();
@@ -238,22 +253,22 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
             db.collection("Orders").add(project).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
-                    Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+//                    Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "Error adding document", e);
+//                    Log.w(TAG, "Error adding document", e);
                 }
             });
 
             //Confirmation text
-            Toast.makeText(this, "Order confirmed", Toast.LENGTH_LONG).show();
-//            Intent intent1 = new Intent(Order.this, RequestTabFragment.class);
+            Toast.makeText(this, "CreateOrderActivity confirmed", Toast.LENGTH_LONG).show();
+//            Intent intent1 = new Intent(CreateOrderActivity.this, RequestTabFragment.class);
 //            startActivity(intent1);
 
         } else {
-            Toast.makeText(this, "Enter your Order Title", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Enter your CreateOrderActivity Title", Toast.LENGTH_LONG).show();
         }
 
 

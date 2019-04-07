@@ -42,7 +42,7 @@ public class RequestTabFragment extends Fragment {
         makeRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getActivity(), Order.class);
+                Intent in = new Intent(getActivity(), CreateOrderActivity.class);
                 startActivity(in);
             }
         });
@@ -66,9 +66,9 @@ public class RequestTabFragment extends Fragment {
 
         /// DATA CREATED HERE, TODO: FILL WITH FIREBASE DATA
         ArrayList<RequestItem> requestItems = new ArrayList<>();
-        requestItems.add(new RequestItem(R.drawable.upload_button, "Order 1", "Order 1 line 2"));
-        requestItems.add(new RequestItem(R.drawable.upload_button, "Order 2", "Order 2 line 2"));
-        requestItems.add(new RequestItem(R.drawable.upload_button, "Order 3", "Order 3 line 2"));
+        requestItems.add(new RequestItem(R.drawable.upload_button, "CreateOrderActivity 1", "CreateOrderActivity 1 line 2"));
+        requestItems.add(new RequestItem(R.drawable.upload_button, "CreateOrderActivity 2", "CreateOrderActivity 2 line 2"));
+        requestItems.add(new RequestItem(R.drawable.upload_button, "CreateOrderActivity 3", "CreateOrderActivity 3 line 2"));
 
 
         // Init Recyclerview

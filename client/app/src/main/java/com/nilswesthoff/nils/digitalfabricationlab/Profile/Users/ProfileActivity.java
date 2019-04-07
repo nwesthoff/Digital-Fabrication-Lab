@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.News.News;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Order;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.CreateOrderActivity;
 
 public class ProfileActivity extends Fragment {
 
     private BottomNavigationView mMainNav;
-    private Order order;
+    private CreateOrderActivity createOrderActivity;
     private News news;
 
     @Override
