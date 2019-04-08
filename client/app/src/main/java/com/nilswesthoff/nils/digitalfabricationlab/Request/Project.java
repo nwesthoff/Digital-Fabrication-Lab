@@ -11,14 +11,16 @@ public class Project {
     private String course;
     private String baan;
     private Date date;
+    private Number status;
 
-    public Project(String titel, String description, DocumentReference printer, String course, String baan, Date date) {
+    public Project(String titel, String description, DocumentReference printer, String course, String baan, Date date, Number status) {
         this.title = titel;
         this.printer = printer;
         this.description = description;
         this.course = course;
         this.baan = baan;
         this.date = date;
+        this.status = status;
     }
 
     public String getTitle() {
@@ -43,5 +45,9 @@ public class Project {
 
     public DocumentReference getPrinter() {
         return printer;
+    }
+
+    public Number getStatus() {
+        return status;
     }
 }

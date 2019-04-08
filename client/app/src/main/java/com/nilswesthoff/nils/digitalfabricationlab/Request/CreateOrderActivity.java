@@ -260,28 +260,32 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
         String course = course_group.getText().toString().trim();
         String baan = baan_code.getText().toString().trim();
         Date date = new Date();
+        Number status = 0;
 
 
         if (!TextUtils.isEmpty(title)) {
 
-            Project project = new Project(title, Description, printer, course, baan, date);
+            Project project = new Project(title, Description, printer, course, baan, date, status);
 
             db.collection("Orders").add(project).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                    //Confirmation text
+                    Toast.makeText(CreateOrderActivity.this, "CreateOrderActivity confirmed", Toast.LENGTH_LONG).show();
+
+                    Intent intent1 = new Intent(CreateOrderActivity.this, RequestTabFragment.class);
+                    startActivity(intent1);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.w(TAG, "Error adding document", e);
+                    //Confirmation text
+                    Toast.makeText(CreateOrderActivity.this, "Error adding project", Toast.LENGTH_LONG).show();
                 }
             });
 
-            //Confirmation text
-            Toast.makeText(this, "CreateOrderActivity confirmed", Toast.LENGTH_LONG).show();
-            Intent intent1 = new Intent(CreateOrderActivity.this, RequestTabFragment.class);
-            startActivity(intent1);
 
         } else {
             Toast.makeText(this, "Enter your CreateOrderActivity Title", Toast.LENGTH_LONG).show();
