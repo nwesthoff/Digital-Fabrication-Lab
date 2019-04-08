@@ -23,7 +23,7 @@ export enum StatusInstance {
 
 export interface UserInstance {
   id: string;
-  name: string;
+  name?: string;
   email?: string;
 }
 
