@@ -8,8 +8,7 @@ public class Printer {
 
     }
 
-    public Printer(String id, String name, Boolean online) {
-        this.id = id;
+    public Printer(String key, String name, Boolean online) {
         this.name = name;
         this.online = online;
     }
@@ -28,6 +27,11 @@ public class Printer {
 
     @Override
     public String toString() {
-        return getName(); // You can add anything else like maybe getDrinkType()
+        return getName();
+    }
+
+    public Printer withId(String id) {
+        this.id = id;
+        return this;
     }
 }

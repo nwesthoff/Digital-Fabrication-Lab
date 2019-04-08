@@ -1,18 +1,24 @@
 package com.nilswesthoff.nils.digitalfabricationlab.Request;
 
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.Date;
+
 public class Project {
     private String title;
     private String description;
-    private String printer;
+    private DocumentReference printer;
     private String course;
     private String baan;
+    private Date date;
 
-    public Project(String titel, String description, String printer, String course, String baan) {
+    public Project(String titel, String description, DocumentReference printer, String course, String baan, Date date) {
         this.title = titel;
         this.printer = printer;
         this.description = description;
         this.course = course;
         this.baan = baan;
+        this.date = date;
     }
 
     public String getTitle() {
@@ -31,7 +37,11 @@ public class Project {
         return description;
     }
 
-    public String getPrinter() {
+    public Date getDate() {
+        return date;
+    }
+
+    public DocumentReference getPrinter() {
         return printer;
     }
 }
