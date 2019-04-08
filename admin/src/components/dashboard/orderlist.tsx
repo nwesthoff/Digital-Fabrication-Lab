@@ -131,7 +131,9 @@ export default class OrderList extends React.Component<Props> {
                     </TableCell>
                     <TableCell>{order.title}</TableCell>
                     <TableCell>
-                      {order.status ? StatusInstance[order.status] : "unknown"}
+                      {order.status || order.status === 0
+                        ? StatusInstance[order.status]
+                        : "unknown"}
                     </TableCell>
                     <TableCell>
                       {order.files ? (

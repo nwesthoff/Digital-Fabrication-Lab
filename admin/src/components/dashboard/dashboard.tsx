@@ -30,6 +30,7 @@ export interface UserInstance {
 export interface Order {
   id: string;
   title?: string;
+  user?: UserInstance;
   invoice_no?: string;
   date?: Date;
   printer?: PrinterInstance;
