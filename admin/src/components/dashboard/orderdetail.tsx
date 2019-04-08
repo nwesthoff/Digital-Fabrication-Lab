@@ -125,7 +125,7 @@ export default class OrderDetail extends React.Component<Props> {
                 <ListItemAvatar>
                   <Avatar>?</Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={orderBy && orderBy.name} />
+                <ListItemText primary={dataStore.selectedOrder.user.name} />
               </ListItem>
             </StyledList>
             <MobileStepper
@@ -201,11 +201,13 @@ export default class OrderDetail extends React.Component<Props> {
               </List>
             </StyledCardContent>
             <CardActions>
-              {orderBy ? (
-                <Button color="primary" href={`mailto:${orderBy.email}`}>
-                  <EmailIcon style={{ marginRight: ".4rem" }} /> Send mail
-                </Button>
-              ) : null}
+              <Button
+                color="primary"
+                href={`mailto:${dataStore.selectedOrder.user.email}`}
+              >
+                <EmailIcon style={{ marginRight: ".4rem" }} /> Send mail
+              </Button>
+
               {dataStore.selectedOrder && dataStore.selectedOrder.files ? (
                 <Button color="secondary" onClick={this.handleDownloadFiles}>
                   <CloudDownloadIcon style={{ marginRight: ".4rem" }} />{" "}

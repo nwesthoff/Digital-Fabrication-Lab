@@ -14,18 +14,11 @@
         completions." </string>
 
     <string-array name="payment">
-        <item> Choose payment method: </item>
+        <item> Choose payment method </item>
         <item> At Digital Fabrication Lab </item>
         <item> Baancode </item>
     </string-array>
 
-    <string-array name="machine">
-        <item> Choose machine: </item>
-        <item> Connex 3 </item>
-        <item> Form2 </item>
-        <item> Ultimaker </item>
-        <item> Lasercutter </item>
-    </string-array>
     <string name="title_activity_requests">Requests</string>
     <string name="tab_text_1">Requests</string>
     <string name="tab_text_2">Printers</string>

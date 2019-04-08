@@ -1,6 +1,7 @@
 package com.nilswesthoff.nils.digitalfabricationlab;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,10 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nilswesthoff.nils.digitalfabricationlab.News.News;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Request.Profile;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab1Fragment;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab2Fragment;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Tab3Fragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.ProfileActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.ProjectTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.RequestTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.PrinterTabFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,12 +57,12 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_profile:
-                        Intent intent1 = new Intent(MainActivity.this, Profile.class);
+                        Intent intent1 = new Intent(MainActivity.this, ProfileActivity.class);
                         startActivity(intent1);
                         break;
 
                     case R.id.nav_request:
-                        mMainNav.setItemBackgroundResource(R.color.colorPrimary);
+
                         break;
 
                     case R.id.nav_news:
@@ -73,6 +75,25 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        //TODO: kijken of bundel intent werkt (kan pas als post etc zichtbaarzijn, komt overeen met to do in comment adapter over mainactivity
+
+        Bundle intent = getIntent().getExtras();
+        if (intent != null) {
+            String publisher = intent.getString("publisherid");
+
+            SharedPreferences.Editor editor = getSharedPreferences("PREPS", MODE_PRIVATE).edit();
+            editor.putString("profileid", publisher);
+            editor.apply();
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                    new ProfileActivity());
+            transaction.commit();
+        }
+//        else {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                    new ProjectTabFragment().commit());
+//        }
+
     }
 
 
@@ -104,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new Tab1Fragment();
+                    fragment = new RequestTabFragment();
                     break;
                 case 1:
-                    fragment = new Tab2Fragment();
+                    fragment = new PrinterTabFragment();
                     break;
                 case 2:
-                    fragment = new Tab3Fragment();
+                    fragment = new ProjectTabFragment();
                     break;
             }
             return fragment;

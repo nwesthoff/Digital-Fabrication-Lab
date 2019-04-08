@@ -1,28 +1,33 @@
-package com.nilswesthoff.nils.digitalfabricationlab.News;
+package com.nilswesthoff.nils.digitalfabricationlab.Profile.Users;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.ProfileActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.CreateOrderActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.News.News;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.CreateOrderActivity;
 
-public class News extends AppCompatActivity {
+public class ProfileActivity extends Fragment {
+
     private BottomNavigationView mMainNav;
     private CreateOrderActivity createOrderActivity;
-    private News  news;
+    private News news;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_profile, container, false);
 
-        mMainNav=(BottomNavigationView) findViewById(R.id.main_nav);
+
+        mMainNav = view.findViewById(R.id.main_nav);
 
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -30,17 +35,17 @@ public class News extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_profile:
-                        Intent intent0 = new Intent(News.this, ProfileActivity.class);
-                        startActivity(intent0);
+
                         break;
 
                     case R.id.nav_request:
-                        Intent intent1 = new Intent(News.this, MainActivity.class);
+                        Intent intent1 = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent1);
                         break;
 
                     case R.id.nav_news:
-
+                        Intent intent2 = new Intent(getActivity(), News.class);
+                        startActivity(intent2);
                         break;
 
                     default:
@@ -48,5 +53,7 @@ public class News extends AppCompatActivity {
                 return false;
             }
         });
+
+        return view;
     }
 }
