@@ -125,7 +125,12 @@ export default class OrderDetail extends React.Component<Props> {
                 <ListItemAvatar>
                   <Avatar>?</Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={dataStore.selectedOrder.user.name} />
+                <ListItemText
+                  primary={
+                    dataStore.selectedOrder.user &&
+                    dataStore.selectedOrder.user.name
+                  }
+                />
               </ListItem>
             </StyledList>
             <MobileStepper
@@ -203,7 +208,8 @@ export default class OrderDetail extends React.Component<Props> {
             <CardActions>
               <Button
                 color="primary"
-                href={`mailto:${dataStore.selectedOrder.user.email}`}
+                href={`mailto:${dataStore.selectedOrder.user &&
+                  dataStore.selectedOrder.user.email}`}
               >
                 <EmailIcon style={{ marginRight: ".4rem" }} /> Send mail
               </Button>
