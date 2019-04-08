@@ -17,35 +17,40 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nilswesthoff.nils.digitalfabricationlab.Printers.Printer;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
-public class Order extends AppCompatActivity implements View.OnClickListener {
-
+public class CreateOrderActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int PICK_FILE_REQUEST = 234;
 
     EditText project_title;
     EditText description;
-    Spinner choose_machine;
+    private List<Printer> Printers;
+    private ArrayAdapter<Printer> printerAdapter;
     EditText course_group;
     EditText baan_code;
+    private String clickedPrinterId;
 
     private Button chooseButton, uploadButton;
-    private Button confirmButton;
-    private static final String TAG = "Order Activity";
-
+    private static final String TAG = "CreateOrderActivity";
 
     private Uri filePath;
 
@@ -101,49 +106,50 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
+
         //choose machine dropdown TODO: Make 1st option grey/not // done
-        CollectionReference PrintersRef = db.collection("Printers");
-        Spinner PrinterSpinner = findViewById(R.id.choose_machine);
-        List<String> Printers = new ArrayList<>();
-        ArrayAdapter<String> PrinterAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Printers);
-        PrinterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        PrinterSpinner.setAdapter(PrinterAdapter);
-
-        PrinterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Printers = new ArrayList<>();
+        readData(new FirestoreCallback() {
             @Override
-            public void onItemSelected(AdapterView<?> parent2, View view, int position, long l) {
+            public void onCallback(List<Printer> printers) {
+                Spinner printerSpinner = findViewById(R.id.choose_machine);
 
-                if (parent2.getItemAtPosition(position).equals("Choose machine")) {
-                    //do nothing
-                } else {
-                    //on selecting spinner item
-                    String item = parent2.getItemAtPosition(position).toString();
+                printerAdapter = new ArrayAdapter<>(CreateOrderActivity.this, android.R.layout.simple_spinner_item, printers);
+                printerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                printerSpinner.setAdapter(printerAdapter);
 
-                    //show selected spinner item
-                    Toast.makeText(parent2.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
+                printerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //on selecting spinner item
+                        String item = parent.getItemAtPosition(position).toString();
+                        clickedPrinterId = printerAdapter.getItem(position).getId();
 
-                    //if we want to do something else with the selection, do it here
-                }
-            }
+                        //show selected spinner item
+                        Toast.makeText(printerAdapter.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                        //if we want to do something else with the selection, do it here
+                    }
 
-                //TODO: Auto-generator method stub
+                    @Override
+                    public void onNothingSelected(AdapterView<?> PrinterAdapter) {
 
+                        //TODO: Auto-generator method stub
+
+                    }
+                });
             }
         });
 
+
         project_title = findViewById(R.id.project_title);
         description = findViewById(R.id.description);
-        choose_machine = findViewById(R.id.choose_machine);
         course_group = findViewById(R.id.course_group);
-        confirmButton = findViewById(R.id.confirm_button);
+        Button confirmButton = findViewById(R.id.confirm_button);
         baan_code = findViewById((R.id.baan_code));
 
 
         // TODO: upload button uploads the WHOLE project to Firebase, including title etc.
-
         chooseButton.setOnClickListener(this);
         uploadButton.setOnClickListener(this);
 
@@ -153,6 +159,30 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
                 filledIn();
             }
         });
+    }
+
+    private void readData(final FirestoreCallback firestoreCallback) {
+        CollectionReference PrintersRef = db.collection("Printers");
+        PrintersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Printer printers = document.toObject(Printer.class).withId(document.getId());
+                        if (printers.getOnline()) {
+                            Printers.add(printers);
+                        }
+                    }
+                    firestoreCallback.onCallback(Printers);
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
+    private interface FirestoreCallback {
+        void onCallback(List<Printer> printers);
     }
 
     private void showFileChooser() {
@@ -224,16 +254,17 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void filledIn() {
+        DocumentReference printer = db.collection("Printers").document(clickedPrinterId);
         String title = project_title.getText().toString().trim();
-        String printer = choose_machine.getSelectedItem().toString();
         String Description = description.getText().toString().trim();
         String course = course_group.getText().toString().trim();
         String baan = baan_code.getText().toString().trim();
+        Date date = new Date();
 
 
         if (!TextUtils.isEmpty(title)) {
 
-            Project project = new Project(title, Description, printer, course, baan);
+            Project project = new Project(title, Description, printer, course, baan, date);
 
             db.collection("Orders").add(project).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
@@ -248,12 +279,12 @@ public class Order extends AppCompatActivity implements View.OnClickListener {
             });
 
             //Confirmation text
-            Toast.makeText(this, "Order confirmed", Toast.LENGTH_LONG).show();
-//            Intent intent1 = new Intent(Order.this, RequestTabFragment.class);
-//            startActivity(intent1);
+            Toast.makeText(this, "CreateOrderActivity confirmed", Toast.LENGTH_LONG).show();
+            Intent intent1 = new Intent(CreateOrderActivity.this, RequestTabFragment.class);
+            startActivity(intent1);
 
         } else {
-            Toast.makeText(this, "Enter your Order Title", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Enter your CreateOrderActivity Title", Toast.LENGTH_LONG).show();
         }
 
 

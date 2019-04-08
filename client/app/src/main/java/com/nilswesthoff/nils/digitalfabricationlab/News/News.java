@@ -9,12 +9,12 @@ import android.view.MenuItem;
 
 import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.ProfileActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.Order;
+import com.nilswesthoff.nils.digitalfabricationlab.Request.CreateOrderActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 public class News extends AppCompatActivity {
     private BottomNavigationView mMainNav;
-    private Order order;
+    private CreateOrderActivity createOrderActivity;
     private News  news;
 
     @Override
