@@ -98,13 +98,6 @@ export default class OrderDetail extends React.Component<Props> {
   };
 
   render() {
-    const orderBy =
-      dataStore.selectedOrder && dataStore.selectedOrder.order_by
-        ? dataStore.users.find(user => {
-            return user.id === dataStore.selectedOrder.order_by.id;
-          })
-        : null;
-
     return (
       <Card>
         {dataStore.selectedOrder ? (
