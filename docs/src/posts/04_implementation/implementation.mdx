@@ -6,15 +6,26 @@ date: "2019-04-04"
 
 # Java concepts
 
-Present the class diagram of your software concept and discuss the choices you have made for structuring the classes. Include the Java code of your classes in appendix A.
+Before we started programming in Android Studio, we divided the our main functionalities over the group. Annemar started working on the Login and Profile page, Avelien on the Order page and Nils on the Admin web page.
+
+The first thing we discovered while programming in java, is that we had to make many more classes than we thought. We went from 4 classes to FIXME classes (see figure FIXME).
+
+- Class diagram uit Android studio
 
 # Android concepts
 
-Present activity, fragment and intent structure in a diagram of your software solution. Explain the decisions behind choosing your implementation. Make the necessary references to Appendix B!
+We used three fragments to switch quickly between the different tabs in the app; Requests, Printers and Showcase. Combined with the bottom navigation bar, to navigate to the news and profile page, the user can find all pages quickly.
+
+Since the tabs, request, printers and showcase are all related to the order made by the students we chose to use them as fragments. The pages Request, News and Profile are however not related to each other and therefore these are separated activities.
+
+- Intent structure image > de flow door de app in android studio
 
 # Implementation of GUI
 
-Discuss the choices of your GUI elements! Present how these GUI elements facilitate interaction with your software. Make the necessary references to Appendix C!
+Requests page looks a bit like Instagram feed.
+Showcase looks like Instagram feed.
+
+- Plaatjes uit android studio
 
 ```java
 public class MainActivity extends AppCompatActivity {
@@ -124,7 +135,15 @@ public class MainActivity extends AppCompatActivity {
 
 # Implementation of database, sensor, multimedia technologies
 
-Present at least two technology solutions related to database management, sensor data handling, multimedia management, camera handling, or connectivity. Discuss the challenges and their solutions you faced during the implementation of your prototype software. Put the related software code into Appendix D.
-Database: Discuss the structure or relational database applied in your software prototype. Present the query that you have implemented and how they are fulfilling user requirements.
-Sensor: Discuss which sensor technologies have been applied in your software, and how they are monitored and how you analyse their results. Present how their data is stored in your solution.
-Multimedia: Discuss which multimedia technologies have been applied in your software. How multimedia content is captured and imported, what representations you had to develop.
+**Database:** using Firestore
+
+**Making a render of file (Nils?)**
+
+**Connected with Admin website**
+
+**Challenges:**
+Creating a spinner from firebase collection (printers):
+Difficult due to async nature of API call
+Used https://www.youtube.com/watch?v=0ofkvm97i0s
+Get ID to ref in Printer class https://stackoverflow.com/questions/48931468/setting-a-custom-object-to-a-spinner-and-showing-a-specific-property
+No errors, but code also not working
