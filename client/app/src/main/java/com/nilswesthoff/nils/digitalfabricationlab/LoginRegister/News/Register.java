@@ -48,7 +48,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         password = findViewById(R.id.password);
         bio = findViewById(R.id.Bio);
 
-        Profileimage = (ImageView) findViewById(R.id.Profile_image);
+        Profileimage = (ImageView) findViewById(R.id.image_profile);
         Profileimage.setOnClickListener(this);
 
         auth = FirebaseAuth.getInstance();
