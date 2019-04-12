@@ -16,12 +16,13 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
-        <ImageView
-            android:id="@+id/Profile_image"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:srcCompat="@color/colorPrimary" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:src="@color/colorPrimary"
+            android:id="@+id/image_profile"/>
 
         <EditText
             android:id="@+id/name"
