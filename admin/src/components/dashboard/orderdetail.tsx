@@ -85,14 +85,8 @@ export default class OrderDetail extends React.Component<Props> {
       dataStore.selectedOrder.files &&
       dataStore.selectedOrder.files.length > 0
     ) {
-      Promise.all(
-        dataStore.selectedOrder.files.map(file => {
-          return fetchFile(file.id);
-        })
-      ).then(res => {
-        res.map(file => {
-          download(file.fileUrl);
-        });
+      dataStore.selectedOrder.files.map(file => {
+        download(file.fileUrl);
       });
     }
   };

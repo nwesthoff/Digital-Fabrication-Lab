@@ -53,14 +53,8 @@ export default class OrderList extends React.Component<Props> {
 
   handleDownloadFiles = async (order: Order) => {
     if (order && order.files && order.files.length > 0) {
-      Promise.all(
-        order.files.map(file => {
-          return fetchFile(file.id);
-        })
-      ).then(res => {
-        res.map(file => {
-          download(file.fileUrl);
-        });
+      order.files.map(file => {
+        download(file.fileUrl);
       });
     }
   };
