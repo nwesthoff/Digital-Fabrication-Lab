@@ -1,6 +1,7 @@
 ---
 path: "/implementation"
 title: "Implementation"
+subtitle: "Architectural overview"
 date: "2019-04-04"
 ---
 
@@ -20,12 +21,31 @@ Since the tabs, request, printers and showcase are all related to the order made
 
 - Intent structure image > de flow door de app in android studio
 
-# Implementation of GUI
+# GUI
 
-Requests page looks a bit like Instagram feed.
-Showcase looks like Instagram feed.
+Since the app is a project for the TUDelft we choose to implement the style of all TU Delft websites and apps. Therefore the colors blue, grey and white are used. We used the color pink to highlight some elements.
 
-- Plaatjes uit android studio
+## Login page
+
+By making the Sign in button pink and the Register button grey the Sign in button stands out more and it is clear for the user to click on the button.
+
+## Edit pages (Order, Register, Settings)
+
+For the register, profile settings and add request page we used the similar layout the get consistency in the app. The edit text fields have grey hints and the pages start with a rounded image.
+
+Because we used the rounded images in this pages, all profile images and add buttons used in the app are `<Circle image views/>`.
+
+By clicking on the confirm buttons you go to the previous page. So confirm project → back to request fragment. Confirm settings → back to profile page. By clicking on Register you go to the start screen which is the request fragment. If you want to go back you can click on de arrow to the left of your android navigation bar.
+
+## Tab navigation and bottom navigation bar
+
+Since nowadays all screens are very large, we used a bottom navigation bar to navigate to the pages, request news and profile. With the blue icon the user can see in what page he is in.
+
+Since the overview of the requests, printers and showcase are all linked to the request page we use fragments within the request page to navigate to those features. With the pink line underneath the tab name, the user can see in which fragment he is.
+
+## Showcase and requests fragment
+
+The showcase en the requests fragment are both an overview. Therefor the pages have a quite similar layout. Both pages look a bit like an instagram feed. In the showcase you can also like public projects. For the layout we used a recyclerview. The items shown have a separate item xml file to define the layout of the items.
 
 ```java
 public class MainActivity extends AppCompatActivity {
@@ -133,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-# Implementation of database, sensor, multimedia technologies
+# Database, authentication and storage
 
 **Database:** using Firestore
 

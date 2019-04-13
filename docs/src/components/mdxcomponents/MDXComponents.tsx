@@ -43,7 +43,10 @@ const mdxComponents = {
   a: (props: any) => <LinkStyled target="blank" {...props} />,
   blockquote: (props: any) => <BlockquoteStyled {...props} />,
   img: (props: any) => (
-    <img style={{ maxWidth: '100%', height: 'auto' }} {...props} />
+    <img
+      style={{ maxWidth: '100%', height: 'auto', margin: '2rem 0' }}
+      {...props}
+    />
   ),
 };
 
