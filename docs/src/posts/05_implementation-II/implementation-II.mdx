@@ -11,13 +11,48 @@ The admin panel is written in Typescript (optionally typed Javascript) and built
 
 # React Concepts
 
-- CSS-in-JS
+React Concepts
+In React you write components that manage their own state. A React component (usually) contains the display and logic in a single place container. You are free to split up your application as you like, and pass data to child components using props.
+
+A basic React (stateful) component looks like this:
+
+```tsx
+export default class Header extends Component {
+  constructor {
+    super(props);
+    // creates initial state open = false
+    this.state = { open: false };
+  }
+
+  handleClose = () => {
+    // setState manages state in React, and rerenders
+    this.setState({ open: !this.state.open });
+  };
+
+  render() {
+    return (
+      <div>
+        // clicking the button calls handleClose function to toggle open state
+        <button onClick={this.handleClose}>
+          // references an icon
+          <MenuIcon />
+        </button>
+        // the drawer component knows what to render for each state
+        <Drawer open={this.state.open}>
+          // generic React child component
+          <DrawerList />
+        </Drawer>
+      </div>
+    );
+  }
+}
+```
 
 # Implementation of GUI
 
 To match the look and feel of the Android app, we chose to use a Material UI Library to quickly build the GUI of the admin panel. We're using several reusable components from the material library, including:
 
-```javascript
+```tsx
 <Grid />
 <Card />
 <Table />
