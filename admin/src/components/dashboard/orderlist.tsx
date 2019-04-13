@@ -10,8 +10,7 @@ import {
   Grid,
   Button,
   Switch,
-  FormControlLabel,
-  CircularProgress
+  FormControlLabel
 } from "@material-ui/core";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
@@ -21,7 +20,7 @@ import { format } from "date-fns";
 import { StatusInstance, PrinterInstance, Order } from "./dashboard";
 import dataStore from "../../stores/datastore";
 import { observer } from "mobx-react";
-import { updateDoc, fetchFile } from "api/firestore";
+import { updateDoc } from "api/firestore";
 import download from "downloadjs";
 
 const StyledIcon = styled.div`
