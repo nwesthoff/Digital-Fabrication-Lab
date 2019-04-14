@@ -28,8 +28,10 @@ import download from "downloadjs";
 import { StatusInstance } from "./dashboard";
 import { observer } from "mobx-react";
 import dataStore from "stores/datastore";
-import { updateDoc, fetchFile } from "api/firestore";
+import { updateDoc } from "api/firestore";
 import FeaturedImage from "./featuredImage";
+
+import GravatarImg from "components/dashboard/GravatarImg";
 
 const StyledCardContent = styled.div`
   padding: 1.2rem 0;
@@ -110,7 +112,12 @@ export default class OrderDetail extends React.Component<Props> {
               </ListItem>
               <ListItem>
                 <ListItemAvatar>
-                  <Avatar>?</Avatar>
+                  {dataStore.selectedOrder.user &&
+                  dataStore.selectedOrder.user.email ? (
+                    <GravatarImg email={dataStore.selectedOrder.user.email} />
+                  ) : (
+                    <Avatar>?</Avatar>
+                  )}
                 </ListItemAvatar>
                 <ListItemText
                   primary={
@@ -193,13 +200,15 @@ export default class OrderDetail extends React.Component<Props> {
               </List>
             </StyledCardContent>
             <CardActions>
-              <Button
-                color="primary"
-                href={`mailto:${dataStore.selectedOrder.user &&
-                  dataStore.selectedOrder.user.email}`}
-              >
-                <EmailIcon style={{ marginRight: ".4rem" }} /> Send mail
-              </Button>
+              {dataStore.selectedOrder.user &&
+              dataStore.selectedOrder.user.email ? (
+                <Button
+                  color="primary"
+                  href={`mailto:${dataStore.selectedOrder.user.email}`}
+                >
+                  <EmailIcon style={{ marginRight: ".4rem" }} /> Send mail
+                </Button>
+              ) : null}
 
               {dataStore.selectedOrder && dataStore.selectedOrder.files ? (
                 <Button color="secondary" onClick={this.handleDownloadFiles}>

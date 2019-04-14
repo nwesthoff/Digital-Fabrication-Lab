@@ -52,6 +52,47 @@ export default class Header extends Component {
 }
 ```
 
+As the admin panel is quite simple, the project doesn't consist of many components. The App component holds the Header, Notification container and a router component.
+
+```tsx
+export default class App extends React.Component {
+  render() {
+    return (
+      // <MuiThemeProvider /> passes our custom theme to all child components
+      <MuiThemeProvider theme={materialTheme}>
+        <AppBar position="sticky">
+          <Toolbar>
+            <Grid container spacing={16} alignItems="center">
+              <Grid item>
+                <Avatar src={fabricationLabLogo} />
+              </Grid>
+              <Grid item>
+                <Typography variant="h6" color="inherit">
+                  Digital Fabrication Lab Admin
+                </Typography>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        <Router>
+          // public routes require no authentication and will display the
+          specific component without being logged in
+          <PublicRoute path="/admin/login" component={Auth} />
+          // Protected routes check whether the user is logged in first, before
+          redirecting them to the passed component
+          <ProtectedRoute
+            default
+            path="/admin/dashboard"
+            component={Dashboard}
+          />
+        </Router>
+        <Notifications />
+      </MuiThemeProvider>
+    );
+  }
+}
+```
+
 # Implementation of GUI
 
 To match the look and feel of the Android app, we chose to use a Material UI Library to quickly build the GUI of the admin panel. We're using several reusable components from the material library, including:
@@ -64,7 +105,7 @@ To match the look and feel of the Android app, we chose to use a Material UI Lib
 <Switch />
 ```
 
-A button and switdch, for example. Looks like this:
+A button and switch, for example. Looks like this:
 
 <Grid container direction="row" alignItems="center">
   <Grid item>
