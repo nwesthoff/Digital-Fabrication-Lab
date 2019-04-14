@@ -37,7 +37,7 @@
         <activity android:name=".News.News" />
         <activity android:name=".Users.Register" />
         <activity android:name=".Users.ProfileActivity" />
-        <activity android:name=".Request.CreateOrderActivity" />
+        <activity android:name=".Orders.CreateOrderActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:screenOrientation="portrait" />

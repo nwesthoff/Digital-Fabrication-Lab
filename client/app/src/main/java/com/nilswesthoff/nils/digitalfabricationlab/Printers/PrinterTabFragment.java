@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.Request;
+package com.nilswesthoff.nils.digitalfabricationlab.Printers;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

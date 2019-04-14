@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.Request;
+package com.nilswesthoff.nils.digitalfabricationlab.Orders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,26 +16,28 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class RequestTabFragment extends Fragment {
-    private static final String TAG = "RequestTabFragment";
+public class OrderTabFragment extends Fragment {
+    private static final String TAG = "OrderTabFragment";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mlayoutManager;
     public FirebaseFirestore db;
+    private List<OrderItem> Orders;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_requests, container, false);
-
-        TextView sectionLabel = view.findViewById(R.id.section_label);
+        final View view = inflater.inflate(R.layout.fragment_requests, container, false);
+        final TextView sectionLabel = view.findViewById(R.id.section_label);
 
         FloatingActionButton makeRequest = view.findViewById(R.id.makeRequest);
         makeRequest.setOnClickListener(new View.OnClickListener() {
@@ -48,29 +50,7 @@ public class RequestTabFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
-        db.collection("orders")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-
-        /// DATA CREATED HERE, TODO: FILL WITH FIREBASE DATA
-        ArrayList<RequestItem> requestItems = new ArrayList<>();
-        requestItems.add(new RequestItem(R.drawable.upload_button, "CreateOrderActivity 1", "CreateOrderActivity 1 line 2"));
-        requestItems.add(new RequestItem(R.drawable.upload_button, "CreateOrderActivity 2", "CreateOrderActivity 2 line 2"));
-        requestItems.add(new RequestItem(R.drawable.upload_button, "CreateOrderActivity 3", "CreateOrderActivity 3 line 2"));
-
-
-        // Init Recyclerview
+        // Init RecyclerView
         recyclerView = view.findViewById(R.id.requestRecycler);
 
         // use this setting to improve performance if you know that changes
@@ -81,16 +61,42 @@ public class RequestTabFragment extends Fragment {
         mlayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mlayoutManager);
 
-//         specify an adapter (see also next example)
-        mAdapter = new RequestAdapter(requestItems);
-        recyclerView.setAdapter(mAdapter);
+        Orders = new ArrayList<>();
+        readData(new FirestoreCallback() {
+            @Override
+            public void onCallback(List<OrderItem> orders) {
+                // specify an adapter (see also next example)
+                mAdapter = new OrderAdapter(orders);
+                recyclerView.setAdapter(mAdapter);
 
-        if (requestItems.size() > 0) {
-            sectionLabel.setText("");
-        }
+                if (orders.size() > 0) {
+                    sectionLabel.setText("");
+                }
+            }
+        });
 
         return view;
     }
 
+    private void readData(final FirestoreCallback firestoreCallback) {
+        CollectionReference OrdersRef = db.collection("Orders");
+        OrdersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        OrderItem order = document.toObject(OrderItem.class);
+                        Orders.add(order);
+                    }
+                    firestoreCallback.onCallback(Orders);
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
 
+    private interface FirestoreCallback {
+        void onCallback(List<OrderItem> orders);
+    }
 }

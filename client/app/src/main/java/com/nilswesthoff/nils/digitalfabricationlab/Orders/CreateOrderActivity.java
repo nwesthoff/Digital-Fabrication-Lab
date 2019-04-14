@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.Request;
+package com.nilswesthoff.nils.digitalfabricationlab.Orders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -275,7 +275,7 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
                     //Confirmation text
                     Toast.makeText(CreateOrderActivity.this, "CreateOrderActivity confirmed", Toast.LENGTH_LONG).show();
 
-                    Intent intent1 = new Intent(CreateOrderActivity.this, RequestTabFragment.class);
+                    Intent intent1 = new Intent(CreateOrderActivity.this, OrderTabFragment.class);
                     startActivity(intent1);
                 }
             }).addOnFailureListener(new OnFailureListener() {

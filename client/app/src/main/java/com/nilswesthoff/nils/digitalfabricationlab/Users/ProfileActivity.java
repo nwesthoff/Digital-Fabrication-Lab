@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.News.News;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.CreateOrderActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.Orders.CreateOrderActivity;
 
 public class ProfileActivity extends Fragment {
 
