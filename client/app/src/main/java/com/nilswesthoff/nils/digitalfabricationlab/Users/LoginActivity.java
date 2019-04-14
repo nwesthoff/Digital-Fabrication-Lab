@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Users;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 public class LoginActivity extends AppCompatActivity {
 

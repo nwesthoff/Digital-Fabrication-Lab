@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.LoginRegister.News;
+package com.nilswesthoff.nils.digitalfabricationlab.Users;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.nilswesthoff.nils.digitalfabricationlab.LoginActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
 

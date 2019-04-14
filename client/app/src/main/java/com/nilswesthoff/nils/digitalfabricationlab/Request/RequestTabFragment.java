@@ -20,7 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
-import com.nilswesthoff.nils.digitalfabricationlab.RequestAdapter;
 
 import java.util.ArrayList;
 

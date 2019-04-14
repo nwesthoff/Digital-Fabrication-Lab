@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Request;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nilswesthoff.nils.digitalfabricationlab.Request.RequestItem;
+import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
 

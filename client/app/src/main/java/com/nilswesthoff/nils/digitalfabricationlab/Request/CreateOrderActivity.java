@@ -31,6 +31,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nilswesthoff.nils.digitalfabricationlab.Printers.Printer;
+import com.nilswesthoff.nils.digitalfabricationlab.Project.Project;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;

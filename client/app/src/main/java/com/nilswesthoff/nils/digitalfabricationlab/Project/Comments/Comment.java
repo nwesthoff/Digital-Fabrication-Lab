@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.Comments;
+package com.nilswesthoff.nils.digitalfabricationlab.Project.Comments;
 
 public class Comment {
 

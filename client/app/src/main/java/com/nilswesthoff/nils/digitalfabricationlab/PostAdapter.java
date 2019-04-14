@@ -18,8 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.nilswesthoff.nils.digitalfabricationlab.Comments.CommentsActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.User;
+import com.nilswesthoff.nils.digitalfabricationlab.Project.Comments.CommentsActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 
 import java.util.List;
 
