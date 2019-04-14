@@ -48,6 +48,7 @@ export default class PreStyled extends React.Component<Props, State> {
           onClick={() => {
             this.handleOpenClick();
           }}
+          style={{ marginBottom: '1.2rem' }}
         >
           Show {!this.state.open ? 'More' : 'Less'}{' '}
           <KeyboardArrowDownIcon

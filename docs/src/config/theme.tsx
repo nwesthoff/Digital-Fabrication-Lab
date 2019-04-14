@@ -28,6 +28,7 @@ export const muiTheme = createMuiTheme({
       fontSize: '1em',
       fontWeight: 400,
       lineHeight: 1.625,
+      fontStyle: 'italic',
     },
     h5: {
       fontFamily: ['Arial', 'sans-serif'].join(),

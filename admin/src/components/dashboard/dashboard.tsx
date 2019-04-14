@@ -58,7 +58,6 @@ export interface OrderImage {
 }
 
 interface Props {
-  dataStore: DataStore;
   path?: String;
 }
 

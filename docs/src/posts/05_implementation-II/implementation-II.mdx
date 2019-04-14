@@ -5,9 +5,13 @@ subtitle: "React Admin Panel"
 date: "2019-04-05"
 ---
 
-The admin panel is written in Typescript (optionally typed Javascript) and built with React, a JavaScript library for building user interfaces. By using React, you are forced to create reusable components.
+import { Button, Grid, Switch } from "@material-ui/core";
+
+The admin panel is written in Typescript (optionally typed Javascript 😍) and built with React, a JavaScript library for building user interfaces. By using React, you are forced to create reusable components.
 
 # Typescript Concepts
+
+Typescript, like Java is an object oriented language, and like Java, it has to be compiled before being able to run (unlike Javascript).
 
 # React Concepts
 
@@ -59,6 +63,21 @@ To match the look and feel of the Android app, we chose to use a Material UI Lib
 <Button />
 <Switch />
 ```
+
+A button and switdch, for example. Looks like this:
+
+<Grid container direction="row" alignItems="center">
+  <Grid item>
+    <Button color="primary" variant="contained">
+      Button
+    </Button>
+  </Grid>
+  <Grid item>
+    <Switch color="primary" checked />
+  </Grid>
+</Grid>
+
+<br />
 
 # Implementation of technologies
 

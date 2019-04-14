@@ -31,7 +31,7 @@ By making the Sign in button pink and the Register button grey the Sign in butto
 
 For the register, profile settings and add request page we used the similar layout the get consistency in the app. The edit text fields have grey hints and the pages start with a rounded image.
 
-Because we used the rounded images in this pages, all profile images and add buttons used in the app are `<Circle image views/>`.
+Because we used the rounded images in this pages, all profile images and add buttons used in the app are a `<CircleImageView />`.
 
 By clicking on the confirm buttons you go to the previous page. So confirm project → back to request fragment. Confirm settings → back to profile page. By clicking on Register you go to the start screen which is the request fragment. If you want to go back you can click on de arrow to the left of your android navigation bar.
 
@@ -145,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 3;
         }
-
-
     }
 }
 ```
