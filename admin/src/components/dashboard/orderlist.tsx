@@ -84,8 +84,8 @@ export default class OrderList extends React.Component<Props> {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Date</TableCell>
               <TableCell>Order #</TableCell>
+              <TableCell>Date</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Files</TableCell>
@@ -110,9 +110,6 @@ export default class OrderList extends React.Component<Props> {
                     onClick={() => this.handleSelectRow(order.id)}
                     selected={order.id === dataStore.selectedOrderId}
                   >
-                    <TableCell>
-                      {order.date && format(order.date.toDate(), "DD/MM/YY")}
-                    </TableCell>
                     <TableCell component="th" scope="row" padding="dense">
                       <StyledIcon paid={order.paid}>
                         <Grid container alignItems="center" wrap="nowrap">
@@ -123,9 +120,14 @@ export default class OrderList extends React.Component<Props> {
                               <MoneyOffIcon color="inherit" />
                             )}
                           </Grid>
-                          <Grid item>{order.invoice_no}</Grid>
+                          <Grid item>
+                            {order.id.substring(0, 6).toUpperCase()}
+                          </Grid>
                         </Grid>
                       </StyledIcon>
+                    </TableCell>
+                    <TableCell>
+                      {order.date && format(order.date.toDate(), "DD/MM/YY")}
                     </TableCell>
                     <TableCell>{order.title}</TableCell>
                     <TableCell>
