@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Typography,
   Card,
   Input,
   FormControl,
@@ -8,23 +7,38 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
-  Grid
+  Grid,
+  CardHeader
 } from "@material-ui/core";
+import userSessionStore from "stores/userSessionStore";
+import { observer } from "mobx-react";
 
 interface Props {
   path?: String;
   default?: Boolean;
 }
 
+@observer
 export default class Auth extends React.Component<Props> {
+  componentDidMount() {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      userSessionStore.isLoggedIn = true;
+    }
+  }
+
+  handleLoginClick = () => {
+    userSessionStore.isLoggedIn = true;
+    localStorage.setItem("isLoggedIn", "true");
+  };
+
   render() {
     return (
       <Grid container justify="center" alignContent="center" spacing={16}>
         <Grid item>
           <Card>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+            <CardHeader title="Sign In" />
+
             <form>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -44,10 +58,10 @@ export default class Auth extends React.Component<Props> {
                 label="Remember me"
               />
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
+                onClick={this.handleLoginClick}
               >
                 Sign in
               </Button>

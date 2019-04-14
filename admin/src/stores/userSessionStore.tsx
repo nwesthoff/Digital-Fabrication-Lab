@@ -12,11 +12,13 @@ export interface NotificationInstance {
   autoHideDuration?: number;
 }
 
-class userSessionStore {
+class UserSessionStore {
   @observable
   notifications: NotificationInstance[] = [];
+  @observable
+  isLoggedIn: Boolean = false;
 }
 
-const UserSessionStore = new userSessionStore();
+const userSessionStore = new UserSessionStore();
 
-export default UserSessionStore;
+export default userSessionStore;

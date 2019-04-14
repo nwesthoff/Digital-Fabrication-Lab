@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Router, Redirect } from "@reach/router";
-import Auth from "components/auth";
+import { Router } from "@reach/router";
+import Auth from "components/auth/Auth";
 import Dashboard from "components/dashboard/dashboard";
 import {
   MuiThemeProvider,
@@ -14,10 +14,12 @@ import materialTheme from "config/theme";
 
 import fabricationLabLogo from "./assets/fabricationlab-logo.png";
 import Notifications from "components/notifications/notifications";
+import ProtectedRoute from "components/auth/ProtectedRoute";
+import PublicRoute from "components/auth/PublicRoute";
+import { observer } from "mobx-react";
 
+@observer
 export default class App extends React.Component {
-  isLoggedIn = false;
-
   render() {
     return (
       <MuiThemeProvider theme={materialTheme}>
@@ -36,9 +38,12 @@ export default class App extends React.Component {
           </Toolbar>
         </AppBar>
         <Router>
-          <Redirect from="/" to="admin/login" />
-          <Dashboard path="/admin/dashboard" />
-          <Auth default path="/admin/login" />
+          <PublicRoute path="/admin/login" component={Auth} />
+          <ProtectedRoute
+            default
+            path="/admin/dashboard"
+            component={Dashboard}
+          />
         </Router>
         <Notifications />
       </MuiThemeProvider>

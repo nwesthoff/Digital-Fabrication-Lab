@@ -99,6 +99,11 @@ export default class OrderList extends React.Component<Props> {
                     order.printer && order.printer.id === this.props.printer.id
                   );
                 })
+                .sort((order1, order2) => {
+                  if (order1.date > order2.date) return -1;
+                  else if (order1.date < order2.date) return 1;
+                  else return 0;
+                })
                 .map(order => (
                   <TableRow
                     key={order.id}

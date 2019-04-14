@@ -8,19 +8,19 @@ import PreStyled from './PreStyled';
 
 // Defining the `MDXProvider` components prop value
 const mdxComponents = {
-  h1: (props: any) => <Typography variant="h2" {...props} />,
-  h2: (props: any) => <Typography variant="h3" {...props} />,
-  h3: (props: any) => <Typography variant="h4" {...props} />,
-  h4: (props: any) => <Typography variant="h5" color="primary" {...props} />,
-  h5: (props: any) => <Typography variant="h6" color="primary" {...props} />,
+  h1: (props: any) => <Typography variant="h3" {...props} />,
+  h2: (props: any) => <Typography variant="h4" color="primary" {...props} />,
+  h3: (props: any) => <Typography variant="h5" {...props} />,
+  h4: (props: any) => <Typography variant="h6" color="primary" {...props} />,
   p: (props: any) => (
     <Typography
       variant="body1"
-      style={{ margin: '0' }}
+      style={{ marginBottom: '.8rem' }}
       {...props}
       gutterBottom
     />
   ),
+  code: (props: any) => <code {...props} />,
   pre: (props: any) => {
     let preProps;
     if (!props.className) {
@@ -43,7 +43,10 @@ const mdxComponents = {
   a: (props: any) => <LinkStyled target="blank" {...props} />,
   blockquote: (props: any) => <BlockquoteStyled {...props} />,
   img: (props: any) => (
-    <img style={{ maxWidth: '100%', height: 'auto' }} {...props} />
+    <img
+      style={{ maxWidth: '100%', height: 'auto', margin: '2rem 0' }}
+      {...props}
+    />
   ),
 };
 

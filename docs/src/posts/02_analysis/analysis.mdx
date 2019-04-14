@@ -3,45 +3,75 @@ path: "/analysis"
 title: "Analysis"
 subtitle: "Functional exploration and analysis"
 date: "2019-04-02"
-image: "img/geesa1.jpg"
+image: "img/3DHub.png"
 ---
 
-Make an explorative study of existing solutions and select the most relevant ones that can help you to address your design problem. Make a summary of the functions of these solutions, and discuss how they can be used in your project. If software code is available generate UML class and sequence diagrams, in order to explore the structure of the solution and the operation of the software. Otherwise, make a simple block diagram of the software functions or a flow chart of the operations. Discuss why these solutions may be relevant for you.
+In the Introduction we described the requirements of the app. Based on functionalities like uploading a project and being able to view other projects we started looking for existing apps/websites. For uploading 3D files we found the website 3D Hubs and the app AstroPrint.
+
+On the 3D Hubs website you can make a request to make a 3D print, a CNC or an injection molding. For us the 3D printing upload page was the most interesting to look at. In figure FIXME you can see this page. We liked that the website shows which file types are accepted and that you can select the units.
+
+![3D Hub](img/3DHub.png)
+
+3D Hubs also makes it quite easy to pick your required material. When you select a certain material it shows a small description and even the costs when you uploaded a file. You can also select some advanced options.
+
+However, this is a website, so we can’t display that much information of a smartphone screen. We would like to put the upload button on top similar to 3D Hubs, so the app can try to predict the machine that will be used based on the file type.
+
+![3D Hubs block diagram](img/3dhubs_block_diagram.png)
+
+In figure FIXME you see a block diagram of the 3D Hubs website, which has quite a lot of pages. This structure isn’t suitable for our app, because it is too complicated.
+
+In the AstroPrint app (see figure FIXMEb) you see a 3D preview of your file, including information like the volume and dimensions. Furthermore you can select the machine, material and quality. This is pretty close to the features we would like to implement in our request page in the app.
+In figure FIXMEa you can see the home screen with navigation buttons. The downside of having these buttons is that you can’t switch between screens quickly. That is why we would like to make use of tabs, so you can swipe from screen to screen. In figure FIXMEc you see the page with all the uploaded designs and projects by the user. We would like to implement a page like this as well, so the user is able to see his/her previous projects and settings.
+
+![Astroprint block diagram](img/astroprint_block_diagram.png)
+
+In figure FIXME you see the block diagram of the AstroPrint app. A structure like this would be suitable for our app. It is clear and it is easy to navigate through the app. We also liked the tabs in the Design Library section, because you can switch between the pages quickly.
 
 <br />
 
-Uploaden 3D bestanden
+- Uploading 3D files
 
-- [3D Hubs](https://www.3dhubs.com/)
-- [Astroprint](https://www.astroprint.com/)
-- Sketchfab
-- Informatie printers
+  - [3D Hubs](https://www.3dhubs.com/)
+  - [Astroprint](https://www.astroprint.com/)
+  - Sketchfab
+  - Informatie printers
 
-Liken van Posts in showcase
-
-- [3D Model Viewer (Android)](https://github.com/andresoviedo/android-3D-model-viewer)
-- Instagram
+- Liken van Posts in showcase
+  - [3D Model Viewer (Android)](https://github.com/andresoviedo/android-3D-model-viewer)
+  - Instagram
 - Beschikbaarheid 3d printers
-
-Notifications sturen
-
+- Notifications sturen
 - Calendar
 - Inroosteren opdrachten en printers
-
-Sketchfab
-
-- 3D object maker
-- Astro Print
+- Sketchfab
+  - 3D object maker
+  - Astro Print
 
 [Firebase Authentication](https://firebase.google.com/docs/auth/)
 
 # Technology exploration and analysis
 
-Identify which technologies should be applied (GUI, Database, Sensor, etc.) in order to realize the functions explored in the previous section. Discuss what is your take away from this analysis.
+## GUI
 
-- GUI
-- Notifications
-- Database
-- Storage for models
-- Algorithmic determination of print time?
-- Authentication and routing (operators get extra functionality)
+The app contains a lot of different functions and activities. The navigation to the pages should be easy and clear. Moreover all different functions and activities should have the same layout style.
+
+To make the navigation easy, we found that we want to implement tabs and a bottom navigation bar. Through the bottom navigation bar the user can switch between activities like their profile, request and news. In the request page we want to use tabs to switch between an overview of you requests, the availability from and information about the printers and the showcase with an overview of all public projects.
+
+The start screen will be the login page in which you can also register with a new profile. After logging in you get on the request page with an overview of your requests and a button to make a new request. In this page we will use a scrollview to scroll through your requests.
+The showcase will look like the instagram feed using icons, recyclerview and a button to upload a project picture from your phone. This picture can also be cropped, rotated and flipped.
+
+## Storage and database
+
+To make it possible for students to upload files that the operator can see it is necessary to implement a storage and a database. For the real app this should be implemented using a network service but for this project we found that Firebase would be the easiest way to implement these technologies. The uploaded files need to be linked to an user, printer and project.
+
+## Authentication and routing of the operators
+
+The operator needs to approve the requests and schedule the project. Nowadays all the information about the user, project, pay status and project status is done by hand in an excel sheet. We want to implement this excel page in the project. For the operator to download the files it is most logical to use a webpage instead of an app. The webpage should be linked to the app so information can be exchanged very easily
+
+## Notifications
+
+When the operator approves the request, the student get a notification with a time slot to come over to the digital fabrication lab to discuss their project. Also when the print is ready the student should get a notification that he or she can pick up the print.
+
+## Algorithmic determination of print time
+
+When we have enough time left, we want to look if it is possible for the app to make an algorithmic determination of the print time to give the students an indication and to help the operator to schedule the project.
