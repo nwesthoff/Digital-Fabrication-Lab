@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { Avatar } from "@material-ui/core";
 import styled from "styled-components";
 import fetchGravatar from "api/fetchGravatar";
+import materialTheme from "config/theme";
+
 interface Props {
   email?: string;
 }
 
 const Gravatar = styled.div`
   border-radius: 100%;
-  border: solid 2px #ef5350;
+  border: solid 2px ${materialTheme.palette.primary.main};
   padding: 3px;
   background-clip: content-box; /* support: IE9+ */
 `;

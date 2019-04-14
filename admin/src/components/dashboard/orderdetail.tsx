@@ -121,8 +121,9 @@ export default class OrderDetail extends React.Component<Props> {
                 </ListItemAvatar>
                 <ListItemText
                   primary={
-                    dataStore.selectedOrder.user &&
-                    dataStore.selectedOrder.user.name
+                    (dataStore.selectedOrder.user &&
+                      dataStore.selectedOrder.user.name) ||
+                    "Unknown User"
                   }
                 />
               </ListItem>
