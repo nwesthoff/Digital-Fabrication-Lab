@@ -85,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("profileid", publisher);
             editor.apply();
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                    new ProfileActivity());
-            transaction.commit();
         }
 //        else {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.container,

@@ -14,7 +14,7 @@ import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 public class News extends AppCompatActivity {
     private BottomNavigationView mMainNav;
-    private CreateOrderActivity createOrderActivity;
+    private MainActivity mainActivity;
     private News  news;
 
     @Override
