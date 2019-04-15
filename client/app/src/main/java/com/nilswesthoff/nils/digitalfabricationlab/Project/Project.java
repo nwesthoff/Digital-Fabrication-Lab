@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.Request;
+package com.nilswesthoff.nils.digitalfabricationlab.Project;
 
 import com.google.firebase.firestore.DocumentReference;
 

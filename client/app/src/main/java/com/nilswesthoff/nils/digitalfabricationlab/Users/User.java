@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.Profile.Users;
+package com.nilswesthoff.nils.digitalfabricationlab.Users;
 
 public class User {
 

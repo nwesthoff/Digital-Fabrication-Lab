@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.ProfileActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.CreateOrderActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.Users.ProfileActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.Orders.CreateOrderActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 public class News extends AppCompatActivity {

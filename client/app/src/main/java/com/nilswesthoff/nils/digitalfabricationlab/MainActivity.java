@@ -17,10 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nilswesthoff.nils.digitalfabricationlab.News.News;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.ProfileActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.ProjectTabFragment;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.RequestTabFragment;
-import com.nilswesthoff.nils.digitalfabricationlab.Request.PrinterTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Users.ProfileActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.Project.ProjectTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Orders.OrderTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.Printers.PrinterTabFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new RequestTabFragment();
+                    fragment = new OrderTabFragment();
                     break;
                 case 1:
                     fragment = new PrinterTabFragment();

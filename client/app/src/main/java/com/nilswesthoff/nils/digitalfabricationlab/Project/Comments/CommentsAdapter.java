@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab.Comments;
+package com.nilswesthoff.nils.digitalfabricationlab.Project.Comments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.Profile.Users.User;
+import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
