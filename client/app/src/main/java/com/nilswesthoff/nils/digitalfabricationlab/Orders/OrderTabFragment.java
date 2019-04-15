@@ -16,8 +16,11 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
@@ -32,6 +35,8 @@ public class OrderTabFragment extends Fragment {
     private RecyclerView.LayoutManager mlayoutManager;
     public FirebaseFirestore db;
     private List<OrderItem> Orders;
+    private FirebaseAuth mAuth;
+    public FirebaseUser currentUser;
 
     @Nullable
     @Override
@@ -79,8 +84,14 @@ public class OrderTabFragment extends Fragment {
     }
 
     private void readData(final FirestoreCallback firestoreCallback) {
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
         CollectionReference OrdersRef = db.collection("Orders");
-        OrdersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Query query = OrdersRef.whereEqualTo("user.email", currentUser.getEmail())
+                .orderBy("date", Query.Direction.DESCENDING);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

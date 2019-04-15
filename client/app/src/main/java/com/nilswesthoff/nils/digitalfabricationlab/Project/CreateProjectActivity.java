@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Project;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -17,24 +18,29 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.nilswesthoff.nils.digitalfabricationlab.Project.ProjectTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.R;
+import com.nilswesthoff.nils.digitalfabricationlab.test;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
 
-public class PostActivity extends AppCompatActivity {
+public class CreateProjectActivity extends AppCompatActivity {
+    private static final String TAG = "CreateProjectActivity";
 
     Uri imageUri;
     String myUrl = "";
     StorageTask uploadTask;
     StorageReference storageReference;
+    public FirebaseFirestore db;
 
     ImageView close, image_added;
     TextView post;
@@ -47,7 +53,7 @@ public class PostActivity extends AppCompatActivity {
 
         close = findViewById(R.id.close);
         image_added = findViewById(R.id.image_added);
-        post = findViewById(R.id.post);
+        post = findViewById(R.id.projectItem);
         description = findViewById(R.id.description);
 
         storageReference = FirebaseStorage.getInstance().getReference("posts");
@@ -55,7 +61,7 @@ public class PostActivity extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PostActivity.this, test.class));
+                startActivity(new Intent(CreateProjectActivity.this, test.class));
                 finish();
             }
         });
@@ -69,7 +75,7 @@ public class PostActivity extends AppCompatActivity {
 
         CropImage.activity()
                 .setAspectRatio(1, 1)
-                .start(PostActivity.this);
+                .start(CreateProjectActivity.this);
     }
 
     private String getFileExtension(Uri uri) {
@@ -104,30 +110,38 @@ public class PostActivity extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         myUrl = downloadUri.toString();
 
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("posts");
-
-                        String postid = reference.push().getKey();
+                        db = FirebaseFirestore.getInstance();
+                        CollectionReference reference = db.collection("Projects");
 
                         HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("postid", postid);
-                        hashMap.put("postimage", myUrl);
+                        hashMap.put("postImage", myUrl);
                         hashMap.put("description", description.getText().toString());
                         hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                        reference.child(postid).setValue(hashMap);
+                        reference.add(hashMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
 
                         progressDialog.dismiss();
 
-                        startActivity(new Intent(PostActivity.this, ProjectTabFragment.class));
+                        startActivity(new Intent(CreateProjectActivity.this, ProjectTabFragment.class));
                         finish();
                     } else {
-                        Toast.makeText(PostActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateProjectActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(PostActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateProjectActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -147,7 +161,7 @@ public class PostActivity extends AppCompatActivity {
             image_added.setImageURI(imageUri);
         } else {
             Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(PostActivity.this, test.class));
+            startActivity(new Intent(CreateProjectActivity.this, test.class));
             finish();
         }
 

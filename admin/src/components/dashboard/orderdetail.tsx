@@ -33,6 +33,7 @@ import { updateDoc } from "api/firestore";
 import FeaturedImage from "./featuredImage";
 
 import GravatarImg from "components/dashboard/GravatarImg";
+import {fetchGravatarUserInfo} from "api/fetchGravatar"
 
 const StyledCardContent = styled.div`
   padding: 1.2rem 0;
@@ -53,6 +54,15 @@ interface Props {
 
 @observer
 export default class OrderDetail extends React.Component<Props> {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      gravatarUser: {
+        displayName: "unknown"
+      }
+    }
+  }
   onStatusNext = () => {
     if (dataStore.selectedOrder) {
       dataStore.selectedOrder.status =
@@ -96,6 +106,17 @@ export default class OrderDetail extends React.Component<Props> {
     }
   };
 
+  componentDidMount() {
+    if(dataStore.selectedOrder.user && dataStore.selectedOrder.user.email) {
+      fetchGravatarUserInfo(dataStore.selectedOrder.user.email).then(res => {
+        this.setState({
+          gravatarUser: res
+        })
+      });
+     
+    }
+  }
+
   render() {
     return (
       <Card>
@@ -124,9 +145,7 @@ export default class OrderDetail extends React.Component<Props> {
                 </ListItemAvatar>
                 <ListItemText
                   primary={
-                    (dataStore.selectedOrder.user &&
-                      dataStore.selectedOrder.user.name) ||
-                    "Unknown User"
+                    this.state.gravatarUser.displayName || "Unknown User"
                   }
                 />
               </ListItem>

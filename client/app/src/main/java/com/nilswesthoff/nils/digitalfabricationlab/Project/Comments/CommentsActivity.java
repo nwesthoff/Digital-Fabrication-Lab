@@ -21,8 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
+import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,7 +69,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         addComment = findViewById(R.id.add_comment);
         image_profile = findViewById(R.id.image_profile);
-        post = findViewById(R.id.post);
+        post = findViewById(R.id.projectItem);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 

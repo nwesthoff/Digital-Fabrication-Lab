@@ -10,6 +10,7 @@ import OrderDetail from "./orderdetail";
 
 export interface PrinterInstance {
   name: string;
+  brand: string;
   id: string;
   online?: boolean;
 }

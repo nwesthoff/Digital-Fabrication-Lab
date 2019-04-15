@@ -46,7 +46,6 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="nils@nilswesthoff.com"
                     android:textColor="@color/textwhite" />
 
             </android.support.design.widget.TextInputLayout>
@@ -68,7 +67,6 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="testtest"
                     android:textColor="@color/textwhite" />
 
             </android.support.design.widget.TextInputLayout>

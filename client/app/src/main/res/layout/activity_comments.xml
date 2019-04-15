@@ -42,12 +42,12 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
-            android:layout_toLeftOf="@+id/post"/>
+            android:layout_toLeftOf="@+id/projectItem"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/post"
+            android:id="@+id/projectItem"
             android:text="POST"
             android:layout_marginEnd="5dp"
             android:layout_alignParentEnd="true"
