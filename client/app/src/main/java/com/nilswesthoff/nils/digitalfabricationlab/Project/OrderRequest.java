@@ -1,6 +1,7 @@
 package com.nilswesthoff.nils.digitalfabricationlab.Project;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 
 import java.util.Date;
 
@@ -12,8 +13,9 @@ public class OrderRequest {
     private String baan;
     private Date date;
     private String status;
+    private User user;
 
-    public OrderRequest(String title, String description, DocumentReference printer, String course, String baan, Date date, String status) {
+    public OrderRequest(String title, String description, DocumentReference printer, String course, String baan, Date date, String status, User user) {
         this.title = title;
         this.printer = printer;
         this.description = description;
@@ -21,6 +23,7 @@ public class OrderRequest {
         this.baan = baan;
         this.date = date;
         this.status = status;
+        this.user = user;
     }
 
     public String getTitle() {
@@ -49,5 +52,9 @@ public class OrderRequest {
 
     public String getStatus() {
         return status;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

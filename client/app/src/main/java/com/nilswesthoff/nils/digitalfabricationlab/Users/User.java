@@ -3,17 +3,19 @@ package com.nilswesthoff.nils.digitalfabricationlab.Users;
 public class User {
 
     private String id;
+    private String email;
     private String fullname;
     private String studenttype;
     private String imageurl;
     private String bio;
 
-    public User(String id, String fullname, String studenttype, String imageurl, String bio) {
+    public User(String id, String fullname, String studenttype, String imageurl, String bio, String email) {
         this.id = id;
         this.fullname = fullname;
         this.studenttype = studenttype;
         this.imageurl = imageurl;
         this.bio = bio;
+        this.email = email;
     }
 
     public User() {
@@ -58,4 +60,8 @@ public class User {
     public void setBio(String bio) {
         this.bio = bio;
     }
+
+    public String getEmail() {return  email;}
+
+    public void setEmail(String email){this.email = email;}
 }

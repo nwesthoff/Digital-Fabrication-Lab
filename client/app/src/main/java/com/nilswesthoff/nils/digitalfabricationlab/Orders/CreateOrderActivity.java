@@ -21,8 +21,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -30,9 +34,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nilswesthoff.nils.digitalfabricationlab.MainActivity;
 import com.nilswesthoff.nils.digitalfabricationlab.Printers.Printer;
 import com.nilswesthoff.nils.digitalfabricationlab.Project.OrderRequest;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
+import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +64,11 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
     private StorageReference storageReference;
     public FirebaseFirestore db;
 
+    //user
+    private FirebaseAuth mAuth;
+    public FirebaseUser currentUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +79,10 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
 
         db = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        //get user id
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         //payment method dropdown TODO: Make 1st option grey, kind of done
         Spinner spinner_payment = findViewById(R.id.payment_method);
@@ -261,11 +276,15 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
         String course = course_group.getText().toString().trim();
         String baan = baan_code.getText().toString().trim();
         Date date = new Date();
+        //TODO: get user email from firebase
+        String email = currentUser.getEmail();
+        User user = new User();
+        user.setEmail(email);
         String status = "ordered";
 
         if (!TextUtils.isEmpty(title)) {
 
-            OrderRequest orderRequest = new OrderRequest(title, Description, printer, course, baan, date, status);
+            OrderRequest orderRequest = new OrderRequest(title, Description, printer, course, baan, date, status, user);
 
             db.collection("Orders").add(orderRequest).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
@@ -274,7 +293,7 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
                     //Confirmation text
                     Toast.makeText(CreateOrderActivity.this, "CreateOrderActivity confirmed", Toast.LENGTH_LONG).show();
 
-                    Intent intent1 = new Intent(CreateOrderActivity.this, OrderTabFragment.class);
+                    Intent intent1 = new Intent(CreateOrderActivity.this, MainActivity.class);
                     startActivity(intent1);
                 }
             }).addOnFailureListener(new OnFailureListener() {
