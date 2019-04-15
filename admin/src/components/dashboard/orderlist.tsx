@@ -17,7 +17,7 @@ import MoneyOffIcon from "@material-ui/icons/MoneyOff";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import styled from "styled-components";
 import { format } from "date-fns";
-import { StatusInstance, PrinterInstance, Order } from "./dashboard";
+import { PrinterInstance, Order } from "./dashboard";
 import dataStore from "../../stores/datastore";
 import { observer } from "mobx-react";
 import { updateDoc } from "api/firestore";
@@ -63,7 +63,9 @@ export default class OrderList extends React.Component<Props> {
       <Card>
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
-            <CardHeader title={this.props.printer.name} />
+            <CardHeader
+              title={this.props.printer.brand + " " + this.props.printer.name}
+            />
           </Grid>
           <Grid item>
             <FormControlLabel
