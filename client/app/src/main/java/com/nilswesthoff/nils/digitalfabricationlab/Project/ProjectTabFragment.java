@@ -8,16 +8,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
@@ -26,9 +28,10 @@ import java.util.List;
 public class ProjectTabFragment extends Fragment {
     private static final String TAG = "ProjectTabFragment";
     private RecyclerView recyclerView;
-    private ProjectAdapter projectAdapter;
-    private List<ProjectItem> projectItemList;
-    private List<String> followingList;
+    private List<ProjectItem> Projects;
+    private RecyclerView.Adapter mAdapter;
+    public FirebaseFirestore db;
+    private RecyclerView.LayoutManager mlayoutManager;
 
     @Nullable
     @Override
@@ -44,71 +47,55 @@ public class ProjectTabFragment extends Fragment {
             }
         });
 
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        projectItemList = new ArrayList<>();
-        projectAdapter = new ProjectAdapter(getContext(), projectItemList);
-        recyclerView.setAdapter(projectAdapter);
+        db = FirebaseFirestore.getInstance();
 
-        checkfollowing();
+
+        // Init RecyclerView
+        recyclerView = view.findViewById(R.id.project_recycler);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mlayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mlayoutManager);
+
+        Projects = new ArrayList<>();
+        readData(new ProjectTabFragment.FirestoreCallback() {
+            @Override
+            public void onCallback(List<ProjectItem> projects) {
+                // specify an adapter (see also next example)
+                mAdapter = new ProjectAdapter(projects);
+                recyclerView.setAdapter(mAdapter);
+            }
+        });
 
         return view;
-
     }
 
-    private void checkfollowing() {
-        followingList = new ArrayList<>();
+    private void readData(final ProjectTabFragment.FirestoreCallback firestoreCallback) {
 
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("Following");
+        CollectionReference ProjectsRef = db.collection("Projects");
+        Query query = ProjectsRef;
 
-        reference.addValueEventListener(new ValueEventListener() {
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                followingList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    followingList.add(snapshot.getKey());
-                }
-
-                readPosts();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void readPosts() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                projectItemList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ProjectItem projectItem = snapshot.getValue(ProjectItem.class);
-                    for (String id : followingList) {
-                        if (projectItem.getPublisher().equals(id)) {
-                            projectItemList.add(projectItem);
-                        }
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        ProjectItem project = document.toObject(ProjectItem.class);
+                        Projects.add(project);
                     }
+                    firestoreCallback.onCallback(Projects);
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
-
-                projectAdapter.notifyDataSetChanged();
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
         });
+    }
+
+    private interface FirestoreCallback {
+        void onCallback(List<ProjectItem> projects);
     }
 }
