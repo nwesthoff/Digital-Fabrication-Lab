@@ -31,7 +31,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nilswesthoff.nils.digitalfabricationlab.Printers.Printer;
-import com.nilswesthoff.nils.digitalfabricationlab.Project.Project;
+import com.nilswesthoff.nils.digitalfabricationlab.Project.OrderRequest;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
@@ -261,14 +261,13 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
         String course = course_group.getText().toString().trim();
         String baan = baan_code.getText().toString().trim();
         Date date = new Date();
-        Number status = 0;
-
+        String status = "ordered";
 
         if (!TextUtils.isEmpty(title)) {
 
-            Project project = new Project(title, Description, printer, course, baan, date, status);
+            OrderRequest orderRequest = new OrderRequest(title, Description, printer, course, baan, date, status);
 
-            db.collection("Orders").add(project).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            db.collection("Orders").add(orderRequest).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
@@ -283,7 +282,7 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
                 public void onFailure(@NonNull Exception e) {
                     Log.w(TAG, "Error adding document", e);
                     //Confirmation text
-                    Toast.makeText(CreateOrderActivity.this, "Error adding project", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateOrderActivity.this, "Error adding orderRequest", Toast.LENGTH_LONG).show();
                 }
             });
 

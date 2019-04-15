@@ -4,17 +4,17 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Date;
 
-public class Project {
+public class OrderRequest {
     private String title;
     private String description;
     private DocumentReference printer;
     private String course;
     private String baan;
     private Date date;
-    private Number status;
+    private String status;
 
-    public Project(String titel, String description, DocumentReference printer, String course, String baan, Date date, Number status) {
-        this.title = titel;
+    public OrderRequest(String title, String description, DocumentReference printer, String course, String baan, Date date, String status) {
+        this.title = title;
         this.printer = printer;
         this.description = description;
         this.course = course;
@@ -47,7 +47,7 @@ public class Project {
         return printer;
     }
 
-    public Number getStatus() {
+    public String getStatus() {
         return status;
     }
 }
