@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,18 +17,17 @@ import com.nilswesthoff.nils.digitalfabricationlab.News.News;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 import com.nilswesthoff.nils.digitalfabricationlab.Orders.CreateOrderActivity;
 
-public class ProfileActivity extends Fragment {
-
+public class ProfileActivity extends AppCompatActivity {
     private BottomNavigationView mMainNav;
-    private CreateOrderActivity createOrderActivity;
-    private News news;
+    private MainActivity mainActivity;
+    private News  news;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_profile, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
 
-
-        mMainNav = view.findViewById(R.id.main_nav);
+        mMainNav=(BottomNavigationView) findViewById(R.id.main_nav);
 
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -39,13 +39,14 @@ public class ProfileActivity extends Fragment {
                         break;
 
                     case R.id.nav_request:
-                        Intent intent1 = new Intent(getActivity(), MainActivity.class);
+                        Intent intent1 = new Intent(ProfileActivity.this, MainActivity.class);
                         startActivity(intent1);
                         break;
 
                     case R.id.nav_news:
-                        Intent intent2 = new Intent(getActivity(), News.class);
-                        startActivity(intent2);
+                        Intent intent0 = new Intent(ProfileActivity.this, News.class);
+                        startActivity(intent0);
+
                         break;
 
                     default:
@@ -53,7 +54,5 @@ public class ProfileActivity extends Fragment {
                 return false;
             }
         });
-
-        return view;
     }
 }

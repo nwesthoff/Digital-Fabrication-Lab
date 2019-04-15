@@ -40,13 +40,6 @@
             android:orientation="vertical"
             android:layout_below="@id/bar">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:id="@+id/image_profile" />
-
             <TextView
                 android:id="@+id/fullname"
                 android:layout_width="match_parent"
@@ -54,7 +47,19 @@
                 android:textAlignment="center"
                 android:textColor="@color/Grey45"
                 android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:hint="Name Lastname"/>
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:src="@color/colorAccent"
+                android:id="@+id/image_profile" />
+
 
             <TextView
                 android:id="@+id/Studenttype"
@@ -63,7 +68,9 @@
                 android:textAlignment="center"
                 android:textColor="@color/Grey45"
                 android:textSize="30dp"
-                android:textStyle="normal" />
+                android:layout_marginBottom="15dp"
+                android:textStyle="normal"
+                android:hint="Student type"/>
 
             <TextView
                 android:id="@+id/Bio"
@@ -75,7 +82,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/Grey45"
                 android:textSize="20dp"
-                android:textStyle="normal"/>
+                android:textStyle="normal"
+                android:hint="Student information"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,17 +114,11 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/main_nav"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="546dp"
         android:background="?android:attr/windowBackground"
         app:itemIconTint="@color/selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/nav_items"
-        tools:layout_editor_absoluteX="0dp">
-
-    </android.support.design.widget.BottomNavigationView>
+        app:menu="@menu/nav_items" />
 
     <FrameLayout
         android:id="@+id/main_frame"
