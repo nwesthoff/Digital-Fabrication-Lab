@@ -15,12 +15,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <view
-            android:id="@+id/recycler_view"
-            class="android.support.v7.app.AlertController$RecycleListView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="haha" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/printer_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

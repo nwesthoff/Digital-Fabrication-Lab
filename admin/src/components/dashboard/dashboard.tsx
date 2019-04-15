@@ -5,7 +5,7 @@ import { observer } from "mobx-react";
 import OrderList from "./orderlist";
 
 import { observable } from "mobx";
-import dataStore, { DataStore } from "../../stores/datastore";
+import dataStore from "stores/datastore";
 import OrderDetail from "./orderdetail";
 
 export interface PrinterInstance {
@@ -15,10 +15,10 @@ export interface PrinterInstance {
 }
 
 export enum StatusInstance {
-  Ordered = 0,
-  Accepted,
-  Printing,
-  Done
+  ordered,
+  accepted,
+  printing,
+  done
 }
 
 export interface UserInstance {

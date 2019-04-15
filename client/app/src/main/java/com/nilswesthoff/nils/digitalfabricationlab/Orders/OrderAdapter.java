@@ -44,7 +44,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
         holder.mOrderHeadline.setText(currentItem.getTitle());
         holder.mOrderSubheading.setText(currentItem.getDescription());
-        holder.mOrderStatus.setText(currentItem.getStatusString());
+        holder.mOrderStatus.setText(currentItem.getStatus());
     }
 
     @Override

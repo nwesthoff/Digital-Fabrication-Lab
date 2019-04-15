@@ -2,14 +2,16 @@ package com.nilswesthoff.nils.digitalfabricationlab.Printers;
 
 public class Printer {
     String id, name;
+    String brand;
     Boolean online;
 
     public Printer() {
 
     }
 
-    public Printer(String key, String name, Boolean online) {
+    public Printer(String key, String name, String brand, Boolean online) {
         this.name = name;
+        this.brand = brand;
         this.online = online;
     }
 
@@ -23,6 +25,10 @@ public class Printer {
 
     public Boolean getOnline() {
         return online;
+    }
+
+    public String getBrand() {
+        return brand;
     }
 
     @Override

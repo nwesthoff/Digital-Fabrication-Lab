@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   ListItemAvatar,
   Avatar,
+  Typography
   MobileStepper,
   CircularProgress,
   ListItemSecondaryAction,
@@ -53,8 +54,9 @@ interface Props {
 @observer
 export default class OrderDetail extends React.Component<Props> {
   onStatusNext = () => {
-    if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
-      dataStore.selectedOrder.status = dataStore.selectedOrder.status + 1;
+    if (dataStore.selectedOrder) {
+      dataStore.selectedOrder.status =
+        StatusInstance[StatusInstance[dataStore.selectedOrder.status] + 1];
 
       updateDoc("Orders", dataStore.selectedOrder.id, {
         status: dataStore.selectedOrder.status
@@ -63,13 +65,14 @@ export default class OrderDetail extends React.Component<Props> {
   };
 
   onStatusBack = () => {
-    if (dataStore.selectedOrder && dataStore.selectedOrder.status >= 0) {
-      dataStore.selectedOrder.status = dataStore.selectedOrder.status - 1;
-    }
+    if (dataStore.selectedOrder) {
+      dataStore.selectedOrder.status =
+        StatusInstance[StatusInstance[dataStore.selectedOrder.status] - 1];
 
-    updateDoc("Orders", dataStore.selectedOrder.id, {
-      status: dataStore.selectedOrder.status
-    });
+      updateDoc("Orders", dataStore.selectedOrder.id, {
+        status: dataStore.selectedOrder.status
+      });
+    }
   };
 
   handlePaidClick = () => {
@@ -127,19 +130,26 @@ export default class OrderDetail extends React.Component<Props> {
                   }
                 />
               </ListItem>
+              <ListItem>
+                <ListItemText 
+                  primary="Status"
+                  secondary={dataStore.selectedOrder && dataStore.selectedOrder.status} />
+              </ListItem>
             </StyledList>
             <MobileStepper
               variant="dots"
               steps={4}
               position="static"
-              activeStep={dataStore.selectedOrder.status}
+              activeStep={StatusInstance[dataStore.selectedOrder.status]}
               nextButton={
                 <Button
                   size="small"
                   onClick={this.onStatusNext}
-                  disabled={dataStore.selectedOrder.status === 3}
+                  disabled={
+                    StatusInstance[dataStore.selectedOrder.status] === 3
+                  }
                 >
-                  {StatusInstance[dataStore.selectedOrder.status + 1]}
+                  next
                   <KeyboardArrowRight />
                 </Button>
               }
@@ -147,10 +157,12 @@ export default class OrderDetail extends React.Component<Props> {
                 <Button
                   size="small"
                   onClick={this.onStatusBack}
-                  disabled={dataStore.selectedOrder.status === 0}
+                  disabled={
+                    StatusInstance[dataStore.selectedOrder.status] === 0
+                  }
                 >
                   <KeyboardArrowLeft />
-                  {StatusInstance[dataStore.selectedOrder.status - 1]}
+                  back
                 </Button>
               }
             />
