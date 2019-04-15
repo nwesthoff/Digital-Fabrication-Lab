@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Project;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -24,12 +24,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.nilswesthoff.nils.digitalfabricationlab.Project.ProjectTabFragment;
+import com.nilswesthoff.nils.digitalfabricationlab.R;
+import com.nilswesthoff.nils.digitalfabricationlab.test;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
 
-public class PostActivity extends AppCompatActivity {
+public class CreateProjectActivity extends AppCompatActivity {
 
     Uri imageUri;
     String myUrl = "";
@@ -47,7 +48,7 @@ public class PostActivity extends AppCompatActivity {
 
         close = findViewById(R.id.close);
         image_added = findViewById(R.id.image_added);
-        post = findViewById(R.id.post);
+        post = findViewById(R.id.projectItem);
         description = findViewById(R.id.description);
 
         storageReference = FirebaseStorage.getInstance().getReference("posts");
@@ -55,7 +56,7 @@ public class PostActivity extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PostActivity.this, test.class));
+                startActivity(new Intent(CreateProjectActivity.this, test.class));
                 finish();
             }
         });
@@ -69,7 +70,7 @@ public class PostActivity extends AppCompatActivity {
 
         CropImage.activity()
                 .setAspectRatio(1, 1)
-                .start(PostActivity.this);
+                .start(CreateProjectActivity.this);
     }
 
     private String getFileExtension(Uri uri) {
@@ -118,16 +119,16 @@ public class PostActivity extends AppCompatActivity {
 
                         progressDialog.dismiss();
 
-                        startActivity(new Intent(PostActivity.this, ProjectTabFragment.class));
+                        startActivity(new Intent(CreateProjectActivity.this, ProjectTabFragment.class));
                         finish();
                     } else {
-                        Toast.makeText(PostActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateProjectActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(PostActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateProjectActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -147,7 +148,7 @@ public class PostActivity extends AppCompatActivity {
             image_added.setImageURI(imageUri);
         } else {
             Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(PostActivity.this, test.class));
+            startActivity(new Intent(CreateProjectActivity.this, test.class));
             finish();
         }
 

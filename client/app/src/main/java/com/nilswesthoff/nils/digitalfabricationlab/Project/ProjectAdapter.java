@@ -1,4 +1,4 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Project;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,28 +19,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nilswesthoff.nils.digitalfabricationlab.Project.Comments.CommentsActivity;
+import com.nilswesthoff.nils.digitalfabricationlab.R;
 import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
+public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder>{
 
     public Context mContext;
-    public List<Post> mPost;
+    public List<ProjectItem> mProjectItem;
 
     private FirebaseUser currentUser;
 
 
-    public PostAdapter(Context mContext, List<Post> mPost) {
+    public ProjectAdapter(Context mContext, List<ProjectItem> mProjectItem) {
         this.mContext = mContext;
-        this.mPost = mPost;
+        this.mProjectItem = mProjectItem;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
         View view = LayoutInflater.from(mContext).inflate(R.layout.postitem, viewGroup, false);
-        return new PostAdapter.ViewHolder(view);
+        return new ProjectAdapter.ViewHolder(view);
 
     }
 
@@ -48,30 +49,30 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i){
 
         currentUser=FirebaseAuth.getInstance().getCurrentUser();
-        final Post post=mPost.get(i);
+        final ProjectItem projectItem = mProjectItem.get(i);
 
-        Glide.with(mContext).load(post.getPostimage()).into(viewHolder.post_image);
+        Glide.with(mContext).load(projectItem.getPostimage()).into(viewHolder.post_image);
 
-        if (post.getDescription().equals("")){
+        if (projectItem.getDescription().equals("")){
             viewHolder.description.setVisibility(View.GONE);
         } else {
             viewHolder.description.setVisibility(View.VISIBLE);
-            viewHolder.description.setText(post.getDescription());
+            viewHolder.description.setText(projectItem.getDescription());
         }
-        publisherInfo(viewHolder.image_profile, viewHolder.fullname,viewHolder.publisher, post.getPublisher());
-        isLiked(post.getPostid(), viewHolder.like);
-        nrLikes(viewHolder.likes, post.getPostid());
-        getComments(post.getPostid(), viewHolder.comments);
+        publisherInfo(viewHolder.image_profile, viewHolder.fullname,viewHolder.publisher, projectItem.getPublisher());
+        isLiked(projectItem.getPostid(), viewHolder.like);
+        nrLikes(viewHolder.likes, projectItem.getPostid());
+        getComments(projectItem.getPostid(), viewHolder.comments);
 
 
         viewHolder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(viewHolder.like.getTag().equals("like")){
-                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostid())
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(projectItem.getPostid())
                             .child(currentUser.getUid()).setValue(true);
                 } else {
-                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostid())
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(projectItem.getPostid())
                             .child(currentUser.getUid()).removeValue();
                 }
             }
@@ -81,8 +82,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(mContext, CommentsActivity.class);
-                intent.putExtra("postid", post.getPostid());
-                intent.putExtra("publisherid", post.getPublisher());
+                intent.putExtra("postid", projectItem.getPostid());
+                intent.putExtra("publisherid", projectItem.getPublisher());
                 mContext.startActivity(intent);
             }
         });
@@ -91,8 +92,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(mContext, CommentsActivity.class);
-                intent.putExtra("postid", post.getPostid());
-                intent.putExtra("publisherid", post.getPublisher());
+                intent.putExtra("postid", projectItem.getPostid());
+                intent.putExtra("publisherid", projectItem.getPublisher());
                 mContext.startActivity(intent);
             }
         });
@@ -101,7 +102,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     @Override
     public int getItemCount(){
-        return mPost.size();
+        return mProjectItem.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

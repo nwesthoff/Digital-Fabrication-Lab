@@ -18,9 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.nilswesthoff.nils.digitalfabricationlab.Post;
-import com.nilswesthoff.nils.digitalfabricationlab.PostActivity;
-import com.nilswesthoff.nils.digitalfabricationlab.PostAdapter;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 
 import java.util.ArrayList;
@@ -29,8 +26,8 @@ import java.util.List;
 public class ProjectTabFragment extends Fragment {
     private static final String TAG = "ProjectTabFragment";
     private RecyclerView recyclerView;
-    private PostAdapter postAdapter;
-    private List<Post> postList;
+    private ProjectAdapter projectAdapter;
+    private List<ProjectItem> projectItemList;
     private List<String> followingList;
 
     @Nullable
@@ -42,7 +39,7 @@ public class ProjectTabFragment extends Fragment {
         makePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getActivity(), PostActivity.class);
+                Intent in = new Intent(getActivity(), CreateProjectActivity.class);
                 startActivity(in);
             }
         });
@@ -53,9 +50,9 @@ public class ProjectTabFragment extends Fragment {
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        postList = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), postList);
-        recyclerView.setAdapter(postAdapter);
+        projectItemList = new ArrayList<>();
+        projectAdapter = new ProjectAdapter(getContext(), projectItemList);
+        recyclerView.setAdapter(projectAdapter);
 
         checkfollowing();
 
@@ -94,17 +91,17 @@ public class ProjectTabFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                postList.clear();
+                projectItemList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Post post = snapshot.getValue(Post.class);
+                    ProjectItem projectItem = snapshot.getValue(ProjectItem.class);
                     for (String id : followingList) {
-                        if (post.getPublisher().equals(id)) {
-                            postList.add(post);
+                        if (projectItem.getPublisher().equals(id)) {
+                            projectItemList.add(projectItem);
                         }
                     }
                 }
 
-                postAdapter.notifyDataSetChanged();
+                projectAdapter.notifyDataSetChanged();
             }
 
             @Override

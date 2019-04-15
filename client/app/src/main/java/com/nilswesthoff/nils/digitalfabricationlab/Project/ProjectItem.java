@@ -1,23 +1,23 @@
-package com.nilswesthoff.nils.digitalfabricationlab;
+package com.nilswesthoff.nils.digitalfabricationlab.Project;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 
 import java.lang.reflect.Constructor;
 
-public class Post {
+public class ProjectItem {
     private String postid;
     private String postimage;
     private String description;
     private String publisher;
 
-    public Post(String postid, String postimage, String description, String publisher) {
+    public ProjectItem(String postid, String postimage, String description, String publisher) {
         this.postid = postid;
         this.postimage = postimage;
         this.description = description;
         this.publisher = publisher;
     }
 
-    public Post() {
+    public ProjectItem() {
     }
 
     public String getPostid() {
