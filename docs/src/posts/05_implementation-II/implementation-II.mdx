@@ -6,6 +6,7 @@ date: "2019-04-05"
 ---
 
 import { Button, Grid, Switch } from "@material-ui/core";
+import IframeResponsive from "../../components/mdxcomponents/iframe";
 import GitLogo from "../../components/mdxcomponents/GitLogo";
 
 ![Digital Fabrication Lab Admin](./img/digital-fabrication-lab-admin.png)
@@ -129,6 +130,13 @@ A button and switch, for example. Looks like this:
 
 All these small components from the Material-UI library make it easy to build a nice, consistent interface quickly.
 
+<IframeResponsive
+  src="https://digital-fabrication-lab-admin.netlify.com/"
+  ratio={16 / 9}
+/>
+
+_you can currently log in without any username and password_ 😉
+
 # Implementation of technologies
 
 The Admin panel depends on a few parts.
@@ -136,6 +144,7 @@ The Admin panel depends on a few parts.
 - [Reach router](https://reach.tech/router)
 - [Firebase](https://firebase.google.com/) Firestore/Auth
 - [MobX](https://mobx.js.org/) (global data store)
+- [Netlify](https://www.netlify.com/) (Git automated CI/deploy)
 
 ## Reach Router
 
@@ -228,8 +237,8 @@ export default class Dashboard extends React.Component<Props, State> {
 
 ## MobX
 
-MobX provides simple, scalable state management. This means that all data that is passed to our dataStore, is available from any component in our application. This means you don't have to do prop-drilling (recursively passing data to child components) as you usually do with React. This is an anti-pattern though. Usually, applications with global state management are easier to break (by removing a useful piece of code). However, our Admin interface is not that complex, and Typescript tells us whether a particular value from the store is used or not. That's why we determined MobX can help us get the admin interface up and running.
+[MobX](https://mobx.js.org/) provides simple, scalable state management. This means that all data that is passed to our dataStore, is available from any component in our application. This means you don't have to do [prop-drilling](https://kentcdodds.com/blog/prop-drilling/) (recursively passing data to child components) as you usually do with React. This is an anti-pattern though. Usually, applications with global state management are easier to break (by removing a useful piece of code). However, our Admin interface is not that complex, and Typescript tells us whether a particular value from the store is used or not. That's why we determined MobX can help us get the admin interface up and running.
 
 ## Netlify
 
-The admin interface deploys automatically from Git to Netlify (as does this report). So every time a commit (or preferably a pull-request) is made to the master branch of the Digital-Fabrication-Lab repo, Netlify will deploy the newest version automatically. A manual deploy can also be previewed and triggered from the develop branch.
+The admin interface deploys automatically from Git to [Netlify](https://www.netlify.com/) (as does this report). So every time a commit (or preferably a pull-request) is made to the master branch of the Digital-Fabrication-Lab repo, Netlify will deploy the newest version automatically. A manual deploy can also be previewed and triggered from the develop branch.
