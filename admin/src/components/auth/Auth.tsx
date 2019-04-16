@@ -8,7 +8,8 @@ import {
   Checkbox,
   Button,
   Grid,
-  CardHeader
+  CardHeader,
+  CardContent
 } from "@material-ui/core";
 import userSessionStore from "stores/userSessionStore";
 import { observer } from "mobx-react";
@@ -34,38 +35,51 @@ export default class Auth extends React.Component<Props> {
 
   render() {
     return (
-      <Grid container justify="center" alignContent="center" spacing={16}>
+      <Grid
+        container
+        justify="center"
+        alignContent="center"
+        spacing={16}
+        style={{ marginTop: "2rem" }}
+      >
         <Grid item>
           <Card>
             <CardHeader title="Sign In" />
 
-            <form>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="email">Email Address</InputLabel>
-                <Input id="email" name="email" autoComplete="email" autoFocus />
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
+            <CardContent>
+              <form>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="email">Email Address</InputLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <Input
+                    name="password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                </FormControl>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
                 />
-              </FormControl>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={this.handleLoginClick}
-              >
-                Sign in
-              </Button>
-            </form>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleLoginClick}
+                >
+                  Sign in
+                </Button>
+              </form>
+            </CardContent>
           </Card>
         </Grid>
       </Grid>
