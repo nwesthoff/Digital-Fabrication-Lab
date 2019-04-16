@@ -4,6 +4,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 
 import java.util.Date;
+import java.util.Map;
 
 public class OrderRequest {
     private String title;
@@ -14,8 +15,9 @@ public class OrderRequest {
     private Date date;
     private String status;
     private User user;
+    private Map<String, Object> files;
 
-    public OrderRequest(String title, String description, DocumentReference printer, String course, String baan, Date date, String status, User user) {
+    public OrderRequest(String title, String description, DocumentReference printer, String course, String baan, Date date, String status, User user, Map<String, Object> files) {
         this.title = title;
         this.printer = printer;
         this.description = description;
@@ -24,6 +26,7 @@ public class OrderRequest {
         this.date = date;
         this.status = status;
         this.user = user;
+        this.files = files;
     }
 
     public String getTitle() {
@@ -32,6 +35,10 @@ public class OrderRequest {
 
     public String getBaan() {
         return baan;
+    }
+
+    public Map<String, Object> getFiles() {
+        return files;
     }
 
     public String getCourse() {

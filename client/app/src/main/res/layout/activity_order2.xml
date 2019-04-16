@@ -47,15 +47,6 @@
                 android:layout_height="100dp"
                 android:background="@drawable/upload_button" />
 
-            <Button
-                android:id="@+id/upload_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="10dp"
-                android:text="Upload file"
-                android:background="@color/Grey45"/>
-
             <Spinner
                 android:id="@+id/choose_machine"
                 android:layout_width="match_parent"
