@@ -200,7 +200,7 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
 
     private void showFileChooser() {
         Intent intent = new Intent();
-        intent.setType("files/*");
+        intent.setType("*/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select file"), PICK_FILE_REQUEST);
     }
