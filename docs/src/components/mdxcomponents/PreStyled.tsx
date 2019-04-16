@@ -52,7 +52,7 @@ export default class PreStyled extends React.Component<Props, State> {
         >
           {this.props.children}
         </pre>
-        {this.state.height && this.state.height > 280 ? (
+        {this.state.height ? (
           <Button
             color="secondary"
             onClick={() => {
