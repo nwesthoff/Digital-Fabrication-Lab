@@ -317,7 +317,7 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
         // Order Request
         Map<String, Object> orderRequest = new HashMap<>();
         orderRequest.put("title", project_title.getText().toString().trim());
-        orderRequest.put("Description", description.getText().toString().trim());
+        orderRequest.put("description", description.getText().toString().trim());
         orderRequest.put("course", course_group.getText().toString().trim());
         orderRequest.put("baan", baan_code.getText().toString().trim());
         orderRequest.put("date", date);
