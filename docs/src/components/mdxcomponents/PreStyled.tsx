@@ -10,6 +10,7 @@ interface Props {
 
 interface State {
   open: boolean;
+  height: number;
 }
 
 export default class PreStyled extends React.Component<Props, State> {
@@ -18,6 +19,7 @@ export default class PreStyled extends React.Component<Props, State> {
 
     this.state = {
       open: false,
+      height: 0,
     };
   }
 
@@ -27,9 +29,16 @@ export default class PreStyled extends React.Component<Props, State> {
     });
   }
 
+  componentDidMount() {
+    const height = this.divElement.clientHeight;
+    this.setState({ height });
+  }
+
   render() {
+    console.log(this.state.height);
+
     return (
-      <div>
+      <div ref={divElement => (this.divElement = divElement)}>
         <pre
           language={this.props.className}
           style={{
@@ -43,18 +52,20 @@ export default class PreStyled extends React.Component<Props, State> {
         >
           {this.props.children}
         </pre>
-        <Button
-          color="secondary"
-          onClick={() => {
-            this.handleOpenClick();
-          }}
-          style={{ marginBottom: '1.2rem' }}
-        >
-          Show {!this.state.open ? 'More' : 'Less'}{' '}
-          <KeyboardArrowDownIcon
-            style={{ rotate: this.state.open ? '180deg' : '0deg' }}
-          />
-        </Button>
+        {this.state.height && this.state.height > 280 ? (
+          <Button
+            color="secondary"
+            onClick={() => {
+              this.handleOpenClick();
+            }}
+            style={{ marginBottom: '1.2rem' }}
+          >
+            Show {!this.state.open ? 'More' : 'Less'}{' '}
+            <KeyboardArrowDownIcon
+              style={{ rotate: this.state.open ? '180deg' : '0deg' }}
+            />
+          </Button>
+        ) : null}
       </div>
     );
   }
