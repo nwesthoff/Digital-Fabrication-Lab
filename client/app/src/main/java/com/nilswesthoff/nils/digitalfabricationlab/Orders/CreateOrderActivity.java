@@ -2,8 +2,10 @@ package com.nilswesthoff.nils.digitalfabricationlab.Orders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,9 +40,13 @@ import com.nilswesthoff.nils.digitalfabricationlab.Printers.Printer;
 import com.nilswesthoff.nils.digitalfabricationlab.R;
 import com.nilswesthoff.nils.digitalfabricationlab.Users.User;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class CreateOrderActivity extends AppCompatActivity implements View.OnClickListener {
@@ -53,10 +60,15 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
     EditText baan_code;
     private String clickedPrinterId;
 
-    private Button chooseButton, uploadButton;
+    private Button chooseButton;
     private static final String TAG = "CreateOrderActivity";
 
-    private Uri filePath;
+    // File uploads
+    Uri localUri;
+    String displayName = null;
+    String path;
+    Uri hostedUri;
+
 
     private StorageReference storageReference;
     public FirebaseFirestore db;
@@ -72,7 +84,6 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_order2);
 
         chooseButton = findViewById(R.id.choose_button);
-        uploadButton = findViewById(R.id.upload_button);
 
         db = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -164,7 +175,6 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
 
         // TODO: upload button uploads the WHOLE project to Firebase, including title etc.
         chooseButton.setOnClickListener(this);
-        uploadButton.setOnClickListener(this);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +210,7 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
 
     private void showFileChooser() {
         Intent intent = new Intent();
-        intent.setType("files/*");
+        intent.setType("*/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select file"), PICK_FILE_REQUEST);
     }
@@ -210,8 +220,6 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
         if (view == chooseButton) {
             //open file chooser
             showFileChooser();
-        } else if (view == uploadButton) {
-            uploadFile();
         }
     }
 
@@ -219,7 +227,7 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
 
         //TODO: show that you selected a file
 
-        if (filePath != null) {
+        if (localUri != null) {
 
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
@@ -228,30 +236,39 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
             //TODO: file title = real file name instead of "projects.jpg"
             //TODO: get Firebase location back
 
-            StorageReference riversRef = storageReference.child("files/project.jpg");
+            final StorageReference orderFile = storageReference.child("files/" + displayName);
 
-            riversRef.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "File Uploaded", Toast.LENGTH_LONG).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                            progressDialog.setMessage(((int) progress) + "% Uploaded...");
-                        }
-                    });
+            orderFile.putFile(localUri).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage(((int) progress) + "% Uploaded...");
+                }
+            }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> taskSnapshot) throws Exception {
+
+
+                    if (!taskSnapshot.isSuccessful()) {
+                        throw taskSnapshot.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return orderFile.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        progressDialog.dismiss();
+                        hostedUri = task.getResult();
+                        Toast.makeText(getApplicationContext(), "File Uploaded", Toast.LENGTH_LONG).show();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
 
         } else {
             //display an error toast
@@ -262,26 +279,54 @@ public class CreateOrderActivity extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
+            localUri = data.getData();
+            String uriString = localUri.toString();
+            File myFile = new File(uriString);
+            path = myFile.getAbsolutePath();
+
+            if (uriString.startsWith("content://")) {
+                Cursor cursor = null;
+                try {
+                    cursor = CreateOrderActivity.this.getContentResolver().query(localUri, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    }
+                } finally {
+                    cursor.close();
+                }
+            } else if (uriString.startsWith("file://")) {
+                displayName = myFile.getName();
+            }
+            uploadFile();
         }
     }
 
     private void filledIn() {
         DocumentReference printer = db.collection("Printers").document(clickedPrinterId);
-        String title = project_title.getText().toString().trim();
-        String Description = description.getText().toString().trim();
-        String course = course_group.getText().toString().trim();
-        String baan = baan_code.getText().toString().trim();
+
         Date date = new Date();
-        //TODO: get user email from firebase
         String email = currentUser.getEmail();
         User user = new User();
         user.setEmail(email);
-        String status = "ordered";
 
-        if (!TextUtils.isEmpty(title)) {
+        // Files
+        Map<String, Object> file = new HashMap<>();
+        file.put("fileName", displayName);
+        file.put("fileUrl", hostedUri.toString());
 
-            OrderRequest orderRequest = new OrderRequest(title, Description, printer, course, baan, date, status, user);
+        // Order Request
+        Map<String, Object> orderRequest = new HashMap<>();
+        orderRequest.put("title", project_title.getText().toString().trim());
+        orderRequest.put("Description", description.getText().toString().trim());
+        orderRequest.put("course", course_group.getText().toString().trim());
+        orderRequest.put("baan", baan_code.getText().toString().trim());
+        orderRequest.put("date", date);
+        orderRequest.put("user", user);
+        orderRequest.put("status", "ordered");
+        orderRequest.put("files", Arrays.asList(file));
+        orderRequest.put("printer", printer);
+
+        if (!TextUtils.isEmpty(project_title.getText().toString().trim())) {
 
             db.collection("Orders").add(orderRequest).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
