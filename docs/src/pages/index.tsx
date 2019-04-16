@@ -3,6 +3,7 @@ import { RouterProps } from '@reach/router';
 
 import Layout from '../components/layout';
 import ChapterList from '../components/ChapterList';
+import IframeResponsive from '../components/mdxcomponents/iframe';
 import { Typography, Grid } from '@material-ui/core';
 
 const IndexPage: React.SFC<RouterProps> = ({ location }) => (
@@ -30,13 +31,27 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
         <Typography variant="overline" gutterBottom>
           Coach: Adrie Kooiman
         </Typography>
+
+        <Typography variant="h3" gutterBottom>
+          Summary
+        </Typography>
+        <Typography variant="body1">
+          We created the starting point for a Digital Fabrication Lab app.
+          Before being ready for use, it should definitely get some help, but
+          we're quite happy with what we have achieved in this short time.
+        </Typography>
+        <br />
+        <IframeResponsive
+          src="https://www.youtube.com/embed/-K6AyFTyryI"
+          ratio={16 / 9}
+        />
       </Grid>
 
       <Grid item xs={12}>
         <hr />
       </Grid>
 
-      <Grid item>
+      <Grid item style={{ width: '100%' }}>
         <Typography variant="h2" component="h3" color="primary" gutterBottom>
           Table of Contents
         </Typography>
