@@ -10,6 +10,7 @@ import NetlifyLogo from '../images/netlify-logo.svg';
 import AndroidLogo from '../images/android-logo.svg';
 import FeaturedImage from '../images/featured-image.png';
 import LinkIcon from '@material-ui/icons/Link';
+import SlideshowIcon from '@material-ui/icons/Slideshow';
 
 const IndexPage: React.SFC<RouterProps> = ({ location }) => (
   <Layout location={location}>
@@ -113,6 +114,17 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
                 src={NetlifyLogo}
               />
               Operator Admin
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              href="https://docs.google.com/presentation/d/1H7uXI0MGrLFXm7Q9k2d0zYrBFxZ-vOgu7pqImVZlxk4/"
+              target="blank"
+              color="secondary"
+              style={{ paddingRight: '1rem' }}
+            >
+              <SlideshowIcon style={{ margin: '.4rem', height: '24px' }} />
+              Slideshow
             </Button>
           </Grid>
           <Grid item>
