@@ -7,10 +7,9 @@ date: "2019-04-06"
 
 # Scenarios
 
-In the project we made to different parts, an app for the students and a webpage for the operator. Both parts need to be tested to make sure everything is clear and easy to use. Moreover we want to know if we missed functions or implemented functions are unnecessary. While testing and during the evaluation we want answers to the following questions:
+We split the project in two different parts, an app for the students and a webpage for the operator. Both parts need to be tested to make sure everything is clear and easy to use. Moreover, we want to know if we missed functions or the implemented functions are unnecessary. While testing and during the evaluation we want answers to the following questions:
 
-- Is it clear how to place a request?
-- Is it clear what the meaning of the icons is?
+- Is it clear how to make a request?
 - Does the user understand how to navigate to several pages?
 - What do users like and dislike?
 - Does the operator understand how to accept the request?
@@ -18,18 +17,61 @@ In the project we made to different parts, an app for the students and a webpage
 - Does the operator think it is a good replacement for the excel sheet?
 - What does the operator like and dislike?
 
-After testing we will use the results to make the final concept, recommendations and add more information in the guide manual so TU Delft can implement the results. We want answers to the following questions
+After testing we will use the results to make the final concept, recommendations and add more information in the guide manual so TU Delft can implement the results. We want answers to the following questions.
 
 ## Scenario 1
 
-We ask a group of 5 (master)students to test our app, we start with giving some information about the project. Then we start a generator on our phone and give it to the student. We ask the student to execute several tasks, while the student speaks out loud what he thinks. With this scenario it takes a lot of effort to get results, but you can easily follow the thoughts of the student and see what he or she is doing. You can also quick add additional questions based on what the students says.
+We ask a group of 5 (master) students to test our app, we start with giving some information about the project. Then we start a generator on our phone and give it to the student. We ask the student to execute several tasks, while the student speaks out loud what he thinks. With this scenario it takes a lot of effort to get results, but you can easily follow the thoughts of the student and see what he or she is doing. You can also quickly add additional questions based on what the students say.
 
 ## Scenario 2
 
-Another scenario to test the software is through a survey. We set up a google form, with a link to the generator. In the google form we will ask the students all the questions. With this scenario we can get a lot of results very quick but we can’t see what students do, how long it takes student to get to the right page or if they hesitate.
+Another scenario to test the software is through a survey. In this case we would set up a google form, with a link to the generator. In the google form we will ask the students all the questions. With this scenario we can quickly get a lot of results, but we can’t see what students do, how long it takes for a student to get to the right page or if they hesitate about several steps.
 
 ## Scenario 3
 
-In the last scenario we would go the the operators of the Digital Fabrication Lab and test the app and web page with them.
+In the last scenario we would only go to the operators of the Digital Fabrication Lab and test the app and web page with them. They know a lot of how everything works and have therefore a critical view on the functions of the app and web page. However they do not cover the whole user group.
 
-# Test results & conclusions
+# Test results and conclusions
+
+We set up two tests, one with the operators at Digital Fabrication Lab for the web page and one with 5 students to test the app. The test results can be found in the appendices.
+
+## App
+
+We activated the generator with android studio. When students came in we told about our project and asked the participants to think out loud so we could follow them. By every task the time needed was measured and every step, hesitation and given hints were written down.
+
+![Anouk Testing App](img/DSC03251.jpg)
+
+At first we asked the participants to upload a new order. The second task was to go to the profile page. Third we asked the participants to upload a photo to the showcase. And final we asked the participants to find the status of the Connex3 printer and asked what the participants think the color of the bullets mean. After finishing the tasks we asked the students the following questions:
+
+- What do you think about the navigation to the different pages?
+- What do you like about the app?
+- What do you dislike about the app?
+- Do you miss anything in the app, what?
+- What is still unclear?
+- Are there any other comments?
+
+## Webpage
+
+For the test of the webpage we went to the Digital Fabrication Lab to test the webpage with Tessa, since she is the actual user of the webpage. We started showing the created app and how it works. Then we loaded the webpage. Same as the app test we asked Tessa to think out loud so we could follow them. By every task the time needed was measured and every step, hesitation and given hints were written down.
+
+![Floris Testing App](img/DSC03249.jpg)
+
+At first we asked Tessa to accept and change the status of a request. Second we asked to set the payment information. After finishing the tasks we asked Tessa the following questions:
+
+- What did you like and dislike?
+- How is the webpage in comparison with the excel sheet?
+- Do you still miss some information?
+- What do you think about the app?
+- Are there any other comments?
+
+# Data analysis
+
+## App
+
+In the app should be more information about the printers, for example which file needed, what material or color is in the printer, this part is implemented in our prototype but not in our app yet. Also, the student needs to choose its material and color when uploading the file, this part should be added. Moreover, the app is not that graphical attractive but very functional and clear, all participants understood the meaning of the color bullets and icons and found the navigation clear. The setting button at the request page can best be replaced in the profile page, since this is more logical. Almost all participants forgot to click on upload file after clicking on the plus button to select a file. Therefore we will delete the upload button and make sure the app automatically uploads the file after its been selected.
+
+![Thomas Testing App](img/DSC03245.jpg)
+
+## Webpage
+
+The webpage is very clear, however the button Next could better be replaced by accepted, printing, printed since it is not clear that next means the next status of the order. If students pay by cash they should first come to Digital Fabrication Lab before the project could be printed. Overall the webpage is easy to use and the best advantage is that the operators can inform students very easily. The order number are now random, however they should start with a prefix and have ascending numbers.

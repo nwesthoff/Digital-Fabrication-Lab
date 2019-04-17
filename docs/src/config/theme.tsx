@@ -7,7 +7,7 @@ export const muiTheme = createMuiTheme({
       fontWeight: 'bold',
     },
     h1: {
-      fontSize: '4.5rem',
+      fontSize: '2.8rem',
       fontWeight: 100,
       lineHeight: 1.3,
     },

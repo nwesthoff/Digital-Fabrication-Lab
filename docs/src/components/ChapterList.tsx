@@ -2,12 +2,20 @@ import * as React from 'react';
 import { Link, graphql, StaticQuery } from 'gatsby';
 import styled from 'styled-components';
 import { PostsQueryData } from '../interfaces/PostsQuery.interface';
-import { Typography, Button, Grid } from '@material-ui/core';
-import NotesIcon from '@material-ui/icons/Notes';
+import { Typography, Grid } from '@material-ui/core';
+import { muiTheme } from '../config/theme';
 
 const Post = styled.article`
+  border-left: 5px solid ${muiTheme.palette.primary.dark};
+  padding-left: 2.4rem;
   margin-bottom: 2.4rem;
   line-height: 1.75rem;
+  transition: all 250ms ease-out;
+
+  &:hover {
+    transform: translate(2rem, 0);
+    border-left: 5px solid ${muiTheme.palette.primary.main};
+  }
 
   @media (max-width: 480px) {
     font-size: 90%;
@@ -17,12 +25,6 @@ const Post = styled.article`
       margin-bottom: 0.4rem;
     }
   }
-`;
-
-const PostImage = styled.img`
-  width: 100%;
-  height: auto;
-  display: block;
 `;
 
 const WrapLink = styled(Link)`
@@ -39,40 +41,19 @@ const ChapterList = () => (
         return (
           <WrapLink key={path} to={`/posts${path}`}>
             <Post>
-              <Grid container direction="column" spacing={8}>
-                {node.frontmatter.image ? (
-                  <Grid item>
-                    <PostImage
-                      src={node.frontmatter.image.childImageSharp.fluid.src}
-                      srcSet={
-                        node.frontmatter.image.childImageSharp.fluid.srcSet
-                      }
-                    />
-                  </Grid>
-                ) : null}
-
+              <Grid
+                container
+                direction="column"
+                spacing={8}
+                style={{ width: '100%' }}
+              >
                 <Grid item>
-                  <Typography variant="h2" component="h3">
+                  <Typography variant="h3" component="h3">
                     {title}
                   </Typography>
-                  <Typography variant="h3" component="h4">
+                  <Typography variant="h4" component="h4">
                     {node.frontmatter.subtitle}
                   </Typography>
-                </Grid>
-
-                <Grid item>
-                  <Typography variant="body1">{node.excerpt}</Typography>
-                </Grid>
-
-                <Grid item>
-                  <Grid container justify="flex-end">
-                    <Grid item>
-                      <Button variant="text" color="primary" size="large">
-                        <NotesIcon style={{ marginRight: '.4rem' }} />
-                        Read Chapter
-                      </Button>
-                    </Grid>
-                  </Grid>
                 </Grid>
               </Grid>
             </Post>

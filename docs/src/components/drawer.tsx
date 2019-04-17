@@ -4,15 +4,11 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemAvatar,
   Divider,
   Typography,
-  IconButton,
   ListItemIcon,
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import GravatarImg from './GravatarImg';
-import fetchGravatar from '../api/fetchGravatar';
 
 const Sidebar = () => (
   <StaticQuery
@@ -46,15 +42,7 @@ const Sidebar = () => (
                       Digital Fabrication Lab
                     </Typography>
                   }
-                  secondary={
-                    <span>
-                      by{' '}
-                      <a href="https://nilswesthoff.com" target="blank">
-                        Nils Westhoff
-                      </a>
-                      , Avelien Husen <br /> and Annemar Marinissen
-                    </span>
-                  }
+                  secondary="Software Report"
                 />
               </ListItem>
               <Divider />
