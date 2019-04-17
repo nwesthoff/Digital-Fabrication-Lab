@@ -11,27 +11,21 @@ import GitLogo from "../../components/mdxcomponents/GitLogo";
 
 As we had previously determined what features we would like to implement first, we distributed tasks among the group. Annemar started working on the login and profile page and Avelien created the order page.
 
-The first thing we discovered while programming in java, is that we had to make many more classes than we thought. During our ideation phase, we expected to create four classes (one for each data type). However, a class does not specifically match a database table, and often needs many helper classes. In the end we created 20 classes, see the UML class diagram in figure FIXME.
+The first thing we discovered while programming in java, is that we had to make many more classes than we thought. During our ideation phase, we expected to create four classes (one for each data type). However, a class does not specifically match a database table, and often needs many helper classes. In the end we created 20 classes, see the UML class diagram in figure 10.
 
 ![UML Class Diagram](./img/class-diagram-full.png)
 
-- Singleton Pattern
-- Factory Pattern
-- Abstract Factory Pattern
-- Builder Pattern
-- Prototype Pattern
-
 # Android concepts
 
-We started structuring our app by making a LoginActivity which leads you to the MainActivity when you log in. The whole activity, fragment and intent structure can be seen in figure FIXME. In this figure the intents (which are the connections between pages) are represented by the black lines.
+We started structuring our app by making a `LoginActivity` which leads you to the `MainActivity` when you log in. The whole activity, fragment and intent structure can be seen in figure 11. In this figure the intents (which are the connections between pages) are represented by the black lines.
 
 All intents between activities are structured like this:
 
 `startActivity(new Intent(getApplicationContext(), MainActivity.class));`
 
-Inside MainActivity we used three fragments to switch quickly between the different tabs in the app; the OrderTabFragment, the PrinterTabFragment and the ProjectTabFragment, which represent the Requests, Printers and Showcase tabs. We also used fragments for this, because they are inflated inside the layout of the MainActivity. Since these tabs are all related to the Order request made by the students, we chose to use them as fragments instead of different activities.
+Inside `MainActivity` we used three fragments to switch quickly between the different tabs in the app; the `OrderTabFragment`, the `PrinterTabFragment` and the `ProjectTabFragment`, which represent the _Requests_, _Printers_ and _Showcase_ tabs. We also used fragments for this, because they are inflated inside the layout of the `MainActivity`. Since these tabs are all related to the Order request made by the students, we chose to use them as fragments instead of different activities.
 
-![Android Activity Diagram](./img/android-activity-diagram.png)
+![Android Activity Diagram](./img/android-activity-diagram.png "Figure 11: Activity-Fragment-Intent structure")
 
 The intent to switch between the tabs looks like this:
 
@@ -56,9 +50,9 @@ public Fragment getItem(int position) {
 }
 ```
 
-Each fragment holds an adapter, which show the corresponding item. The Adapters link the data from the items to the corresponding layout resource. All the items are represented by classes, which store all the required information. The OrderItem stores for example a project title, a description, a file, a printer, a group/course and the payment method. When you click on the ➕button inside the OrderTabFragment you will be lead to the CreateOrderActivity. This is the page where you can make the actual request for your order. When you press the ‘Confirm Order Request’ button you actually send all the data packed in the OrderRequest class to Cloud Firestore and OrderItem then shows this data in your order overview, which actually makes OrderRequest and OrderItem the same class 🤔.
+Each fragment holds an _adapter_, which show the corresponding _item_. The _adapters_ link the data from the _items_ to the corresponding _layout_ resource. All the items are represented by _classes_, which store all the required information. The `OrderItem` stores for example a project title, a description, a file, a printer, a group/course and the payment method. When you click on the ➕button inside the `OrderTabFragment` you will be lead to the `CreateOrderActivity`. This is the page where you can make the actual request for your _order_. When you press the _‘Confirm Order Request’_ button you actually send all the data packed in the `OrderRequest` class to _Cloud Firestore_ and `OrderItem` then shows this data in your order overview, which actually makes `OrderRequest` and `OrderItem` the same class 🤔.
 
-We also have a bottom navigation bar, which navigates to the News and Profile activity. The pages Request, News and Profile are however not related to each other and therefore these are separated activities.
+We also have a bottom navigation bar, which navigates to the _News_ and _Profile_ activity. The pages _Request_, _News_ and _Profile_ are however not related to each other and therefore these are separated activities.
 
 # GUI
 

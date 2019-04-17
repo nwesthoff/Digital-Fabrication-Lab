@@ -12,35 +12,28 @@ In the Introduction we described the requirements of the app. Based on the must 
 
 For uploading 3D files we found the website [3D Hubs](https://www.3dhubs.com/) and the app [Astroprint](https://www.astroprint.com/).
 
-On the 3D Hubs website you can make a request to 3D print, a CNC or an injection molding job. For us the 3D printing upload page was the most interesting to look at. In figure FIXME you can see this webpage. We liked that the website shows which file types are accepted and that you can select the units.
+On the 3D Hubs website you can make a request to 3D print, a CNC or an injection molding job. For us the 3D printing upload page was the most interesting to look at. In figure 1 you can see this webpage. We liked that the website shows which file types are accepted and that you can select the units.
 
-![3D Hub](img/3DHub.png)
+![3D Hub](img/3DHub.png "Figure 1: 3D Hubs 3D print order page")
 
 3D Hubs also makes it quite easy to pick your required material. When you select a certain material it shows a small description and even the estimated costs, when you upload a file. You can also select some advanced options.
 
 However, this is a website, so we can’t display that much information on a smartphone screen. We would like to put the upload button on top similar to 3D Hubs, so the app can try to predict the machine that will be used based on the file type.
 
-![3D Hubs block diagram](img/3dhubs_block_diagram.png)
+![3D Hubs block diagram](img/3dhubs_block_diagram.png "Figure 2: Block diagram 3D Hubs website")
 
-In figure FIXME you see a block diagram of the 3D Hubs website, which has quite a lot of pages. This structure isn’t suitable for our app, because it is too complicated.
+In figure 2 you see a block diagram of the 3D Hubs website, which has quite a lot of pages. This structure isn’t suitable for our app, because it is too complicated.
 
-When you open the AstroPrint app you start at a homepage with a few navigation buttons. These buttons lead you to the most important pages. The downside of having these buttons is that you can’t switch between screens quickly. That is why we would like to make use of tabs, so you can swipe from screen to screen.
+![Astroprint interface](img/astroprint-together.jpg "Figure 3: (a) Home page AstroPrint (b) Upload page AstroPrint (c) print overview AstroPrint
+")
 
-On the upload page (see figure FIXMEb) you see a 3D preview of your file, including information like the volume and dimensions. Furthermore you can select the machine, material and quality. This is pretty close to the features we would like to implement in our request page in the app. In figure FIXMEc you see the page with all the uploaded designs and projects by the user. We would like to implement a page like this as well, so the user is able to see his/her previous projects and settings.
+When you open the AstroPrint app you start at a homepage with a few navigation buttons (see figure 3a). These buttons lead you to the most important pages. The downside of having these buttons is that you can’t switch between screens quickly. That is why we would like to make use of tabs, so you can swipe from screen to screen.
 
-![Astroprint block diagram](img/astroprint_block_diagram.png)
+On the upload page (see figure 3b) you see a 3D preview of your file, including information like the volume and dimensions. Furthermore you can select the machine, material and quality. This is pretty close to the features we would like to implement in our request page in the app. In figure 3c you see the page with all the uploaded designs and projects by the user. We would like to implement a page like this as well, so the user is able to see his/her previous projects and settings.
 
-In figure FIXME you see the block diagram of the AstroPrint app. A structure like this would be suitable for our app. It is clear and it is easy to navigate through the app. We also liked the tabs in the Design Library section, because you can switch between the pages quickly.
+![Astroprint block diagram](img/astroprint_block_diagram.png "Figure 4: Block diagram AstroPrint")
 
-<br />
-
-## Authentication and approving projects
-
-In our app we would also like to make use of a database for signing in and storing data. We had to choose between Firebase and setting up a server by ourselves. This choice was made easily, because setting up a server takes a lot of time and skills we unfortunately don’t have.
-
-![Firebase Functionality](img/Firebase.gif)
-
-We would like to use [Firebase Authentication](https://firebase.google.com/docs/auth/) for the login process of our app, because it is a relatively easy way to store user emails and passwords. For the storage of project orders and files we would like to use Firestore, because you can make a clear structure of collections and documents within this function. Firestore can also be used for admin webpage. This admin webpage will show the project order made by users in the app and when the admin changes for example the order or payment status, this will also show in the app.
+In figure 4 you see the block diagram of the AstroPrint app. A structure like this would be suitable for our app. It is clear and it is easy to navigate through the app. We also liked the tabs in the Design Library section, because you can switch between the pages quickly.
 
 ## Showcase
 
@@ -99,7 +92,7 @@ This is still very much a possible feature for the app. However, we have not imp
 
 <br />
 
-![Functional Decomposition Digital Fabrication Lab App](img/functional-decomposition.png)
+![Functional Decomposition Digital Fabrication Lab App](img/functional-decomposition.png "Figure 5: Functional decomposition")
 
 ## GUI
 
@@ -111,9 +104,11 @@ There are multiple options to log in to the app, we could students NetID, Facebo
 
 ## Upload Files
 
-To make it possible for students to upload files that the operator can see it is necessary to implement a storage and a database. For the real app this should be implemented using a network service cause this is is cheaper but then you have to make your own storage and database. For the prototype we choose Firebase to implement these technologies, since this is easier to use and we would not have enough time to make a whole service.
+To make it possible for students to upload files that the operator can see it is necessary to implement a storage and a database. For the real app this should be implemented using a network service because this is cheaper. Setting up a server takes a lot of time and skills we unfortunately don’t have. For the prototype we choose Firebase, to implement these technologies, since this is an online database it is easier to use and spares us a lot of time.
 
 Moreover it is good to realise that students won’t have their print file on their phone, so to upload a file the app should have access to a cloud where the file is located. In the full version we should implement access to clouds like, Google Drive, Dropbox and Icloud. For now you can upload all kinds of files, suchs as images, from your phone.
+
+![Uploading file animation](img/uploading_file.gif)
 
 ## Operator part
 
@@ -122,7 +117,16 @@ The operator needs to approve the requests and schedule the project. Nowadays al
 ## Notifications
 
 To give students a notification sent by the operator we can choose between push notifications or Text messages, Text messages can be opened is the home screen where Push notifications are short en opened in the app. Push notifications are completely free for users to receive while this is not always the case with text messages. Therefore we choose to implement Notifications Push programs. Examples of Push programs are: Firebase Cloud Message Google Cloud Message.
+
+![Notification animation](img/notifications.gif)
+
 FCM is an improved version of GCM. FCM inherits GCM’s core infrastructure but simplifies the client development. With GCM you need to write your own registrations or subscription retry logic but wit FCM you can integrate it with only a few lines of code. There are some other services who generate push messages but since we already choose to use firebase for a lot of other technology implementations we decided to use it for the notifications as well, the disadvantage for using google is that googleplay should be installed at your device to receive the notifications.
+
+## Firebase
+
+![Firebase Functionality](img/Firebase.gif)
+
+As read above, we are going to use Firebase a lot. We would like to use Firebase Authentication for the login process of our app, because it is a relatively easy way to store user emails and passwords. For the storage of project orders and files we would like to use Firestore, because you can make a clear structure of collections and documents within this function. Firestore can also be used for admin webpage. This admin webpage will show the project order made by users in the app and when the admin changes for example the order or payment status, this will also show in the app.
 
 ## Process flow
 
