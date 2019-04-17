@@ -8,6 +8,8 @@ import { Typography, Grid, Button } from '@material-ui/core';
 import GitLogo from '../components/mdxcomponents/GitLogo';
 import NetlifyLogo from '../images/netlify-logo.svg';
 import AndroidLogo from '../images/android-logo.svg';
+import FeaturedImage from '../images/featured-image.png';
+import LinkIcon from '@material-ui/icons/Link';
 
 const IndexPage: React.SFC<RouterProps> = ({ location }) => (
   <Layout location={location}>
@@ -17,22 +19,44 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
         <Typography variant="h2" color="primary" gutterBottom>
           Digital Fabrication Lab App
         </Typography>
-        <ul>
-          <li>
-            <Typography variant="body1">Avelien Husen (4432436)</Typography>
-          </li>
-          <li>
-            <Typography variant="body1">
-              Annemar Marinissen (4429842)
+      </Grid>
+      <Grid item>
+        <img src={FeaturedImage} style={{ maxWidth: '100%' }} />
+      </Grid>
+      <Grid item>
+        <Grid container spacing={32}>
+          <Grid item>
+            <Typography variant="overline" color="secondary">
+              4432436
             </Typography>
-          </li>
-          <li>
-            <Typography variant="body1">Nils Westhoff (4364678)</Typography>
-          </li>
-        </ul>
+            <Button href="http://avelien.com" target="blank">
+              <LinkIcon style={{ marginRight: '.4rem' }} />
+              Avelien Husen
+            </Button>
+          </Grid>
+          <Grid item>
+            <Typography variant="overline" color="secondary">
+              4429842
+            </Typography>
+            <Typography variant="button" style={{ margin: '6px 8px' }}>
+              Annemar Marinissen
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="overline" color="secondary">
+              4364678
+            </Typography>
+            <Button href="https://nilswesthoff.com" target="blank">
+              <LinkIcon style={{ marginRight: '.4rem' }} />
+              Nils Westhoff
+            </Button>
+          </Grid>
+        </Grid>
+
+        <br />
         <Typography variant="overline">Group 8</Typography>
         <Typography variant="overline" gutterBottom>
-          Coach: Adrie Kooiman
+          Coach: Adrie Kooijman
         </Typography>
       </Grid>
 

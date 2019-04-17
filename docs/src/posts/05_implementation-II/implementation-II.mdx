@@ -8,8 +8,9 @@ date: "2019-04-05"
 import { Button, Grid, Switch } from "@material-ui/core";
 import IframeResponsive from "../../components/mdxcomponents/iframe";
 import GitLogo from "../../components/mdxcomponents/GitLogo";
+import NetlifyLogo from "../../images/netlify-logo.svg";
 
-![Digital Fabrication Lab Admin](./img/digital-fabrication-lab-admin.png)
+![Digital Fabrication Lab Admin](./img/admin-mockup.png)
 
 The app is connected to the admin panel, which will be used by Tessa and Joris, the printer operators 🖨. The admin panel is written in [Typescript](https://www.typescriptlang.org/) (optionally typed Javascript 😍) and built with [React](https://reactjs.org/), a JavaScript library for building user interfaces. React makes it easy to create reusable components.
 
@@ -128,12 +129,16 @@ A button and switch, for example. Looks like this:
 
 <br />
 
-All these small components from the Material-UI library make it easy to build a nice, consistent interface quickly.
+All these small components from the Material-UI library make it easy to build a nice, consistent interface quickly. You can see the admin panel here:
 
-<IframeResponsive
-  src="https://digital-fabrication-lab-admin.netlify.com/"
-  ratio={16 / 9}
-/>
+<Button
+  href="https://digital-fabrication-lab-admin.netlify.com"
+  target="blank"
+  style={{ paddingRight: "1rem", marginBottom: ".8rem" }}
+>
+  <img style={{ height: 24, width: 24, margin: ".4rem" }} src={NetlifyLogo} />
+  Admin Panel
+</Button>
 
 _you can currently log in without any username and password_ 😉
 

@@ -11,7 +11,9 @@ import GitLogo from "../../components/mdxcomponents/GitLogo";
 
 As we had previously determined what features we would like to implement first, we distributed tasks among the group. Annemar started working on the login and profile page and Avelien created the order page.
 
-The first thing we discovered while programming in java, is that we had to make many more classes than we thought. During our ideation phase, we expected to create four classes (one for each data type). However, a class does not specifically match a database table, and often needs many helper classes. In the end we created TODO: classes, see the UML class diagram in figure FIXME.
+The first thing we discovered while programming in java, is that we had to make many more classes than we thought. During our ideation phase, we expected to create four classes (one for each data type). However, a class does not specifically match a database table, and often needs many helper classes. In the end we created 20 classes, see the UML class diagram in figure FIXME.
+
+![UML Class Diagram](./img/class-diagram-full.png)
 
 - Singleton Pattern
 - Factory Pattern
@@ -71,7 +73,7 @@ By making the Sign in button pink and the Register button grey the Sign in butto
 
 For the register, profile settings and add request page we used the similar layout the get consistency in the app. The edit text fields have grey hints and the pages start with a rounded image.
 
-Because we used the rounded images in this pages, all profile images and add buttons used in the app are a `<CircleImageView />`.
+Because we used the rounded images in this pages, all profile images and add buttons used in the app are a _CircleImageView_.
 
 <GitLogo src="https://github.com/nwesthoff/Digital-Fabrication-Lab/blob/0abff025e227eb2d6a9e62f2c8b9684feab135ec/client/app/src/main/res/layout/activity_profile.xml#L54" />
 
@@ -96,7 +98,7 @@ The showcase en the requests fragment are both an overview. Therefor the pages h
 
 # Database, authentication and storage
 
-## firebase
+## Firebase
 
 As previously stated, we use Firebase for authentication, file storage and as a database.
 
@@ -187,7 +189,7 @@ private void uploadFile() {
 
 ### Database
 
-We're using Firebase Firestore for the database. Further on in CreateOrderActivity, we created the filledIn() method, where we store our Orders in the database. This picks up on the previously set values in text, the authenticated user, as well as the hostedUri that we received from the uploadFile() method.
+We're using Firebase Firestore for the database. Further on in `CreateOrderActivity`, we created the `filledIn()` method, where we store our Orders in the database. This picks up on the previously set values in text, the authenticated user, as well as the `hostedUri` that we received from the `uploadFile()` method.
 
 <GitLogo src="https://github.com/nwesthoff/Digital-Fabrication-Lab/blob/0abff025e227eb2d6a9e62f2c8b9684feab135ec/client/app/src/main/java/com/nilswesthoff/nils/digitalfabricationlab/Orders/CreateOrderActivity.java#L304" />
 
@@ -243,7 +245,7 @@ if (!TextUtils.isEmpty(project_title.getText().toString().trim())) {
 }
 ```
 
-We obviously want to query this data in the app again as well. Which we do in our OrderTabFragment. Because the API call to Firestore is async, the data comes in after the UI has been created. We create an ArrayList of Orders, which we will fill after the onComplete callback has fired from our readData method.
+We obviously want to query this data in the app again as well. Which we do in our `OrderTabFragment`. Because the API call to Firestore is async, the data comes in after the UI has been created. We create an ArrayList of Orders, which we will fill after the `onComplete` callback has fired from our readData method.
 
 <GitLogo src="https://github.com/nwesthoff/Digital-Fabrication-Lab/blob/0abff025e227eb2d6a9e62f2c8b9684feab135ec/client/app/src/main/java/com/nilswesthoff/nils/digitalfabricationlab/Orders/OrderTabFragment.java#L69" />
 
