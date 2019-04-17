@@ -61,11 +61,17 @@ Since the app is a project for the TUDelft we choose to implement the style of a
 
 ## Login page
 
+![DFL Login Page](./img/login-layout.png "Figure 12: Login activity layout")
+
 By making the Sign in button pink and the Register button grey the Sign in button stands out more and it is clear for the user to click on the button.
 
 ## Edit pages (Order, Register, Settings)
 
+![DFL Editable Page Layouts](./img/edit-page-layouts.jpg "Figure 13: (a) Create Order and (b) Register activity layouts")
+
 For the register, profile settings and add request page we used the similar layout the get consistency in the app. The edit text fields have grey hints and the pages start with a rounded image.
+
+![Add FAB's](./img/fabs.jpg "Figure 14: Create order and showcase project floating action buttons (FAB's)")
 
 Because we used the rounded images in this pages, all profile images and add buttons used in the app are a _CircleImageView_.
 
@@ -82,13 +88,201 @@ By clicking on the confirm buttons you go to the previous page. So confirm proje
 
 ## Tab navigation and bottom navigation bar
 
+![Bottom Navigation Bar](./img/bottomnavbar.png "Figure 15: Bottom Navigation Bar")
+
 Since nowadays all screens are very large, we used a bottom navigation bar to navigate to the pages: request, news and profile. With the blue icon the user can see in what page he is in.
+
+![Top Navigation Bar](./img/topnavbar.png "Figure 16: Android Toolbar and TabBarLayout")
 
 Since the overview of the requests, printers and showcase are all linked to the request page we use fragments within the request page to navigate to those features. With the pink line underneath the tab name, the user can see in which fragment he is.
 
 ## Showcase and requests fragment
 
-The showcase en the requests fragment are both an overview. Therefor the pages have a quite similar layout. Both pages look a bit like an instagram feed. In the showcase you can also like public projects. For the layout we used a RecyclerView. The items shown have a separate item xml file to define the layout of the items.
+The showcase en the requests fragment are both an overview. Therefor the pages have a quite similar layout. Both pages look a bit like an instagram feed. In the showcase you can also like public projects. For the layout we used a RecyclerView.
+
+<GitLogo src="https://github.com/nwesthoff/Digital-Fabrication-Lab/blob/0abff025e227eb2d6a9e62f2c8b9684feab135ec/client/app/src/main/res/layout/activity_profile.xml#L54" />
+
+```xml
+<android.support.v7.widget.RecyclerView
+android:id="@+id/project_recycler"
+android:layout_width="match_parent"
+android:layout_height="wrap_content" />
+```
+
+The items shown have a separate item xml file to define the layout of the items.
+
+### OrderItem Layout
+
+![OrderItem Layout](./img/orderitem.png "Figure 17: OrderItem Layout")
+
+<GitLogo src="https://github.com/nwesthoff/Digital-Fabrication-Lab/blob/master/client/app/src/main/res/layout/request_item.xml" />
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/cardview_default_elevation">
+
+        <ImageView
+        android:id="@+id/orderImageView"
+        android:layout_width="match_parent"
+        android:layout_height="220dp" />
+
+        <TextView
+        android:id="@+id/orderTextHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/orderImageView"
+        android:layout_marginStart="8dp"
+        android:text="Order Title"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+        <TextView
+        android:id="@+id/orderTextSubheading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/orderTextHeadline"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Order Description" />
+
+        <TextView
+        android:id="@+id/orderTextStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/orderTextSubheading"
+        android:layout_alignEnd="@+id/orderImageView"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Order Status" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+```
+
+### Showcase Project Layout
+
+![Showcase Project Item Layout](./img/showcase.png "Figure 18: ProjectItem Layout")
+
+<GitLogo src="https://github.com/nwesthoff/Digital-Fabrication-Lab/blob/master/client/app/src/main/res/layout/postitem.xml" />
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_profile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:src="@color/colorAccent"/>
+
+            <TextView
+                android:id="@+id/fullname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/Grey45"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:hint="Full name"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/project_image"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/like"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_like" />
+
+            <ImageView
+                android:id="@+id/comment"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/like"
+                android:src="@drawable/ic_commend" />
+
+            <ImageView
+                android:id="@+id/save"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_save" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/Grey45"
+            android:textStyle="bold"
+            android:hint="2 Likes"/>
+
+        <TextView
+            android:id="@+id/publisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/Grey45"
+            android:textStyle="bold"
+            android:hint="Full name"/>
+
+        <TextView
+            android:id="@+id/project_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/Grey45" />
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/Grey45"
+            android:textStyle="bold"
+            android:hint="Comments"/>
+    </LinearLayout>
+
+</RelativeLayout>
+```
 
 # Database, authentication and storage
 

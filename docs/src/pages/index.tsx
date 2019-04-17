@@ -11,6 +11,7 @@ import AndroidLogo from '../images/android-logo.svg';
 import FeaturedImage from '../images/featured-image.png';
 import LinkIcon from '@material-ui/icons/Link';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
+import AttachmentIcon from '@material-ui/icons/Attachment';
 
 const IndexPage: React.SFC<RouterProps> = ({ location }) => (
   <Layout location={location}>
@@ -31,7 +32,7 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
               4432436
             </Typography>
             <Button href="http://avelien.com" target="blank">
-              <LinkIcon style={{ marginRight: '.4rem' }} />
+              <LinkIcon style={{ margin: '.4rem', height: '24px' }} />
               Avelien Husen
             </Button>
           </Grid>
@@ -39,7 +40,7 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
             <Typography variant="overline" color="secondary">
               4429842
             </Typography>
-            <Typography variant="button" style={{ margin: '6px 8px' }}>
+            <Typography variant="button" style={{ margin: '.7rem 8px' }}>
               Annemar Marinissen
             </Typography>
           </Grid>
@@ -48,7 +49,7 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
               4364678
             </Typography>
             <Button href="https://nilswesthoff.com" target="blank">
-              <LinkIcon style={{ marginRight: '.4rem' }} />
+              <LinkIcon style={{ margin: '.4rem', height: '24px' }} />
               Nils Westhoff
             </Button>
           </Grid>
@@ -114,6 +115,17 @@ const IndexPage: React.SFC<RouterProps> = ({ location }) => (
                 src={NetlifyLogo}
               />
               Operator Admin
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              href="https://drive.google.com/file/d/1NFZizdAoEI2Ov-ayUhmZzycUnUpbb7NI/view"
+              target="blank"
+              color="primary"
+              style={{ paddingRight: '1rem' }}
+            >
+              <AttachmentIcon style={{ margin: '.4rem', height: '24px' }} />
+              PDF Report
             </Button>
           </Grid>
           <Grid item>
