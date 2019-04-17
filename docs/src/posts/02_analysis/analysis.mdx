@@ -52,7 +52,7 @@ We would like the extra function Showcase to have an Instagram-like feed. With t
 
 We also played with the idea to render the uploaded STL file, to show a preview, which makes it easier to see which project you're looking at, at a glance. Before we started working on the app, we created a small node-server that renders and parses (returning estimated weight, size etc.) an STL-file.
 
-```ts
+```js
 app.get("/stl-parser", (req, res) => {
   const requestSettings = {
     method: "GET",
